@@ -129,7 +129,8 @@ keys = [
 
 # SUPER + FUNCTION KEYS
 
-    #Key([mod], "f", lazy.window.toggle_fullscreen()),
+    #Key([mod, "shift"], "f", lazy.window.toggle_fullscreen()),
+    Key([mod, "shift"], "n", lazy.layout.normalize()),
     Key([mod, "shift"], "f", lazy.window.toggle_floating()),
     Key([mod], "q", lazy.window.kill()),
 
