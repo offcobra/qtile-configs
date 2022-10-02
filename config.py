@@ -16,11 +16,12 @@ from libqtile.widget import Spacer
 mod = "mod4"
 mod1 = "alt"
 mod2 = "control"
+myTerm = "alacritty"      # My terminal of choice
 home = os.path.expanduser('~')
 
 
-# Functions
-###########
+# Functions #
+#############
 
 def to_next(qtile, right=True):
     i = qtile.screens.index(qtile.current_screen)
@@ -56,6 +57,7 @@ keys = [
 
     Key([mod], "Return", lazy.spawn("alacritty")),
     Key([mod], "p", lazy.spawn("rofi -show run")),
+    Key([mod, "shift"], "p", lazy.spawn("websearch")),
     #Key([mod], "e", lazy.spawn("emacsclient -c -a 'emacs'")),
     Key([mod], "w", lazy.spawn("brave")),
     Key([mod], "f", lazy.spawn("pcmanfm")),
@@ -81,7 +83,7 @@ keys = [
             lazy.spawn("emacsclient -c -a 'emacs' --eval '(dired nil)'"),
             desc='Emacsclient Dired'
             ),
-        Key([], "v",
+        Key([], "t",
             lazy.spawn("emacsclient -c -a 'emacs' --eval '(+vterm/here nil)'"),
             desc='Emacsclient Vterm'
             )
@@ -142,7 +144,6 @@ keys = [
 
 
 # QTILE LAYOUT KEYS
-    #Key([mod], "n", lazy.layout.normalize()),
     Key([mod], "space", lazy.next_layout()),
 
 # CHANGE FOCUS
@@ -264,6 +265,17 @@ layouts = [
 ]
 
 # Define Colors
+colors_bak = [["#282c34", "#282c34"],
+          ["#1c1f24", "#1c1f24"],
+          ["#dfdfdf", "#dfdfdf"],
+          ["#ff6c6b", "#ff6c6b"],
+          ["#98be65", "#98be65"],
+          ["#da8548", "#da8548"],
+          ["#51afef", "#51afef"],
+          ["#c678dd", "#c678dd"],
+          ["#46d9ff", "#46d9ff"],
+          ["#a9a1e1", "#a9a1e1"]]
+
 colors = [["#282c34", "#282c34"],
           ["#1c1f24", "#1c1f24"],
           ["#dfdfdf", "#dfdfdf"],
@@ -275,6 +287,12 @@ colors = [["#282c34", "#282c34"],
           ["#46d9ff", "#46d9ff"],
           ["#a9a1e1", "#a9a1e1"]]
 
+color_bar = [
+    ["#194d33", "#194d33"],
+    #["#1c1f24", "#1c1f24"], #pretty good...
+    ["#330000", "#330000"], #pretty good...
+#    ["#800000", "#800000"]
+]
 
 # WIDGETS FOR THE BAR
 def init_widgets_defaults():
@@ -288,6 +306,17 @@ widget_defaults = init_widgets_defaults()
 def init_widgets_list():
     prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
     widgets_list = [
+              widget.Image(
+                       filename = "~/.config/qtile/icons/python-white.png",
+                       scale = "true",
+                       mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm)}
+                       ),
+               widget.Sep(
+                        linewidth = 0,
+                        padding = 10,
+                        foreground = colors[2],
+                        background = colors[0]
+                        ),
                widget.GroupBox(
                         font = "Noto Sans Bold",
                         fontsize = 12,
@@ -303,91 +332,104 @@ def init_widgets_list():
                         highlight_method = "line",
                         this_current_screen_border = colors[8],
                         foreground = colors[2],
-                        background = colors[1]
+                        background = colors[0]
                         ),
                widget.Sep(
                         linewidth = 2,
                         padding = 10,
                         foreground = colors[2],
-                        background = colors[1]
+                        background = colors[0]
                         ),
                widget.CurrentLayout(
                         font = "Noto Sans Bold",
-                        foreground = colors[5],
-                        background = colors[1]
+                        foreground = colors[6],
+                        background = colors[0]
                         ),
                widget.Sep(
                         linewidth = 2,
                         padding = 10,
                         foreground = colors[2],
-                        background = colors[1]
+                        background = colors[0]
                         ),
                widget.WindowName(
                         font = "Noto Sans Bold",
                         fontsize = 12,
-                        foreground = colors[5],
-                        background = colors[1],
+                        foreground = colors[6],
+                        background = colors[0],
                         ),
+              widget.TextBox(
+                       text = '',
+                       font = "Ubuntu Mono",
+                       background = colors[0],
+                       foreground = color_bar[1],
+                       padding = 0,
+                       fontsize = 37
+                       ),
                 widget.TextBox(
                          font = "Noto Sans Bold",
                          #font="FontAwesome",
-                        fontsize=12,
-                         text="   cpu: ",
+                         fontsize=28,
+                         text="",
                          foreground=colors[6],
-                         background=colors[1],
-                         padding = 0,
+                         background = color_bar[1],
+                         padding = 4,
                          #fontsize=16
                          ),
                 widget.CPUGraph(
                          border_color = colors[2],
                          fill_color = colors[8],
                          graph_color = colors[8],
-                         background=colors[1],
+                         background = color_bar[1],
                          border_width = 1,
                          line_width = 1,
                          core = "all",
                          type = "box"
                          ),
-                widget.Sep(
-                         linewidth = 2,
-                         padding = 10,
-                         foreground = colors[2],
-                         background = colors[1]
-                         ),
+              widget.TextBox(
+                       text = '',
+                       font = "Ubuntu Mono",
+                       background = color_bar[1],
+                       foreground = color_bar[0],
+                       padding = 0,
+                       fontsize = 37
+                       ),
                 widget.TextBox(
                          font = "Noto Sans Bold",
                          #font="FontAwesome",
-                         fontsize=12,
-                         text=" temp: ",
+                         fontsize=10,
+                         text="🌡",
                          foreground=colors[6],
-                         background=colors[1],
-                         padding = 0,
+                         background = color_bar[0],
+                         padding = 4,
                          #fontsize=16
                          ),
                 widget.ThermalSensor(
                         font = "Noto Sans Bold",
-                         foreground = colors[5],
+                         foreground = colors[2],
                          foreground_alert = colors[6],
                          fontsize=10,
                          bandwidth="down",
-                         background = colors[1],
+                         background = color_bar[0],
                          metric = True,
                          padding = 3,
                          threshold = 80
                          ),
-                widget.Sep(
-                         linewidth = 2,
-                         padding = 10,
-                         foreground = colors[2],
-                         background = colors[1]
-                         ),
+              widget.TextBox(
+                       text = '',
+                       font = "Ubuntu Mono",
+                       background = color_bar[0],
+                       foreground = color_bar[1],
+                       padding = 0,
+                       fontsize = 37
+                       ),
                 widget.TextBox(
                          font = "Noto Sans Bold",
                          #font="FontAwesome",
-                         text=" net: ",
+                         fontsize=24,
+                         text="",
                          foreground=colors[6],
-                         background=colors[1],
-                         padding = 0,
+                         background=color_bar[1],
+                         padding = 4,
                          #fontsize=16
                          ),
                 widget.NetGraph(
@@ -397,65 +439,77 @@ def init_widgets_list():
                          interface="auto",
                          fill_color = colors[8],
                          foreground=colors[2],
-                         background=colors[1],
+                         background=color_bar[1],
                          graph_color = colors[8],
                          border_color = colors[2],
                          padding = 0,
                          border_width = 1,
                          line_width = 1,
                          ),
-                widget.Sep(
-                         linewidth = 2,
-                         padding = 10,
-                         foreground = colors[2],
-                         background = colors[1]
-                         ),
+              widget.TextBox(
+                       text = '',
+                       font = "Ubuntu Mono",
+                       background = color_bar[1],
+                       foreground = color_bar[0],
+                       padding = 0,
+                       fontsize = 37
+                       ),
                 widget.TextBox(
                          font = "Noto Sans Bold",
                          #font="FontAwesome",
-                        fontsize=12,
-                         text="   ram: ",
-                         foreground=colors[4],
-                         background=colors[1],
-                         padding = 0,
+                         fontsize=25,
+                         text="",
+                         foreground=colors[6],
+                         background=color_bar[0],
+                         padding = 4,
                          #fontsize=16
                          ),
                 widget.MemoryGraph(
                          border_width = 1,
                          border_color = colors[2],
                          frequency = 1,
-                         background = colors[1],
+                         background = color_bar[0],
                         ),
-                widget.Sep(
-                         linewidth = 2,
-                         padding = 10,
-                         foreground = colors[2],
-                         background = colors[1]
-                         ),
+              widget.TextBox(
+                       text = '',
+                       font = "Ubuntu Mono",
+                       background = color_bar[0],
+                       foreground = color_bar[1],
+                       padding = 0,
+                       fontsize = 37
+                       ),
                widget.TextBox(
                         font = "Noto Sans Bold",
                         #font="FontAwesome",
-                        text="  ",
-                        foreground=colors[3],
-                        background=colors[1],
-                        padding = 0,
-                        fontsize=16
+                        text="🕗",
+                        foreground=colors[6],
+                        background=color_bar[1],
+                        padding = 4,
+                        fontsize=14
                         ),
                widget.Clock(
                         font = "Noto Sans Bold",
-                        foreground = colors[5],
-                        background = colors[1],
+                        foreground = colors[2],
+                        background = color_bar[1],
                         fontsize = 14,
                         format="%H:%M  %d-%m-%Y  "
                         ),
-                widget.Sep(
-                         linewidth = 2,
-                         padding = 10,
-                         foreground = colors[2],
-                         background = colors[1]
-                         ),
+              widget.TextBox(
+                       text = '',
+                       font = "Ubuntu Mono",
+                       background = color_bar[1],
+                       foreground = color_bar[0],
+                       padding = 0,
+                       fontsize = 37
+                       ),
+#                widget.Sep(
+#                         linewidth = 2,
+#                         padding = 10,
+#                         foreground = colors[2],
+#                         background = colors[0]
+#                         ),
                widget.Systray(
-                        background=colors[1],
+                        background = color_bar[0],
                         icon_size=20,
                         padding = 4
                         ),
@@ -470,21 +524,31 @@ def init_widgets_screen1():
     return widgets_screen1
 
 def init_widgets_screen2():
-    widgets_screen2 = init_widgets_list()[:5]
+    widgets_screen2 = init_widgets_list()[2:7]
+    widgets_screen2.pop(1)
+    widgets_screen2.pop(1)
     widgets_screen2.extend([
+        widget.TextBox(
+                text = '',
+                font = "Ubuntu Mono",
+                background = colors[0],
+                foreground = color_bar[0],
+                padding = 0,
+                fontsize = 37
+                ),
         widget.TextBox(
                     font = "Noto Sans Bold",
                     #font="FontAwesome",
-                    text="  ",
-                    foreground=colors[3],
-                    background=colors[1],
-                    padding = 0,
-                    fontsize=16
+                    text="",
+                    foreground=colors[6],
+                    background = color_bar[0],
+                    padding = 4,
+                    fontsize=24
                     ),
         widget.Clock(
                 font = "Noto Sans Bold",
-                foreground = colors[5],
-                background = colors[1],
+                foreground = colors[2],
+                background = color_bar[0],
                 fontsize = 14,
                 format="%H:%M  %d-%m-%Y"
                 ),
