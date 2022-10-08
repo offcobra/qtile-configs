@@ -6,6 +6,7 @@ import re
 import socket
 import subprocess
 from typing import List  # noqa: F401
+from libqtile import qtile
 from libqtile import layout, bar, widget, hook
 from libqtile.config import Click, Drag, Group, Key, KeyChord, Match, Screen, Rule
 from libqtile.command import lazy
@@ -40,11 +41,13 @@ def to_prev(qtile, right=True):
 def check_vpn():
     ''' Check if VPN is Actrive '''
     cmd = 'ip addr'
-    process = subprocess.run(cmd.split(), stdout=suprocess.PIPE).stdout.decode('utf-8')
+    process = subprocess.run(cmd.split(), stdout=subprocess.PIPE).stdout.decode('utf-8')
     if 'nordlynx' in process:
-        result = ' vpn: YES '
+        result = '⮝ vpn: NordVPN '
+    elif 'tun0' in process:
+        result = '⮝ vpn: HackTheBox '
     else:
-        result = ' vpn: NO '
+        result = '⮝ vpn: no '
     return result
 
 
@@ -56,17 +59,17 @@ keys = [
 # Def my own Keybinding
 
     Key([mod], "Return", lazy.spawn("alacritty")),
+    Key([mod, "shift"], "Return", lazy.spawn("kitty -e fish")),
     Key([mod], "p", lazy.spawn("rofi -show run")),
     Key([mod, "shift"], "p", lazy.spawn("websearch")),
     #Key([mod], "e", lazy.spawn("emacsclient -c -a 'emacs'")),
     Key([mod], "w", lazy.spawn("brave")),
+    Key([mod, "shift"], "w", lazy.spawn("brave --incognito")),
     Key([mod], "f", lazy.spawn("pcmanfm")),
     Key([mod], "g", lazy.spawn("steam")),
     Key([mod], "v", lazy.spawn("pavucontrol")),
     Key([mod], "o", lazy.spawn("nitrogen")),
     Key([mod], "s", lazy.spawn("alacritty -e bashtop")),
-    Key([mod, "shift"], "Return", lazy.spawn("kitty")),
-    Key([mod, "shift"], "w", lazy.spawn("brave --incognito")),
 
 # KEYCHORD BINDINGS
 # Emacs
@@ -111,6 +114,10 @@ keys = [
             lazy.spawn("librewolf"),
             desc='Librewolf'
             ),
+        Key([], "o",
+            lazy.spawn("qutebrowser"),
+            desc='QuteBrowser'
+            ),
         #Key([], "L",
         #    lazy.spawn("librewolf --private-window"),
         #    desc='Librewolf Incognito'
@@ -118,13 +125,17 @@ keys = [
     ]),
 
 # Monitor Resolution
-    KeyChord([mod],"r", [
+    KeyChord([mod],"t", [
         Key([], "w",
-            lazy.spawn("work.sh"),
+            lazy.spawn("screen_work"),
             desc='Monitors in work mode'
             ),
+        Key([], "p",
+            lazy.spawn("toggle_picom"),
+            desc='Toggle Picom'
+            ),
         Key([], "c",
-            lazy.spawn("chill.sh"),
+            lazy.spawn("screen_chill"),
             desc='Monitors in chill mode'
             )
     ]),
@@ -182,7 +193,8 @@ keys = [
 # FLIP LAYOUT FOR MONADTALL/MONADWIDE
     #Key([mod, "shift"], "f", lazy.layout.flip()),
 
-    ]
+    
+]
 
 def window_to_previous_screen(qtile, switch_group=False, switch_screen=False):
     i = qtile.screens.index(qtile.current_screen)
@@ -216,7 +228,7 @@ group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0",]
 # FOR AZERTY KEYBOARDS
 #group_names = ["ampersand", "eacute", "quotedbl", "apostrophe", "parenleft", "section", "egrave", "exclam", "ccedilla", "agrave",]
 
-group_labels = ["1 ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ", "0",]
+group_labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0",]
 #group_labels = ["", "", "", "", "", "", "", "", "", "",]
 #group_labels = ["Web", "Edit/chat", "Image", "Gimp", "Meld", "Video", "Vb", "Files", "Mail", "Music",]
 
@@ -235,6 +247,9 @@ for i in groups:
     keys.extend([
 
 #CHANGE WORKSPACES
+
+
+
         Key([mod], i.name, lazy.group[i.name].toscreen(toggle=False)),
         Key(["mod1"], "Tab", lazy.screen.next_group()),
         Key(["mod1", "shift"], "Tab", lazy.screen.prev_group()),
@@ -287,11 +302,17 @@ colors = [["#282c34", "#282c34"],
           ["#46d9ff", "#46d9ff"],
           ["#a9a1e1", "#a9a1e1"]]
 
+test = '#993333'
+#test = '#ffffff'
+black = '#000000'
+
 color_bar = [
     ["#194d33", "#194d33"],
+    [test, test],
     #["#1c1f24", "#1c1f24"], #pretty good...
-    ["#330000", "#330000"], #pretty good...
-#    ["#800000", "#800000"]
+    #["#330000", "#330000"], # This is last one
+    #["#662200", "#662200"] -> rot...
+    #["#4d1a00", "#4d1a00"]
 ]
 
 # WIDGETS FOR THE BAR
@@ -303,12 +324,14 @@ def init_widgets_defaults():
 
 widget_defaults = init_widgets_defaults()
 
+arch_symbols = '⮝⮝  ⋏ ◬ ⟑  ⩓'
+
 def init_widgets_list():
     prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
     widgets_list = [
               widget.Image(
                        filename = "~/.config/qtile/icons/python-white.png",
-                       scale = "true",
+                       scale = True,
                        mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm)}
                        ),
                widget.Sep(
@@ -318,7 +341,8 @@ def init_widgets_list():
                         background = colors[0]
                         ),
                widget.GroupBox(
-                        font = "Noto Sans Bold",
+                        font = "Source Code Pro Bold",
+                        #font = "Noto Sans Bold",
                         fontsize = 12,
                         margin_y = 4,
                         margin_x = 0,
@@ -341,7 +365,8 @@ def init_widgets_list():
                         background = colors[0]
                         ),
                widget.CurrentLayout(
-                        font = "Noto Sans Bold",
+                        font = "Source Code Pro Bold",
+                        #font = "Noto Sans Bold",
                         foreground = colors[6],
                         background = colors[0]
                         ),
@@ -352,7 +377,8 @@ def init_widgets_list():
                         background = colors[0]
                         ),
                widget.WindowName(
-                        font = "Noto Sans Bold",
+                        font = "Source Code Pro Bold",
+                        #font = "Noto Sans Bold",
                         fontsize = 12,
                         foreground = colors[6],
                         background = colors[0],
@@ -361,6 +387,22 @@ def init_widgets_list():
                        text = '',
                        font = "Ubuntu Mono",
                        background = colors[0],
+                       foreground = color_bar[0],
+                       padding = 0,
+                       fontsize = 37
+                       ),
+              widget.GenPollText(
+                        font = "Source Code Pro Bold",
+                        fontsize = 12,
+                        update_interval=3,
+                        func=lambda: check_vpn(),
+                        foreground=colors[6],
+                        background = color_bar[0],
+              ),
+              widget.TextBox(
+                       text = '',
+                       font = "Ubuntu Mono",
+                       background = color_bar[0],#colors[0],
                        foreground = color_bar[1],
                        padding = 0,
                        fontsize = 37
@@ -373,7 +415,7 @@ def init_widgets_list():
                          foreground=colors[6],
                          background = color_bar[1],
                          padding = 4,
-                         #fontsize=16
+                         mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e bashtop')}
                          ),
                 widget.CPUGraph(
                          border_color = colors[2],
@@ -383,7 +425,8 @@ def init_widgets_list():
                          border_width = 1,
                          line_width = 1,
                          core = "all",
-                         type = "box"
+                         type = "box",
+                         mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e bashtop')}
                          ),
               widget.TextBox(
                        text = '',
@@ -401,7 +444,7 @@ def init_widgets_list():
                          foreground=colors[6],
                          background = color_bar[0],
                          padding = 4,
-                         #fontsize=16
+                         mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -t Sensors -e watch sensors')}
                          ),
                 widget.ThermalSensor(
                         font = "Noto Sans Bold",
@@ -412,7 +455,8 @@ def init_widgets_list():
                          background = color_bar[0],
                          metric = True,
                          padding = 3,
-                         threshold = 80
+                         threshold = 80,
+                         mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -t Sensors -e watch sensors')}
                          ),
               widget.TextBox(
                        text = '',
@@ -430,6 +474,7 @@ def init_widgets_list():
                          foreground=colors[6],
                          background=color_bar[1],
                          padding = 4,
+                         mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('websearch')}
                          #fontsize=16
                          ),
                 widget.NetGraph(
@@ -480,19 +525,21 @@ def init_widgets_list():
                        ),
                widget.TextBox(
                         font = "Noto Sans Bold",
-                        #font="FontAwesome",
                         text="🕗",
                         foreground=colors[6],
                         background=color_bar[1],
                         padding = 4,
-                        fontsize=14
+                        fontsize=14,
+                        mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -t Calender -e /usr/bin/cal -y')}
                         ),
-               widget.Clock(
-                        font = "Noto Sans Bold",
+            widget.Clock(
+                    font = "Source Code Pro Bold",
+                        #font = "Noto Sans Bold",
                         foreground = colors[2],
                         background = color_bar[1],
                         fontsize = 14,
-                        format="%H:%M  %d-%m-%Y  "
+                        format="%H:%M %d-%m-%Y ",
+                        mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -t Calender -e cal -3')}
                         ),
               widget.TextBox(
                        text = '',
@@ -534,7 +581,7 @@ def init_widgets_screen2():
                 background = colors[0],
                 foreground = color_bar[0],
                 padding = 0,
-                fontsize = 37
+                fontsize = 18
                 ),
         widget.TextBox(
                     font = "Noto Sans Bold",
@@ -543,14 +590,17 @@ def init_widgets_screen2():
                     foreground=colors[6],
                     background = color_bar[0],
                     padding = 4,
-                    fontsize=24
+                    fontsize=22,
+                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -t Calender -e cal -3')}
                     ),
         widget.Clock(
-                font = "Noto Sans Bold",
+                font = "Source Code Pro Bold",
+                #font = "Noto Sans Bold",
                 foreground = colors[2],
                 background = color_bar[0],
                 fontsize = 14,
-                format="%H:%M  %d-%m-%Y"
+                format="%H:%M  %d-%m-%Y",
+                mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -t Calender -e cal -3')}
                 ),
     ])
     return widgets_screen2
@@ -560,9 +610,9 @@ widgets_screen2 = init_widgets_screen2()
 
 
 def init_screens():
-    return [Screen(bottom=bar.Bar(widgets=init_widgets_screen1(), size=20, opacity=0.8)),
-            Screen(bottom=bar.Bar(widgets=init_widgets_screen2(), size=20, opacity=0.8)),
-            Screen(bottom=bar.Bar(widgets=init_widgets_screen2(), size=20, opacity=0.8))]
+    return [Screen(top=bar.Bar(widgets=init_widgets_screen1(), size=16, opacity=0.9, margin=[4,6,0,6])),
+            Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=15, opacity=0.8, margin=[4,6,0,6])),
+            Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=16, opacity=0.8, margin=[4,6,0,6]))]
 screens = init_screens()
 
 
