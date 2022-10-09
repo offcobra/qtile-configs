@@ -62,16 +62,35 @@ keys = [
     Key([mod, "shift"], "Return", lazy.spawn("kitty -e fish")),
     Key([mod], "p", lazy.spawn("rofi -show run")),
     Key([mod, "shift"], "p", lazy.spawn("websearch")),
-    #Key([mod], "e", lazy.spawn("emacsclient -c -a 'emacs'")),
-    Key([mod], "w", lazy.spawn("brave")),
     Key([mod, "shift"], "w", lazy.spawn("brave --incognito")),
     Key([mod], "f", lazy.spawn("pcmanfm")),
-    Key([mod], "g", lazy.spawn("steam")),
-    Key([mod], "v", lazy.spawn("pavucontrol")),
-    Key([mod], "o", lazy.spawn("nitrogen")),
     Key([mod], "s", lazy.spawn("alacritty -e bashtop")),
 
 # KEYCHORD BINDINGS
+# Basic Commands
+    KeyChord([mod],"g", [
+        Key([], "g",
+            lazy.spawn("steam"),
+            desc='steam'
+            ),
+        Key([], "v",
+            lazy.spawn("pavucontrol"),
+            desc='Pavucontrol'
+            ),
+        Key([], "d",
+            lazy.spawn("discord"),
+            desc='Discord'
+            ),
+        Key([], "p",
+            lazy.spawn("gparted"),
+            desc='Gparted'
+            ),
+        Key([], "o",
+            lazy.spawn("nitrogen"),
+            desc='Nitrogen'
+            )
+    ]),
+
 # Emacs
     KeyChord([mod],"e", [
         Key([], "e",
@@ -124,7 +143,7 @@ keys = [
         #    )
     ]),
 
-# Monitor Resolution
+# Monitor Resolution / Picom toggle
     KeyChord([mod],"t", [
         Key([], "w",
             lazy.spawn("screen_work"),
@@ -137,6 +156,18 @@ keys = [
         Key([], "c",
             lazy.spawn("screen_chill"),
             desc='Monitors in chill mode'
+            )
+    ]),
+
+# Virtualization
+    KeyChord([mod],"v", [
+        Key([], "v",
+            lazy.spawn("virtualbox"),
+            desc='Spawns VirtualBox'
+            ),
+        Key([], "m",
+            lazy.spawn("virt-manager"),
+            desc='Spawns Virt-Manager'
             )
     ]),
 
@@ -371,6 +402,7 @@ def init_widgets_list():
                         background = colors[0]
                         ),
                widget.Sep(
+
                         linewidth = 2,
                         padding = 10,
                         foreground = colors[2],
@@ -549,12 +581,6 @@ def init_widgets_list():
                        padding = 0,
                        fontsize = 37
                        ),
-#                widget.Sep(
-#                         linewidth = 2,
-#                         padding = 10,
-#                         foreground = colors[2],
-#                         background = colors[0]
-#                         ),
                widget.Systray(
                         background = color_bar[0],
                         icon_size=20,
