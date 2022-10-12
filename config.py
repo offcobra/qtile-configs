@@ -1,10 +1,13 @@
 # My Qtile config #
+
 ###################
 
 import os
 import re
 import socket
 import subprocess
+from random import randint
+
 from typing import List  # noqa: F401
 from libqtile import qtile
 from libqtile import layout, bar, widget, hook
@@ -16,14 +19,16 @@ from libqtile.widget import Spacer
 #mod4 or mod = super key
 mod = "mod4"
 mod1 = "alt"
+
 mod2 = "control"
 myTerm = "alacritty"      # My terminal of choice
 home = os.path.expanduser('~')
 
+COUNTRIES = ["Albania", "Austria", "Belgium", "Bulgaria", "Croatia", "Cyprus", "Czech_Republic", "Denmark", "Estonia", "Finland", "Germany", "Greece", "Hungary", "Italy", "Lithuania", "Luxembourg", "Moldova", "North_Macedonia", "Norway", "Poland", "Portugal" ,"Romania", "Serbia", "Slovakia", "Slovenia", "Switzerland", "Spain", "Sweden", "Turkey"]
+
 
 # Functions #
-#############
-
+#------------
 def to_next(qtile, right=True):
     i = qtile.screens.index(qtile.current_screen)
     if i <= 1:
@@ -38,31 +43,73 @@ def to_prev(qtile, right=True):
     else:
         qtile.cmd_to_screen(2)
 
+def window_to_previous_screen(qtile, switch_group=False, switch_screen=False):
+    i = qtile.screens.index(qtile.current_screen)
+    if i != 0:
+        group = qtile.screens[i - 1].group.name
+        qtile.current_window.togroup(group, switch_group=switch_group)
+        if switch_screen == True:
+            qtile.cmd_to_screen(i - 1)
+
+def window_to_next_screen(qtile, switch_group=False, switch_screen=False):
+    i = qtile.screens.index(qtile.current_screen)
+    if i + 1 != len(qtile.screens):
+        group = qtile.screens[i + 1].group.name
+        qtile.current_window.togroup(group, switch_group=switch_group)
+        if switch_screen == True:
+            qtile.cmd_to_screen(i + 1)
+
+def get_vpn_data():
+    ''' Get Data from vpn status '''
+    cmd = 'nordvpn status'
+    process = subprocess.run(cmd.split(), stdout=subprocess.PIPE).stdout.decode('utf-8')
+    data = process.split("\r")[-1]
+    data = data.split("\n")
+    cache = '{} - {} '
+    for item in data:
+        if 'Country' in item:
+            country = item.split(": ")[-1]
+        if 'IP' in item:
+            ip = item.split(": ")[-1]
+    result = cache.format(country, ip)
+    return result
+
 def check_vpn():
     ''' Check if VPN is Actrive '''
     cmd = 'ip addr'
     process = subprocess.run(cmd.split(), stdout=subprocess.PIPE).stdout.decode('utf-8')
     if 'nordlynx' in process:
-        result = '⮝ vpn: NordVPN '
+        result = '⮝ vpn: NordVPN => ' + get_vpn_data()
     elif 'tun0' in process:
         result = '⮝ vpn: HackTheBox '
     else:
         result = '⮝ vpn: no '
     return result
 
+def vpn_toggle():
+    ''' Toggles the VPN connection to NordVpn '''
+    status = check_vpn()
+    if 'no' in status:
+        country = COUNTRIES[randint(0, len(COUNTRIES) - 1)]
+        response = f" -e nordvpn connect {country}"
+    elif 'NordVPN' in status:
+        response = " -e nordvpn disconnect"
+    else:
+        response = " --hold -e echo '#=-> Nothing to do... Status unknown!!! '"
+    return response
 
-# User Defined KEYS
+
+# Keybindings
+#------------
 keys = [
 
-# Most of our keybindings are in sxhkd file - except these
-# sxhkd out of use
+# BASIC KEYBINDINGS
 # Def my own Keybinding
 
     Key([mod], "Return", lazy.spawn("alacritty")),
     Key([mod, "shift"], "Return", lazy.spawn("kitty -e fish")),
     Key([mod], "p", lazy.spawn("rofi -show run")),
     Key([mod, "shift"], "p", lazy.spawn("websearch")),
-    Key([mod, "shift"], "w", lazy.spawn("brave --incognito")),
     Key([mod], "f", lazy.spawn("pcmanfm")),
     Key([mod], "s", lazy.spawn("alacritty -e bashtop")),
 
@@ -70,7 +117,7 @@ keys = [
 # Basic Commands
     KeyChord([mod],"g", [
         Key([], "g",
-            lazy.spawn("steam"),
+            lazy.spawn("steam_start"),
             desc='steam'
             ),
         Key([], "v",
@@ -165,6 +212,14 @@ keys = [
             lazy.spawn("virtualbox"),
             desc='Spawns VirtualBox'
             ),
+        Key([], "k",
+            lazy.spawn("alacritty -e kali"),
+            desc='Spawn and attach to KaliLinux Container'
+            ),
+        Key([], "s",
+            lazy.spawn("alacritty -e stop_docker"),
+            desc='Remove all docker Container'
+            ),
         Key([], "m",
             lazy.spawn("virt-manager"),
             desc='Spawns Virt-Manager'
@@ -198,59 +253,44 @@ keys = [
 
 
 # RESIZE UP, DOWN, LEFT, RIGHT
-    Key([mod, "control"], "l",
-        lazy.layout.grow_right(),
-        lazy.layout.grow(),
-        lazy.layout.increase_ratio(),
-        lazy.layout.delete(),
-        ),
-    Key([mod, "control"], "h",
-        lazy.layout.grow_left(),
-        lazy.layout.shrink(),
-        lazy.layout.decrease_ratio(),
-        lazy.layout.add(),
-        ),
-    Key([mod, "control"], "k",
-        lazy.layout.grow_up(),
-        lazy.layout.grow(),
-        lazy.layout.decrease_nmaster(),
-        ),
-    Key([mod, "control"], "j",
-        lazy.layout.grow_down(),
-        lazy.layout.shrink(),
-        lazy.layout.increase_nmaster(),
-        ),
+    #Key([mod, "alt"], "l",
+    #    lazy.layout.grow_right(),
+    #    lazy.layout.grow(),
+    #    lazy.layout.increase_ratio(),
+    #    lazy.layout.delete(),
+    #    ),
+    #Key([mod, "alt"], "h",
+    #    lazy.layout.grow_left(),
+    #    lazy.layout.shrink(),
+    #    lazy.layout.decrease_ratio(),
+    #    lazy.layout.add(),
+    #    ),
+    #Key([mod, "alt"], "k",
+    #    lazy.layout.grow_up(),
+    #    lazy.layout.grow(),
+    #    lazy.layout.decrease_nmaster(),
+    #    ),
+    #Key([mod, "alt"], "j",
+    #    lazy.layout.grow_down(),
+    #    lazy.layout.shrink(),
+    #    lazy.layout.increase_nmaster(),
+    #    ),
 
-# FLIP LAYOUT FOR MONADTALL/MONADWIDE
-    #Key([mod, "shift"], "f", lazy.layout.flip()),
+    # MOVE WINDOWS left / right & up / down
+    Key([mod, "control"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
+    Key([mod, "control"], "l", lazy.layout.shuffle_right(), desc="Move window to the right"),
+    Key([mod, "control"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
+    Key([mod, "control"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
 
-    
-]
-
-def window_to_previous_screen(qtile, switch_group=False, switch_screen=False):
-    i = qtile.screens.index(qtile.current_screen)
-    if i != 0:
-        group = qtile.screens[i - 1].group.name
-        qtile.current_window.togroup(group, switch_group=switch_group)
-        if switch_screen == True:
-            qtile.cmd_to_screen(i - 1)
-
-def window_to_next_screen(qtile, switch_group=False, switch_screen=False):
-    i = qtile.screens.index(qtile.current_screen)
-    if i + 1 != len(qtile.screens):
-        group = qtile.screens[i + 1].group.name
-        qtile.current_window.togroup(group, switch_group=switch_group)
-        if switch_screen == True:
-            qtile.cmd_to_screen(i + 1)
-
-keys.extend([
     # MOVE WINDOW TO NEXT SCREEN
-    Key([mod,"shift"], "Right", lazy.function(window_to_next_screen, switch_screen=True)),
-    Key([mod,"shift"], "Left", lazy.function(window_to_previous_screen, switch_screen=True)),
     Key([mod,"shift"], "l", lazy.function(window_to_next_screen, switch_screen=True)),
     Key([mod,"shift"], "h", lazy.function(window_to_previous_screen, switch_screen=True)),
-])
 
+    # TODO -> Add cool Keys from distrotube
+]
+
+# GROUPS
+#--------
 groups = []
 
 # FOR QWERTY KEYBOARDS
@@ -278,20 +318,14 @@ for i in groups:
     keys.extend([
 
 #CHANGE WORKSPACES
-
-
-
         Key([mod], i.name, lazy.group[i.name].toscreen(toggle=False)),
-        Key(["mod1"], "Tab", lazy.screen.next_group()),
-        Key(["mod1", "shift"], "Tab", lazy.screen.prev_group()),
-
-# MOVE WINDOW TO SELECTED WORKSPACE 1-10 AND STAY ON WORKSPACE
         Key([mod, "shift"], i.name, lazy.window.togroup(i.name)),
-# MOVE WINDOW TO SELECTED WORKSPACE 1-10 AND FOLLOW MOVED WINDOW TO WORKSPACE
         #Key([mod, "shift"], i.name, lazy.window.togroup(i.name) , lazy.group[i.name].toscreen()),
     ])
 
 
+# LAYOUTS
+#--------
 def init_layout_theme():
     return {"margin":5,
             "border_width":2,
@@ -302,26 +336,39 @@ def init_layout_theme():
 
 layout_theme = init_layout_theme()
 
-
 layouts = [
     layout.MonadTall(**layout_theme),
     layout.MonadWide(**layout_theme),
     layout.RatioTile(**layout_theme),
+    #layout.TreeTab(**layout_theme), # TODO -> Change Theme... It's UGLY as fuck!!!
+    layout.TreeTab(
+         font = "Source Code Pro Bold",
+         fontsize = 12,
+         #sections = ["FIRST", "SECOND", "THIRD", "FOURTH"],
+         sections = ["    #=-> Stuff: <-=#"],
+         section_fontsize = 14,
+         border_width = 2,
+         bg_color = "282c34",#"1c1f24",
+         active_bg = "51afef",#"FF5733",
+         #active_bg = "194d33",
+         active_fg = "000000",
+         inactive_bg = "194d33",#"51afef",
+         inactive_fg = "1c1f24",
+         padding_left = 0,
+         padding_x = 0,
+         padding_y = 5,
+         section_top = 10,
+         section_fg = "dfdfdf",
+         section_bottom = 20,
+         level_shift = 8,
+         vspace = 3,
+         panel_width = 200
+         ),
     layout.Max(**layout_theme)
 ]
 
-# Define Colors
-colors_bak = [["#282c34", "#282c34"],
-          ["#1c1f24", "#1c1f24"],
-          ["#dfdfdf", "#dfdfdf"],
-          ["#ff6c6b", "#ff6c6b"],
-          ["#98be65", "#98be65"],
-          ["#da8548", "#da8548"],
-          ["#51afef", "#51afef"],
-          ["#c678dd", "#c678dd"],
-          ["#46d9ff", "#46d9ff"],
-          ["#a9a1e1", "#a9a1e1"]]
-
+# COLORS
+#-------
 colors = [["#282c34", "#282c34"],
           ["#1c1f24", "#1c1f24"],
           ["#dfdfdf", "#dfdfdf"],
@@ -346,7 +393,9 @@ color_bar = [
     #["#4d1a00", "#4d1a00"]
 ]
 
+
 # WIDGETS FOR THE BAR
+#---------------------
 def init_widgets_defaults():
     return dict(font="Noto Sans",
                 fontsize = 12,
@@ -360,14 +409,20 @@ arch_symbols = '⮝⮝  ⋏ ◬ ⟑  ⩓'
 def init_widgets_list():
     prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
     widgets_list = [
-              widget.Image(
-                       filename = "~/.config/qtile/icons/python-white.png",
-                       scale = True,
-                       mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm)}
-                       ),
                widget.Sep(
                         linewidth = 0,
                         padding = 10,
+                        foreground = colors[2],
+                        background = colors[0]
+                        ),
+              widget.Image(
+                       filename = "~/.config/qtile/icons/python-white.png",
+                       scale = True,
+                       mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -e bat /home/wally/.config/docs/shortcuts.org')}
+                       ),
+               widget.Sep(
+                        linewidth = 0,
+                        padding = 5,
                         foreground = colors[2],
                         background = colors[0]
                         ),
@@ -407,6 +462,11 @@ def init_widgets_list():
                         padding = 10,
                         foreground = colors[2],
                         background = colors[0]
+
+
+
+
+
                         ),
                widget.WindowName(
                         font = "Source Code Pro Bold",
@@ -430,6 +490,10 @@ def init_widgets_list():
                         func=lambda: check_vpn(),
                         foreground=colors[6],
                         background = color_bar[0],
+                        mouse_callbacks = {
+                            'Button1': lambda: qtile.cmd_spawn(myTerm + vpn_toggle()),
+                            'Button3': lambda: qtile.cmd_spawn(myTerm + ' --hold -e watch nordvpn status'),
+                        }
               ),
               widget.TextBox(
                        text = '',
@@ -488,7 +552,7 @@ def init_widgets_list():
                          metric = True,
                          padding = 3,
                          threshold = 80,
-                         mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -t Sensors -e watch sensors')}
+                         mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + " --hold -t Sensors -e watch sensors")}
                          ),
               widget.TextBox(
                        text = '',
@@ -522,6 +586,7 @@ def init_widgets_list():
                          padding = 0,
                          border_width = 1,
                          line_width = 1,
+                         mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -t TestInternetConn -e test-conn')}
                          ),
               widget.TextBox(
                        text = '',
@@ -597,9 +662,7 @@ def init_widgets_screen1():
     return widgets_screen1
 
 def init_widgets_screen2():
-    widgets_screen2 = init_widgets_list()[2:7]
-    widgets_screen2.pop(1)
-    widgets_screen2.pop(1)
+    widgets_screen2 = init_widgets_list()[0:8]
     widgets_screen2.extend([
         widget.TextBox(
                 text = '',
@@ -617,7 +680,7 @@ def init_widgets_screen2():
                     background = color_bar[0],
                     padding = 4,
                     fontsize=22,
-                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -t Calender -e cal -3')}
+                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -t Calender -e /usr/bin/cal -y')}
                     ),
         widget.Clock(
                 font = "Source Code Pro Bold",
@@ -649,6 +712,7 @@ mouse = [
     Drag([mod], "Button3", lazy.window.set_size_floating(),
          start=lazy.window.get_size())
 ]
+
 
 dgroups_key_binder = None
 dgroups_app_rules = []

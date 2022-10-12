@@ -26,7 +26,7 @@ volumeicon &
 #blueberry-tray &
 
 echo "Starting Picom"
-picom --config $HOME/.config/qtile/scripts/picom.conf &
+picom --config $HOME/.config/picom/picom.conf &
 
 echo "Auth Agent & Notifyd"
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
