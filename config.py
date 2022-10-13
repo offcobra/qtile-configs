@@ -20,6 +20,7 @@ from libqtile.widget import Spacer
 mod = "mod4"
 mod1 = "alt"
 
+
 mod2 = "control"
 myTerm = "alacritty"      # My terminal of choice
 home = os.path.expanduser('~')
@@ -200,6 +201,11 @@ keys = [
             lazy.spawn("toggle_picom"),
             desc='Toggle Picom'
             ),
+        Key([], "v",
+            #lazy.spawn(myTerm + vpn_toggle()),
+            lazy.spawn("toggle_vpn"),
+            desc='Toggle NordVPN'
+            ),
         Key([], "c",
             lazy.spawn("screen_chill"),
             desc='Monitors in chill mode'
@@ -253,28 +259,28 @@ keys = [
 
 
 # RESIZE UP, DOWN, LEFT, RIGHT
-    #Key([mod, "alt"], "l",
-    #    lazy.layout.grow_right(),
-    #    lazy.layout.grow(),
-    #    lazy.layout.increase_ratio(),
-    #    lazy.layout.delete(),
-    #    ),
-    #Key([mod, "alt"], "h",
-    #    lazy.layout.grow_left(),
-    #    lazy.layout.shrink(),
-    #    lazy.layout.decrease_ratio(),
-    #    lazy.layout.add(),
-    #    ),
-    #Key([mod, "alt"], "k",
-    #    lazy.layout.grow_up(),
-    #    lazy.layout.grow(),
-    #    lazy.layout.decrease_nmaster(),
-    #    ),
-    #Key([mod, "alt"], "j",
-    #    lazy.layout.grow_down(),
-    #    lazy.layout.shrink(),
-    #    lazy.layout.increase_nmaster(),
-    #    ),
+    Key([mod, "mod1"], "l",
+        lazy.layout.grow_right(),
+        lazy.layout.grow(),
+        lazy.layout.increase_ratio(),
+        lazy.layout.delete(),
+        ),
+    Key([mod, "mod1"], "h",
+        lazy.layout.grow_left(),
+        lazy.layout.shrink(),
+        lazy.layout.decrease_ratio(),
+        lazy.layout.add(),
+        ),
+    Key([mod, "mod1"], "k",
+        lazy.layout.grow_up(),
+        lazy.layout.grow(),
+        lazy.layout.decrease_nmaster(),
+        ),
+    Key([mod, "mod1"], "j",
+        lazy.layout.grow_down(),
+        lazy.layout.shrink(),
+        lazy.layout.increase_nmaster(),
+        ),
 
     # MOVE WINDOWS left / right & up / down
     Key([mod, "control"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
@@ -486,7 +492,7 @@ def init_widgets_list():
               widget.GenPollText(
                         font = "Source Code Pro Bold",
                         fontsize = 12,
-                        update_interval=3,
+                        update_interval=2,
                         func=lambda: check_vpn(),
                         foreground=colors[6],
                         background = color_bar[0],
