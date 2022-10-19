@@ -107,8 +107,8 @@ keys = [
 # BASIC KEYBINDINGS
 # Def my own Keybinding
 
-    Key([mod], "Return", lazy.spawn("alacritty")),
-    Key([mod, "shift"], "Return", lazy.spawn("kitty -e fish")),
+    Key([mod], "Return", lazy.spawn("kitty -e fish")),
+    Key([mod, "shift"], "Return", lazy.spawn("alacritty")),
     Key([mod], "p", lazy.spawn("rofi -show run")),
     Key([mod, "shift"], "p", lazy.spawn("websearch")),
     Key([mod], "f", lazy.spawn("pcmanfm")),
@@ -132,6 +132,14 @@ keys = [
         Key([], "p",
             lazy.spawn("gparted"),
             desc='Gparted'
+            ),
+        Key([], "t",
+            lazy.spawn("tweak_theme"),
+            desc='Launch GTK & QT tweaks Tools'
+            ),
+        Key([], "m",
+            lazy.spawn("popcorntime"),
+            desc='Launch PopCornTime'
             ),
         Key([], "o",
             lazy.spawn("nitrogen"),
@@ -344,8 +352,8 @@ layout_theme = init_layout_theme()
 
 layouts = [
     layout.MonadTall(**layout_theme),
-    layout.MonadWide(**layout_theme),
-    layout.RatioTile(**layout_theme),
+    #layout.MonadWide(**layout_theme),
+    #layout.RatioTile(**layout_theme),
     #layout.TreeTab(**layout_theme), # TODO -> Change Theme... It's UGLY as fuck!!!
     layout.TreeTab(
          font = "Source Code Pro Bold",
@@ -424,7 +432,7 @@ def init_widgets_list():
               widget.Image(
                        filename = "~/.config/qtile/icons/python-white.png",
                        scale = True,
-                       mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -e bat /home/wally/.config/docs/shortcuts.org')}
+                       mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -t "Qtile Docs" --hold -e bat /home/wally/.config/docs/shortcuts.org')}
                        ),
                widget.Sep(
                         linewidth = 0,
@@ -463,16 +471,10 @@ def init_widgets_list():
                         background = colors[0]
                         ),
                widget.Sep(
-
                         linewidth = 2,
                         padding = 10,
                         foreground = colors[2],
                         background = colors[0]
-
-
-
-
-
                         ),
                widget.WindowName(
                         font = "Source Code Pro Bold",
