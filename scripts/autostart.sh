@@ -1,5 +1,19 @@
 #!/bin/bash
 
+##### ===-->> Qtile autostart Config <<--=== ######
+#------------------
+# This is a config of:
+#  ___   __  __ _____ _        __        __    _ _
+# / _ \ / _|/ _|_   _| |__   __\ \      / /_ _| | |
+#| | | | |_| |_  | | | '_ \ / _ \ \ /\ / / _` | | |
+#| |_| |  _|  _| | | | | | |  __/\ V  V / (_| | | |
+# \___/|_| |_|   |_| |_| |_|\___| \_/\_/ \__,_|_|_|
+#
+#
+# Github Url: https://github.com/offcobra/dotfiles
+# Github Ssh: git@github.com:offcobra/dotfiles.git
+#--------------------------------------------------
+
 #Some ways to set your wallpaper besides variety or nitrogen
 #wallpaper for other Arch based systems
 #run variety -> To cycle wallpapers
