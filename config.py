@@ -120,6 +120,7 @@ keys = [
     Key([mod], "Return", lazy.spawn("kitty -e fish")),
     Key([mod, "shift"], "Return", lazy.spawn("alacritty")),
     Key([mod], "p", lazy.spawn("rofi -show run -theme ~/.config/rofi/theme.rasi")),
+    Key([mod], "o", lazy.spawn("theme_choose")),
     Key([mod, "shift"], "p", lazy.spawn("websearch")),
     Key([mod], "f", lazy.spawn("pcmanfm")),
     Key([mod], "s", lazy.spawn("alacritty -e bashtop")),
