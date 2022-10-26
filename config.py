@@ -394,41 +394,49 @@ layouts = [
 
 # COLORS
 #-------
-colors = [["#282c34", "#282c34"],
+bak_colors = [["#282c34", "#282c34"], # Background Bar
           ["#1c1f24", "#1c1f24"],
-          ["#dfdfdf", "#dfdfdf"],
+          ["#dfdfdf", "#dfdfdf"], # Foreground Separator
           ["#ff6c6b", "#ff6c6b"],
           ["#98be65", "#98be65"],
-          ["#da8548", "#da8548"],
-          ["#51afef", "#51afef"],
+          ["#da8548", "#da8548"], # Inactive Workspace
+          ["#51afef", "#51afef"], # Font color
           ["#c678dd", "#c678dd"],
-          ["#46d9ff", "#46d9ff"],
-          ["#a9a1e1", "#a9a1e1"]]
+          ["#46d9ff", "#46d9ff"], # Current border, Graph color
+          ["#a9a1e1", "#a9a1e1"]] # Active Worspace
 
-test = '#993333'
-#test = '#ffffff'
-black = '#000000'
+colors_dt = [["#282c34", "#282c34"], # Background Bar
+          ["#dfdfdf", "#dfdfdf"], # Foreground Separator
+          ["#da8548", "#da8548"], # Inactive Workspace
+          ["#51afef", "#51afef"], # UnUsed....
+          ["#c678dd", "#c678dd"], # Font Color
+          ["#a9a1e1", "#a9a1e1"], # Active Worspace
+          ["#194d33", "#194d33"], # Color Bar
+          ['#993333', '#993333']] # Other Color Bar
 
-color_bar = [
-    ["#194d33", "#194d33"],
-    [test, test],
-    #["#1c1f24", "#1c1f24"], #pretty good...
-    #["#330000", "#330000"], # This is last one
-    #["#662200", "#662200"] -> rot...
-    #["#4d1a00", "#4d1a00"]
-]
+background = "#3b4252"
+foreground = "#d8dee9"
+cyan = "#88c0d0"
+blue = "#81a1c1"
+red = "#bf616a"
+magenta = "#b48ead"
+green = "#a3be8c"
+black = "#3b4252"
 
+
+colors_nord = [[background, background], # Background Bar
+          [cyan, cyan], # Foreground Separator
+          [red, red], # Inactive Workspace
+          ["#51afef", "#51afef"], # UnUsed....
+          [black, black], # Font Color
+          [blue, blue], # Active Worspace
+          [magenta, magenta], # Color Bar
+          [green, green]] # Other Color Bar
+
+colors = colors_dt
 
 # WIDGETS FOR THE BAR
 #---------------------
-def init_widgets_defaults():
-    return dict(font="Noto Sans",
-                fontsize = 12,
-                padding = 2,
-                background=colors[1])
-
-widget_defaults = init_widgets_defaults()
-
 arch_symbols = '⮝⮝  ⋏ ◬ ⟑  ⩓'
 
 def init_widgets_list():
@@ -437,7 +445,7 @@ def init_widgets_list():
                widget.Sep(
                         linewidth = 0,
                         padding = 10,
-                        foreground = colors[2],
+                        foreground = colors[1],
                         background = colors[0]
                         ),
               widget.Image(
@@ -448,7 +456,7 @@ def init_widgets_list():
                widget.Sep(
                         linewidth = 0,
                         padding = 5,
-                        foreground = colors[2],
+                        foreground = colors[1],
                         background = colors[0]
                         ),
                widget.GroupBox(
@@ -461,44 +469,44 @@ def init_widgets_list():
                         padding_x = 5,
                         borderwidth = 2,
                         disable_drag = True,
-                        active = colors[9],
-                        inactive = colors[5],
+                        active = colors[5],
+                        inactive = colors[2],
                         rounded = False,
                         highlight_method = "line",
-                        this_current_screen_border = colors[8],
-                        foreground = colors[2],
+                        this_current_screen_border = colors[5],
+                        foreground = colors[1],
                         background = colors[0]
                         ),
                widget.Sep(
                         linewidth = 2,
                         padding = 10,
-                        foreground = colors[2],
+                        foreground = colors[1],
                         background = colors[0]
                         ),
                widget.CurrentLayout(
                         font = "Source Code Pro Bold",
                         #font = "Noto Sans Bold",
-                        foreground = colors[6],
+                        foreground = colors[4],
                         background = colors[0]
                         ),
                widget.Sep(
                         linewidth = 2,
                         padding = 10,
-                        foreground = colors[2],
+                        foreground = colors[1],
                         background = colors[0]
                         ),
                widget.WindowName(
                         font = "Source Code Pro Bold",
                         #font = "Noto Sans Bold",
                         fontsize = 12,
-                        foreground = colors[6],
+                        foreground = colors[4],
                         background = colors[0],
                         ),
               widget.TextBox(
                        text = '',
                        font = "Ubuntu Mono",
                        background = colors[0],
-                       foreground = color_bar[0],
+                       foreground = colors[6],
                        padding = 0,
                        fontsize = 37
                        ),
@@ -507,8 +515,8 @@ def init_widgets_list():
                         fontsize = 12,
                         update_interval=2,
                         func=lambda: check_vpn(),
-                        foreground=colors[6],
-                        background = color_bar[0],
+                        foreground=colors[4],
+                        background = colors[6],
                         mouse_callbacks = {
                             'Button1': lambda: qtile.cmd_spawn(myTerm + vpn_toggle()),
                             'Button3': lambda: qtile.cmd_spawn(myTerm + ' --hold -e watch nordvpn status'),
@@ -517,8 +525,8 @@ def init_widgets_list():
               widget.TextBox(
                        text = '',
                        font = "Ubuntu Mono",
-                       background = color_bar[0],#colors[0],
-                       foreground = color_bar[1],
+                       background = colors[6],#colors[0],
+                       foreground = colors[7],
                        padding = 0,
                        fontsize = 37
                        ),
@@ -527,16 +535,16 @@ def init_widgets_list():
                          #font="FontAwesome",
                          fontsize=28,
                          text="",
-                         foreground=colors[6],
-                         background = color_bar[1],
+                         foreground=colors[4],
+                         background = colors[7],
                          padding = 4,
                          mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e bashtop')}
                          ),
                 widget.CPUGraph(
-                         border_color = colors[2],
-                         fill_color = colors[8],
-                         graph_color = colors[8],
-                         background = color_bar[1],
+                         border_color = colors[1],
+                         fill_color = colors[5],
+                         graph_color = colors[5],
+                         background = colors[7],
                          border_width = 1,
                          line_width = 1,
                          core = "all",
@@ -546,8 +554,8 @@ def init_widgets_list():
               widget.TextBox(
                        text = '',
                        font = "Ubuntu Mono",
-                       background = color_bar[1],
-                       foreground = color_bar[0],
+                       background = colors[7],
+                       foreground = colors[6],
                        padding = 0,
                        fontsize = 37
                        ),
@@ -556,18 +564,18 @@ def init_widgets_list():
                          #font="FontAwesome",
                          fontsize=10,
                          text="🌡",
-                         foreground=colors[6],
-                         background = color_bar[0],
+                         foreground=colors[4],
+                         background = colors[6],
                          padding = 4,
                          mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -t Sensors -e watch sensors')}
                          ),
                 widget.ThermalSensor(
                         font = "Noto Sans Bold",
-                         foreground = colors[2],
-                         foreground_alert = colors[6],
+                         foreground = colors[1],
+                         foreground_alert = colors[4],
                          fontsize=10,
                          bandwidth="down",
-                         background = color_bar[0],
+                         background = colors[6],
                          metric = True,
                          padding = 3,
                          threshold = 80,
@@ -576,8 +584,8 @@ def init_widgets_list():
               widget.TextBox(
                        text = '',
                        font = "Ubuntu Mono",
-                       background = color_bar[0],
-                       foreground = color_bar[1],
+                       background = colors[6],
+                       foreground = colors[7],
                        padding = 0,
                        fontsize = 37
                        ),
@@ -586,8 +594,8 @@ def init_widgets_list():
                          #font="FontAwesome",
                          fontsize=24,
                          text="",
-                         foreground=colors[6],
-                         background=color_bar[1],
+                         foreground=colors[4],
+                         background=colors[7],
                          padding = 4,
                          mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('websearch')}
                          #fontsize=16
@@ -597,11 +605,11 @@ def init_widgets_list():
                          fontsize=12,
                          bandwidth="down",
                          interface="auto",
-                         fill_color = colors[8],
-                         foreground=colors[2],
-                         background=color_bar[1],
-                         graph_color = colors[8],
-                         border_color = colors[2],
+                         fill_color = colors[5],
+                         foreground=colors[1],
+                         background=colors[7],
+                         graph_color = colors[5],
+                         border_color = colors[1],
                          padding = 0,
                          border_width = 1,
                          line_width = 1,
@@ -610,8 +618,8 @@ def init_widgets_list():
               widget.TextBox(
                        text = '',
                        font = "Ubuntu Mono",
-                       background = color_bar[1],
-                       foreground = color_bar[0],
+                       background = colors[7],
+                       foreground = colors[6],
                        padding = 0,
                        fontsize = 37
                        ),
@@ -620,30 +628,30 @@ def init_widgets_list():
                          #font="FontAwesome",
                          fontsize=25,
                          text="",
-                         foreground=colors[6],
-                         background=color_bar[0],
+                         foreground=colors[4],
+                         background=colors[6],
                          padding = 4,
                          #fontsize=16
                          ),
                 widget.MemoryGraph(
                          border_width = 1,
-                         border_color = colors[2],
+                         border_color = colors[1],
                          frequency = 1,
-                         background = color_bar[0],
+                         background = colors[6],
                         ),
               widget.TextBox(
                        text = '',
                        font = "Ubuntu Mono",
-                       background = color_bar[0],
-                       foreground = color_bar[1],
+                       background = colors[6],
+                       foreground = colors[7],
                        padding = 0,
                        fontsize = 37
                        ),
                widget.TextBox(
                         font = "Noto Sans Bold",
                         text="🕗",
-                        foreground=colors[6],
-                        background=color_bar[1],
+                        foreground=colors[4],
+                        background=colors[7],
                         padding = 4,
                         fontsize=14,
                         mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -t Calender -e /usr/bin/cal -y')}
@@ -651,8 +659,8 @@ def init_widgets_list():
             widget.Clock(
                     font = "Source Code Pro Bold",
                         #font = "Noto Sans Bold",
-                        foreground = colors[2],
-                        background = color_bar[1],
+                        foreground = colors[1],
+                        background = colors[7],
                         fontsize = 14,
                         format="%H:%M %d-%m-%Y ",
                         mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -t Calender -e cal -3')}
@@ -660,13 +668,13 @@ def init_widgets_list():
               widget.TextBox(
                        text = '',
                        font = "Ubuntu Mono",
-                       background = color_bar[1],
-                       foreground = color_bar[0],
+                       background = colors[7],
+                       foreground = colors[6],
                        padding = 0,
                        fontsize = 37
                        ),
                widget.Systray(
-                        background = color_bar[0],
+                        background = colors[6],
                         icon_size=20,
                         padding = 4
                         ),
@@ -687,7 +695,7 @@ def init_widgets_screen2():
                 text = '',
                 font = "Ubuntu Mono",
                 background = colors[0],
-                foreground = color_bar[0],
+                foreground = colors[6],
                 padding = 0,
                 fontsize = 18
                 ),
@@ -695,8 +703,8 @@ def init_widgets_screen2():
                     font = "Noto Sans Bold",
                     #font="FontAwesome",
                     text="",
-                    foreground=colors[6],
-                    background = color_bar[0],
+                    foreground=colors[4],
+                    background = colors[6],
                     padding = 4,
                     fontsize=22,
                     mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -t Calender -e /usr/bin/cal -y')}
@@ -704,8 +712,8 @@ def init_widgets_screen2():
         widget.Clock(
                 font = "Source Code Pro Bold",
                 #font = "Noto Sans Bold",
-                foreground = colors[2],
-                background = color_bar[0],
+                foreground = colors[1],
+                background = colors[6],
                 fontsize = 14,
                 format="%H:%M  %d-%m-%Y",
                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -t Calender -e cal -3')}
