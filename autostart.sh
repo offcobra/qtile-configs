@@ -28,12 +28,11 @@
 #starting utility applications at boot time
 
 echo "Setting Screen resolution...."
-#bash ~/.screenlayout/work.sh &
 screen_work &
 
 echo "Starting Tray applets..."
 nm-applet &
-pamac-tray &
+#pamac-tray &
 volumeicon &
 #xfce4-power-manager &
 #numlockx on &
