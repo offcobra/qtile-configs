@@ -31,9 +31,8 @@ py_image = widget.Image(
 
 # Groupbox for Display Groups
 groupbox = widget.GroupBox(
-    font = myFont,
-    #font = "Noto Sans Bold",
-    fontsize = 12,
+    font = myFont + ' Bold',
+    fontsize = 20,
     margin_y = 4,
     margin_x = 0,
     padding_y = 5,
@@ -162,6 +161,7 @@ systray = widget.Systray(
     padding = 4
 )
 
+# Clock "🕗 "
 
 def init_widgets_list():
     ''' Widgets for the main screen '''
@@ -173,22 +173,23 @@ def init_widgets_list():
         get_sep(2, 10),
         cur_layout,
         get_sep(2, 10),
+        window_name,
         get_text_box(colors[0], color_bar[0]),
         vpn_widget,
         get_text_box(color_bar[0], color_bar[1]),
         get_text_box(color_bar[1], colors[6], "", 28, cmd=myTerm + ' -e bashtop'),
         cpu,
         get_text_box(color_bar[1], color_bar[0]),
-        get_text_box(color_bar[0], colors[6], "🌡", 28, cmd=myTerm + ' --hold -t Sensors -e watch sensors'),
+        get_text_box(color_bar[0], colors[6], "🌡", 14, cmd=myTerm + ' --hold -t Sensors -e watch sensors'),
         thermal,
         get_text_box(color_bar[0], color_bar[1]),
         get_text_box(color_bar[1], colors[6], "", 24, cmd="websearch"),
         net,
-        get_text_box(color_bar[0], color_bar[1]),
+        get_text_box(color_bar[1], color_bar[0]),
         get_text_box(color_bar[0], colors[6], "", 24),
         memory,
         get_text_box(color_bar[0], color_bar[1]),
-        get_text_box(color_bar[0], colors[6], "🕗", 14, cmd=myTerm + ' --hold -t Calender -e /usr/bin/cal -y'),
+        get_text_box(color_bar[1], colors[6], " ", 22, cmd=myTerm + ' --hold -t Calender -e /usr/bin/cal -y'),
         clock(color_bar[1]),
         get_text_box(color_bar[1], color_bar[0]),
         systray
@@ -201,7 +202,7 @@ def init_widgets_secondary():
     widgets = init_widgets_list()[0:8]
     widgets.extend([
         get_text_box(colors[0], color_bar[0]),
-        get_text_box(color_bar[0], colors[6], "", 22, cmd=myTerm + ' --hold -t Calender -e /usr/bin/cal -y'),
+        get_text_box(color_bar[0], colors[6], " ", 22, cmd=myTerm + ' --hold -t Calender -e /usr/bin/cal -y'),
         clock(color_bar[0])
     ])
     return widgets
