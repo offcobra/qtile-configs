@@ -16,9 +16,9 @@ myFont = "Source Code Pro"
 #arch_symbols = '⮝⮝  ⋏ ◬ ⟑  ⩓'
 
 # Separator with no with
-def get_sep(width, pad=5):
+def get_sep(width, pad=5, background=colors[0]):
     ''' get separator '''
-    return widget.Sep(linewidth = width, padding = pad, foreground = colors[2], background = colors[0])
+    return widget.Sep(linewidth = width, padding = pad, foreground = colors[2], background = background)
 
 # Display Python Image
 py_image = widget.Image(
@@ -30,38 +30,44 @@ py_image = widget.Image(
     )})
 
 # Groupbox for Display Groups
-groupbox = widget.GroupBox(
-    font = myFont + ' Bold',
-    fontsize = 20,
-    margin_y = 4,
-    margin_x = 0,
-    padding_y = 5,
-    padding_x = 5,
-    borderwidth = 2,
-    disable_drag = True,
-    active = colors[9],
-    inactive = colors[5],
-    rounded = False,
-    highlight_method = "line",
-    this_current_screen_border = colors[8],
-    foreground = colors[2],
-    background = colors[0]
-)
+def get_group_box():
+    ''' get group box '''
+    groupbox = widget.GroupBox(
+        font = myFont + ' Bold',
+        fontsize = 20,
+        margin_y = 4,
+        margin_x = 0,
+        padding_y = 5,
+        padding_x = 5,
+        borderwidth = 2,
+        disable_drag = True,
+        active = colors[9],
+        inactive = colors[5],
+        rounded = False,
+        highlight_method = "line",
+        this_current_screen_border = colors[8],
+        foreground = colors[2],
+        background = colors[0]
+    )
+    return groupbox
 
 # Current Layout
-cur_layout = widget.CurrentLayout(
-    font = myFont + " Bold",
-    foreground = colors[6],
-    background = colors[0]
-)
+def get_current_layout():
+    return widget.CurrentLayout(
+        font = myFont + " Bold",
+        foreground = colors[6],
+        background = colors[0]
+    )
 
 # Current Window
-window_name = widget.WindowName(
-    font = myFont + " Bold",
-    fontsize = 12,
-    foreground = colors[6],
-    background = colors[0],
-)
+def get_window_name():
+    ''' get current window name..'''
+    return widget.WindowName(
+        font = myFont + " Bold",
+        fontsize = 12,
+        foreground = colors[6],
+        background = colors[0],
+    )
 
 # Text Box
 def get_text_box(backc, forec, txt='', size=37, cmd=''):
@@ -131,7 +137,7 @@ net = widget.NetGraph(
     padding = 0,
     border_width = 1,
     line_width = 1,
-    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -t TestInternetConn -e test-conn')}
+    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -t TestInternetConn -e bash /home/wally/.local/bin/test-conn')}
 )
 
 # Memory
@@ -169,11 +175,11 @@ def init_widgets_list():
         get_sep(0, 10),
         py_image,
         get_sep(0, 5),
-        groupbox,
+        get_group_box(),
         get_sep(2, 10),
-        cur_layout,
+        get_current_layout(),
         get_sep(2, 10),
-        window_name,
+        get_window_name(),
         get_text_box(colors[0], color_bar[0]),
         vpn_widget,
         get_text_box(color_bar[0], color_bar[1]),
@@ -192,14 +198,15 @@ def init_widgets_list():
         get_text_box(color_bar[1], colors[6], " ", 12, cmd=myTerm + ' --hold -t Calender -e /usr/bin/cal -y'),
         clock(color_bar[1]),
         get_text_box(color_bar[1], color_bar[0]),
-        systray
+        systray,
+        get_sep(0, 5, background=color_bar[0]),
     ]
     return widgets_list
 
 
 def init_widgets_secondary():
     ''' widgets for the secundary Screen '''
-    widgets = init_widgets_list()[0:8]
+    widgets = init_widgets_list()[0:8].copy()
     widgets.extend([
         get_text_box(colors[0], color_bar[0]),
         get_text_box(color_bar[0], colors[6], " ", 12, cmd=myTerm + ' --hold -t Calender -e /usr/bin/cal -y'),

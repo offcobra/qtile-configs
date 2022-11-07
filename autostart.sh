@@ -28,7 +28,7 @@
 #starting utility applications at boot time
 
 echo "Setting Screen resolution...."
-screen_work &
+bash /home/wally/.local/bin/screen_work &
 
 echo "Starting Tray applets..."
 nm-applet &

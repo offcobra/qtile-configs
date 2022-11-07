@@ -39,16 +39,17 @@ keybindings = [
     Key([mod], "Return", lazy.spawn("kitty -e fish")),
     Key([mod, "shift"], "Return", lazy.spawn("alacritty")),
     Key([mod], "p", lazy.spawn("rofi -show run -theme ~/.config/rofi/theme.rasi")),
-    Key([mod], "o", lazy.spawn("theme_choose")),
-    Key([mod, "shift"], "p", lazy.spawn("websearch")),
+    Key([mod], "o", lazy.spawn("bash /home/wally/.local/bin/theme_choose")),
+    Key([mod, "shift"], "p", lazy.spawn("bash /home/wally/.local/bin/websearch")),
     Key([mod], "f", lazy.spawn("pcmanfm")),
     Key([mod], "s", lazy.spawn("alacritty -e bashtop")),
+    Key([mod], "z", lazy.spawn("archlinux-logout")),
 
 # KEYCHORD BINDINGS
 # Basic Commands
     KeyChord([mod],"g", [
         Key([], "g",
-            lazy.spawn("steam_start"),
+            lazy.spawn("bash /home/wally/.local/bin/steam_start"),
             desc='steam'
             ),
         Key([], "v",
@@ -64,12 +65,16 @@ keybindings = [
             desc='Gparted'
             ),
         Key([], "t",
-            lazy.spawn("tweak_theme"),
+            lazy.spawn("bash /home/wally/.local/bin/tweak_theme"),
             desc='Launch GTK & QT tweaks Tools'
             ),
         Key([], "m",
             lazy.spawn("popcorntime"),
             desc='Launch PopCornTime'
+            ),
+        Key([], "a",
+            lazy.spawn("archlinux-tweak-tool"),
+            desc='ArcoTweakTool'
             ),
         Key([], "o",
             lazy.spawn("nitrogen"),
@@ -123,29 +128,29 @@ keybindings = [
             lazy.spawn("qutebrowser"),
             desc='QuteBrowser'
             ),
-        #Key([], "L",
-        #    lazy.spawn("librewolf --private-window"),
-        #    desc='Librewolf Incognito'
-        #    )
+        Key([], "p",
+            lazy.spawn("librewolf --private-window"),
+            desc='Librewolf Incognito'
+            )
     ]),
 
 # Monitor Resolution / Picom toggle
     KeyChord([mod],"t", [
         Key([], "w",
-            lazy.spawn("screen_work"),
+            lazy.spawn("bash /home/wally/.local/bin/screen_work"),
             desc='Monitors in work mode'
             ),
         Key([], "p",
-            lazy.spawn("toggle_picom"),
+            lazy.spawn("bash /home/wally/.local/bin/toggle_picom"),
             desc='Toggle Picom'
             ),
         Key([], "v",
             #lazy.spawn(myTerm + vpn_toggle()),
-            lazy.spawn("toggle_vpn"),
+            lazy.spawn("bash /home/wally/.local/bin/toggle_vpn"),
             desc='Toggle NordVPN'
             ),
         Key([], "c",
-            lazy.spawn("screen_chill"),
+            lazy.spawn("bash /home/wally/.local/bin/screen_chill"),
             desc='Monitors in chill mode'
             )
     ]),
