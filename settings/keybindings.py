@@ -136,6 +136,14 @@ keybindings = [
 
 # Monitor Resolution / Picom toggle
     KeyChord([mod],"t", [
+        Key([], "f",
+            lazy.spawn("bash /home/wally/.local/bin/screen_full"),
+            desc='Monitors in full mode'
+            ),
+        Key([], "c",
+            lazy.spawn("bash /home/wally/.local/bin/screen_chill"),
+            desc='Monitors in chill mode'
+            ),
         Key([], "w",
             lazy.spawn("bash /home/wally/.local/bin/screen_work"),
             desc='Monitors in work mode'
@@ -145,13 +153,8 @@ keybindings = [
             desc='Toggle Picom'
             ),
         Key([], "v",
-            #lazy.spawn(myTerm + vpn_toggle()),
             lazy.spawn("bash /home/wally/.local/bin/toggle_vpn"),
             desc='Toggle NordVPN'
-            ),
-        Key([], "c",
-            lazy.spawn("bash /home/wally/.local/bin/screen_chill"),
-            desc='Monitors in chill mode'
             )
     ]),
 
