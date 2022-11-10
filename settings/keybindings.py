@@ -41,6 +41,7 @@ keybindings = [
     Key([mod], "p", lazy.spawn("rofi -show run -theme ~/.config/rofi/theme.rasi")),
     Key([mod], "o", lazy.spawn("bash /home/wally/.local/bin/theme_choose")),
     Key([mod, "shift"], "p", lazy.spawn("bash /home/wally/.local/bin/websearch")),
+    Key([mod, "shift"], "b", lazy.hide_show_bar("top")),
     Key([mod], "f", lazy.spawn("pcmanfm")),
     Key([mod], "s", lazy.spawn("alacritty -e bashtop")),
     Key([mod], "z", lazy.spawn("archlinux-logout")),
