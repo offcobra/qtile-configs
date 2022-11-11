@@ -57,6 +57,10 @@ keybindings = [
             lazy.spawn("pavucontrol"),
             desc='Pavucontrol'
             ),
+        Key([], "e",
+            lazy.spawn("thunderbird"),
+            desc='Mail Client'
+            ),
         Key([], "d",
             lazy.spawn("discord"),
             desc='Discord'
@@ -100,6 +104,22 @@ keybindings = [
         Key([], "t",
             lazy.spawn("emacsclient -c -a 'emacs' --eval '(+vterm/here nil)'"),
             desc='Emacsclient Vterm'
+            )
+    ]),
+
+# Crypto Stuff
+    KeyChord([mod],"c", [
+        Key([], "b",
+            lazy.spawn("binance"),
+            desc='Binance Trading'
+            ),
+        Key([], "c",
+            lazy.spawn("qutebrowser https://coinmarketcap.com/"),
+            desc='CoinMarketCap'
+            ),
+        Key([], "e",
+            lazy.spawn("exodus"),
+            desc='Crypto Wallet'
             )
     ]),
 
@@ -166,11 +186,11 @@ keybindings = [
             desc='Spawns VirtualBox'
             ),
         Key([], "k",
-            lazy.spawn("alacritty -e kali"),
+            lazy.spawn("alacritty -e /home/wally/.local/bin/docker_run"),
             desc='Spawn and attach to KaliLinux Container'
             ),
         Key([], "s",
-            lazy.spawn("alacritty -e stop_docker"),
+            lazy.spawn("alacritty -e /home/wally/.local/bin/stop_docker"),
             desc='Remove all docker Container'
             ),
         Key([], "m",

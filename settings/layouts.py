@@ -11,7 +11,8 @@ def init_layout_theme():
             "border_width":2,
             "border_focus": "#E33D1A",
             "border_normal": "#4c566a",
-            "new_client_position": "top"
+            #"new_client_position": "top"
+            "new_client_position": "before_current"
             }
 
 layout_theme = init_layout_theme()
