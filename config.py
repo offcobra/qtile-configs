@@ -102,6 +102,7 @@ floating_layout = layout.Floating(float_rules=[
     Match(wm_class='archlinux-logout'),
     Match(wm_class='xfce4-terminal'),
     Match(wm_class='csgo_linux64'),
+    Match(wm_class='Archlinux-logout.py'),
     #Match(wm_class='ConanSandbox (64-bit, PCD3D_SM5)'),
     Match(wm_class='conky'),
 

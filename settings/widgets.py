@@ -4,7 +4,7 @@ from libqtile import qtile
 from libqtile import widget
 
 from settings.colors import colors, color_bar
-from settings.helper import check_vpn, vpn_toggle
+from settings.helper import check_vpn, vpn_toggle, check_cpu
 
 
 myTerm = "alacritty"      # My terminal of choice
@@ -96,6 +96,16 @@ vpn_widget = widget.GenPollText(
     }
 )
 
+cpu_widget = widget.GenPollText(
+    font = myFont + " Bold",
+    fontsize = 12,
+    update_interval=2,
+    func=lambda: check_cpu(),
+    foreground=["#191919", "#191919"],
+    #foreground=colors[2],
+    background = color_bar[1]
+)
+
 # CPU Widget
 cpu = widget.CPUGraph(
     border_color = colors[2],
@@ -183,7 +193,8 @@ def init_widgets_list():
         get_text_box(colors[0], color_bar[0]),
         vpn_widget,
         get_text_box(color_bar[0], color_bar[1]),
-        get_text_box(color_bar[1], colors[6], "", 12, cmd=myTerm + ' -e bashtop'),
+        #get_text_box(color_bar[1], colors[6], " [{}]".format(check_cpu()), 12, cmd=myTerm + ' -e bashtop'),
+        cpu_widget,
         cpu,
         get_text_box(color_bar[1], color_bar[0]),
         get_text_box(color_bar[0], colors[6], "🌡", 12, cmd=myTerm + ' --hold -t Sensors -e watch sensors'),

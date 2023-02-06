@@ -90,3 +90,23 @@ def vpn_toggle():
     else:
         response = " --hold -e echo '#=-> Nothing to do... Status unknown!!! '"
     return response
+
+
+def check_cpu():
+    ''' Check for CPU state '''
+    cmd = '/bin/cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor'
+    state = subprocess.run(cmd.split(), stdout=subprocess.PIPE, check=True).stdout.decode('utf-8')
+    #return state.replace("\n", "")
+    # ""
+    #return "  => {}".format(state.replace("\n", ""))
+    return "  => {}".format(state.replace("\n", ""))
+
+
+def toggle_cpu():
+    ''' Toggle CPU from ondemand to performance '''
+    state = check_cpu()
+    if not 'performance' in check_cpu():
+        new_state = 'performance'
+    else:
+        new_state = 'ondemand'
+    return new_state

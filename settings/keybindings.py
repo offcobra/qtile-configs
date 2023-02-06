@@ -5,6 +5,7 @@ from libqtile.config import Drag, Key, KeyChord
 from settings.helper import (
     to_next,
     to_prev,
+    toggle_cpu,
     window_to_next_screen,
     window_to_previous_screen
 )
@@ -52,6 +53,10 @@ keybindings = [
         Key([], "g",
             lazy.spawn("bash /home/wally/.local/bin/steam_start"),
             desc='steam'
+            ),
+        Key([], "u",
+            lazy.spawn("/home/wally/.local/web_app/youtube-linux-x64/youtube"),
+            desc='Youtube'
             ),
         Key([], "v",
             lazy.spawn("pavucontrol"),
@@ -117,6 +122,10 @@ keybindings = [
             lazy.spawn("qutebrowser https://coinmarketcap.com/"),
             desc='CoinMarketCap'
             ),
+        Key([], "p",
+            lazy.spawn("qutebrowser https://mail.proton.me"),
+            desc='ProtonMail'
+            ),
         Key([], "e",
             lazy.spawn("exodus"),
             desc='Crypto Wallet'
@@ -173,6 +182,10 @@ keybindings = [
             lazy.spawn("bash /home/wally/.local/bin/toggle_picom"),
             desc='Toggle Picom'
             ),
+        Key([], "b",
+            lazy.spawn("bash /home/wally/.local/bin/toggle_cpu"),
+            desc='Toggle CPU Guvernor'
+            ),
         Key([], "v",
             lazy.spawn("bash /home/wally/.local/bin/toggle_vpn"),
             desc='Toggle NordVPN'
@@ -196,6 +209,14 @@ keybindings = [
         Key([], "m",
             lazy.spawn("virt-manager"),
             desc='Spawns Virt-Manager'
+            ),
+        Key([], "w",
+            lazy.spawn("gksudo virsh start win10", shell=True),
+            desc='Start Windows'
+            ),
+        Key([], "b",
+            lazy.spawn("flatpak run com.usebottles.bottles"),
+            desc='Spawns Bottles'
             )
     ]),
 
