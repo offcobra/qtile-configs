@@ -103,7 +103,10 @@ cpu_widget = widget.GenPollText(
     func=lambda: check_cpu(),
     foreground=["#191919", "#191919"],
     #foreground=colors[2],
-    background = color_bar[1]
+    background = color_bar[1],
+    mouse_callbacks = {
+        'Button1': lambda: qtile.cmd_spawn("bash /home/wally/.local/bin/toggle_cpu")
+    }
 )
 
 # CPU Widget
@@ -194,6 +197,8 @@ def init_widgets_list():
         vpn_widget,
         get_text_box(color_bar[0], color_bar[1]),
         #get_text_box(color_bar[1], colors[6], " [{}]".format(check_cpu()), 12, cmd=myTerm + ' -e bashtop'),
+        get_text_box(color_bar[1], ["#191919", "#191919"], "  =>", 13),
+        #get_text_box(color_bar[1], colors[2], "  => ", 13),
         cpu_widget,
         cpu,
         get_text_box(color_bar[1], color_bar[0]),

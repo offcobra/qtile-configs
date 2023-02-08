@@ -99,7 +99,7 @@ def check_cpu():
     #return state.replace("\n", "")
     # ""
     #return "  => {}".format(state.replace("\n", ""))
-    return "  => {}".format(state.replace("\n", ""))
+    return "{}".format(state.replace("\n", ""))
 
 
 def toggle_cpu():

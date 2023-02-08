@@ -78,9 +78,13 @@ keybindings = [
             lazy.spawn("bash /home/wally/.local/bin/tweak_theme"),
             desc='Launch GTK & QT tweaks Tools'
             ),
-        Key([], "m",
+        Key([], "w",
             lazy.spawn("popcorntime"),
             desc='Launch PopCornTime'
+            ),
+        Key([], "m",
+            lazy.spawn("piper"),
+            desc='Launch Piper mouse control'
             ),
         Key([], "a",
             lazy.spawn("archlinux-tweak-tool"),

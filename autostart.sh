@@ -29,6 +29,7 @@
 
 echo "Setting Screen resolution...."
 bash /home/wally/.local/bin/screen_full &
+xset m 1 0 &
 
 echo "Starting Tray applets..."
 nm-applet &
