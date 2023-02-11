@@ -45,6 +45,7 @@ keybindings = [
     Key([mod, "shift"], "b", lazy.hide_show_bar("top")),
     Key([mod], "f", lazy.spawn("pcmanfm")),
     Key([mod], "s", lazy.spawn("alacritty -e bashtop")),
+    Key([mod], "u", lazy.spawn("kitty --hold -e gksudo 'bash /home/wally/.local/bin/update_system'")),
     Key([mod], "z", lazy.spawn("archlinux-logout")),
 
 # KEYCHORD BINDINGS
@@ -79,7 +80,7 @@ keybindings = [
             desc='Launch GTK & QT tweaks Tools'
             ),
         Key([], "w",
-            lazy.spawn("popcorntime"),
+            lazy.spawn("bash /home/wally/.local/bin/movie_time"),
             desc='Launch PopCornTime'
             ),
         Key([], "m",
