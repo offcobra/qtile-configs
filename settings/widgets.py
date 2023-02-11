@@ -1,9 +1,10 @@
 ''' Module to define the widgets for the bar.. '''
+import json
 
 from libqtile import qtile
 from libqtile import widget
 
-from settings.colors import colors, color_bar
+from settings.colors import get_theme
 from settings.helper import check_vpn, vpn_toggle, check_cpu
 
 
@@ -11,14 +12,16 @@ myTerm = "alacritty"      # My terminal of choice
 myFont = "Source Code Pro"
 
 
+colors = get_theme()
+
 # WIDGETS FOR THE BAR
 #---------------------
 #arch_symbols = '⮝⮝  ⋏ ◬ ⟑  ⩓'
 
 # Separator with no with
-def get_sep(width, pad=5, background=colors[0]):
+def get_sep(width, pad=5, background=colors['background']):
     ''' get separator '''
-    return widget.Sep(linewidth = width, padding = pad, foreground = colors[2], background = background)
+    return widget.Sep(linewidth = width, padding = pad, foreground = colors['color1'], background = background)
 
 # Display Python Image
 py_image = widget.Image(
@@ -34,20 +37,20 @@ def get_group_box():
     ''' get group box '''
     groupbox = widget.GroupBox(
         font = myFont + ' Bold',
-        fontsize = 20,
+        fontsize = 18,
         margin_y = 4,
         margin_x = 0,
         padding_y = 5,
         padding_x = 5,
         borderwidth = 2,
         disable_drag = True,
-        active = colors[9],
-        inactive = colors[5],
+        active = colors['active'],
+        inactive = colors['inactive'],
         rounded = False,
         highlight_method = "line",
-        this_current_screen_border = colors[8],
-        foreground = colors[2],
-        background = colors[0]
+        this_current_screen_border = colors['color1'],
+        foreground = colors['foreground'],
+        background = colors['background']
     )
     return groupbox
 
@@ -55,8 +58,8 @@ def get_group_box():
 def get_current_layout():
     return widget.CurrentLayout(
         font = myFont + " Bold",
-        foreground = colors[6],
-        background = colors[0]
+        foreground = colors['color1'],
+        background = colors['background']
     )
 
 # Current Window
@@ -65,8 +68,8 @@ def get_window_name():
     return widget.WindowName(
         font = myFont + " Bold",
         fontsize = 12,
-        foreground = colors[6],
-        background = colors[0],
+        foreground = colors['active'],
+        background = colors['background']
     )
 
 # Text Box
@@ -74,7 +77,7 @@ def get_text_box(backc, forec, txt='', size=37, cmd=''):
     ''' Get textBox for wiget'''
     return widget.TextBox(
         text = txt,
-        font = "Ubuntu Mono",
+        font = myFont + " Bold",
         background = backc,
         foreground = forec,
         padding = 0,
@@ -85,11 +88,11 @@ def get_text_box(backc, forec, txt='', size=37, cmd=''):
 # Genn Pool Text
 vpn_widget = widget.GenPollText(
     font = myFont + " Bold",
-    fontsize = 12,
+    fontsize = 10,
     update_interval=2,
     func=lambda: check_vpn(),
-    foreground=colors[6],
-    background = color_bar[0],
+    foreground = colors['foreground'],
+    background = colors['background'],
     mouse_callbacks = {
         'Button1': lambda: qtile.cmd_spawn(myTerm + vpn_toggle()),
         'Button3': lambda: qtile.cmd_spawn(myTerm + ' --hold -e watch nordvpn status'),
@@ -98,12 +101,11 @@ vpn_widget = widget.GenPollText(
 
 cpu_widget = widget.GenPollText(
     font = myFont + " Bold",
-    fontsize = 12,
+    fontsize = 10,
     update_interval=2,
     func=lambda: check_cpu(),
-    foreground=["#191919", "#191919"],
-    #foreground=colors[2],
-    background = color_bar[1],
+    foreground = colors['color1'],
+    background = colors['background'],
     mouse_callbacks = {
         'Button1': lambda: qtile.cmd_spawn("bash /home/wally/.local/bin/toggle_cpu")
     }
@@ -111,10 +113,9 @@ cpu_widget = widget.GenPollText(
 
 # CPU Widget
 cpu = widget.CPUGraph(
-    border_color = colors[2],
-    fill_color = colors[8],
-    graph_color = colors[8],
-    background = color_bar[1],
+    fill_color = colors['color1'],
+    graph_color = colors['color1'],
+    background = colors['background'],
     border_width = 1,
     line_width = 1,
     core = "all",
@@ -125,11 +126,11 @@ cpu = widget.CPUGraph(
 # Termal Sensor
 thermal = widget.ThermalSensor(
     font = "Noto Sans Bold",
-    foreground = colors[2],
-    foreground_alert = colors[6],
-    fontsize=10,
+    foreground = colors['color4'],
+    background = colors['background'],
+    foreground_alert = colors['color2'],
+    fontsize=8,
     bandwidth="down",
-    background = color_bar[0],
     metric = True,
     padding = 3,
     threshold = 80,
@@ -142,11 +143,10 @@ net = widget.NetGraph(
     fontsize=12,
     bandwidth="down",
     interface="auto",
-    fill_color = colors[8],
-    foreground=colors[2],
-    background=color_bar[1],
-    graph_color = colors[8],
-    border_color = colors[2],
+    foreground = colors['foreground'],
+    background = colors['background'],
+    graph_color = colors['color2'],
+    fill_color = colors['color2'],
     padding = 0,
     border_width = 1,
     line_width = 1,
@@ -155,10 +155,12 @@ net = widget.NetGraph(
 
 # Memory
 memory = widget.MemoryGraph(
+    foreground = colors['foreground'],
+    background = colors['background'],
+    graph_color = colors['color3'],
+    fill_color = colors['color3'],
     border_width = 1,
-    border_color = colors[2],
-    frequency = 1,
-    background = color_bar[0],
+    frequency = 1
 )
 
 # Clock
@@ -166,21 +168,24 @@ def clock(backc):
     ''' retruns clock '''
     return widget.Clock(
         font = myFont + " Bold",
-        foreground = colors[2],
+        foreground = colors['color1'],
         background = backc,
-        fontsize = 14,
+        fontsize = 11,
         format="%H:%M %d-%m-%Y ",
-        mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -t Calender -e cal -3')}
+        mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -t Calender -e cal -y')}
     )
 
 # SysTray
 systray = widget.Systray(
-    background = color_bar[0],
-    icon_size=20,
+    background = colors['background'],
+    icon_size=12,
     padding = 4
 )
 
 # Clock "🕗 "
+# Remove Text Boxes
+#get_text_box(colors[0], color_bar[0]),
+#
 
 def init_widgets_list():
     ''' Widgets for the main screen '''
@@ -189,43 +194,34 @@ def init_widgets_list():
         py_image,
         get_sep(0, 5),
         get_group_box(),
-        get_sep(2, 10),
         get_current_layout(),
-        get_sep(2, 10),
         get_window_name(),
-        get_text_box(colors[0], color_bar[0]),
         vpn_widget,
-        get_text_box(color_bar[0], color_bar[1]),
-        #get_text_box(color_bar[1], colors[6], " [{}]".format(check_cpu()), 12, cmd=myTerm + ' -e bashtop'),
-        get_text_box(color_bar[1], ["#191919", "#191919"], "  =>", 13),
-        #get_text_box(color_bar[1], colors[2], "  => ", 13),
+        get_text_box(colors['background'], colors['foreground'], " ", 14),
+        get_text_box(colors['background'], colors['color1'], "", 16),
         cpu_widget,
         cpu,
-        get_text_box(color_bar[1], color_bar[0]),
-        get_text_box(color_bar[0], colors[6], "🌡", 12, cmd=myTerm + ' --hold -t Sensors -e watch sensors'),
+        get_text_box(colors['background'], colors['foreground'], " ", 14),
+        get_text_box(colors['background'], colors['color4'], "🌡", 10, cmd=myTerm + ' --hold -t Sensors -e watch sensors'),
         thermal,
-        get_text_box(color_bar[0], color_bar[1]),
-        get_text_box(color_bar[1], colors[6], "", 14, cmd="websearch"),
+        get_text_box(colors['background'], colors['foreground'], " ", 14),
+        get_text_box(colors['background'], colors['color2'], "", 14, cmd="websearch"),
         net,
-        get_text_box(color_bar[1], color_bar[0]),
-        get_text_box(color_bar[0], colors[6], "", 12),
+        get_text_box(colors['background'], colors['foreground'], " ", 14),
+        get_text_box(colors['background'], colors['color3'], "", 20),
         memory,
-        get_text_box(color_bar[0], color_bar[1]),
-        get_text_box(color_bar[1], colors[6], " ", 12, cmd=myTerm + ' --hold -t Calender -e /usr/bin/cal -y'),
-        clock(color_bar[1]),
-        get_text_box(color_bar[1], color_bar[0]),
+        get_text_box(colors['background'], colors['foreground'], " ", 14),
+        #clock(colors['background']),
         systray,
-        get_sep(0, 5, background=color_bar[0]),
+        get_sep(0, 5, background=colors['background']),
     ]
     return widgets_list
 
 
 def init_widgets_secondary():
     ''' widgets for the secundary Screen '''
-    widgets = init_widgets_list()[0:8].copy()
+    widgets = init_widgets_list()[0:6].copy()
     widgets.extend([
-        get_text_box(colors[0], color_bar[0]),
-        get_text_box(color_bar[0], colors[6], " ", 12, cmd=myTerm + ' --hold -t Calender -e /usr/bin/cal -y'),
-        clock(color_bar[0])
+        clock(colors['background'])
     ])
     return widgets
