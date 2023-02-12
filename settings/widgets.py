@@ -1,8 +1,10 @@
 ''' Module to define the widgets for the bar.. '''
-import json
 
 from libqtile import qtile
 from libqtile import widget
+
+#from qtile_extras import widget
+from qtile_extras.widget.decorations import BorderDecoration
 
 from settings.colors import get_theme
 from settings.helper import check_vpn, vpn_toggle, check_cpu
@@ -37,7 +39,7 @@ def get_group_box():
     ''' get group box '''
     groupbox = widget.GroupBox(
         font = myFont + ' Bold',
-        fontsize = 18,
+        fontsize = 8,
         margin_y = 4,
         margin_x = 0,
         padding_y = 5,
@@ -58,8 +60,17 @@ def get_group_box():
 def get_current_layout():
     return widget.CurrentLayout(
         font = myFont + " Bold",
+        fontsize = 10,
         foreground = colors['color1'],
-        background = colors['background']
+        background = colors['background'],
+        decorations=[
+            BorderDecoration(
+                colour = colors['color1'],
+                border_width = [0, 0, 1, 0],
+                padding_x = 5,
+                padding_y = None,
+            )
+        ],
     )
 
 # Current Window
@@ -67,7 +78,7 @@ def get_window_name():
     ''' get current window name..'''
     return widget.WindowName(
         font = myFont + " Bold",
-        fontsize = 12,
+        fontsize = 10,
         foreground = colors['active'],
         background = colors['background']
     )
@@ -160,6 +171,7 @@ memory = widget.MemoryGraph(
     graph_color = colors['color3'],
     fill_color = colors['color3'],
     border_width = 1,
+    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e bashtop')},
     frequency = 1
 )
 
@@ -178,14 +190,10 @@ def clock(backc):
 # SysTray
 systray = widget.Systray(
     background = colors['background'],
-    icon_size=12,
-    padding = 4
+    icon_size=14,
+    padding = 7,
 )
 
-# Clock "🕗 "
-# Remove Text Boxes
-#get_text_box(colors[0], color_bar[0]),
-#
 
 def init_widgets_list():
     ''' Widgets for the main screen '''
@@ -213,7 +221,7 @@ def init_widgets_list():
         get_text_box(colors['background'], colors['foreground'], " ", 14),
         #clock(colors['background']),
         systray,
-        get_sep(0, 5, background=colors['background']),
+        get_sep(0, 10, background=colors['background']),
     ]
     return widgets_list
 

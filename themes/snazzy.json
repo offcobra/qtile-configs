@@ -1,10 +1,10 @@
 {
-    "background": ["#292d3e", "#292d3e"],
-    "foreground": ["#ffffff", "#ffffff"],
-    "active": ["#FF5454", "#FF5454"],
-    "inactive": ["#f1ffff", "#f1ffff"],
-    "color1": ["#5AF78D", "#5AF78D"],
-    "color2": ["#BD93F9", "#BD93F9"],
-    "color3": ["#7197E7", "#7197E7"],
-    "color4": ["#ffb86c", "#ffb86c"]
+    "background": ["#282a36", "#282a36"],
+    "foreground": ["#eff0eb", "#eff0eb"],
+    "active": ["#5AF78E", "#5AF78E"],
+    "inactive": ["#9AEDFE", "#9AEDFE"],
+    "color1": ["#57C7FF", "#57C7FF"],
+    "color2": ["#F3F99D", "#F3F99D"],
+    "color3": ["#FF6AC1", "#FF6AC1"],
+    "color4": ["#F1F1F0", "#F1F1F0"]
 }

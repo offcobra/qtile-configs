@@ -25,7 +25,7 @@ def_layouts = [
          font = "Source Code Pro Bold",
          fontsize = 12,
          #sections = ["FIRST", "SECOND", "THIRD", "FOURTH"],
-         sections = ["    #=-> Stuff: <-=#"],
+         sections = ["#=-> Stuff: <-=#"],
          section_fontsize = 14,
          border_width = 2,
          bg_color = "282c34",#"1c1f24",
@@ -42,7 +42,7 @@ def_layouts = [
          section_bottom = 20,
          level_shift = 8,
          vspace = 3,
-         panel_width = 200
+         panel_width = 135
          ),
     layout.Max(**layout_theme)
 ]

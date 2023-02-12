@@ -15,7 +15,8 @@ group_keys = []
 group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0",]
 
 #group_labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0",]
-group_labels = ["", "", "", "", "", "", "", "", "", "",]
+#group_labels = ["", "", "", "", "", "", "", "", "", "",]
+group_labels = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"]
 
 group_layouts = [
     "monadtall","monadtall","monadtall","monadtall","monadtall",

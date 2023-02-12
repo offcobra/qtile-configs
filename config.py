@@ -43,9 +43,9 @@ layouts = def_layouts
 # Screens Definition
 def init_screens():
     ''' Create the Screens... '''
-    return [Screen(top=bar.Bar(widgets=init_widgets_list(), size=16, opacity=0.9, margin=[4,6,0,6])),
-            Screen(top=bar.Bar(widgets=init_widgets_secondary(), size=15, opacity=0.8, margin=[4,6,0,6])),
-            Screen(top=bar.Bar(widgets=init_widgets_secondary(), size=16, opacity=0.8, margin=[4,6,0,6]))]
+    return [Screen(top=bar.Bar(widgets=init_widgets_list(), size=15, opacity=1, margin=[4,6,0,6])),
+            Screen(top=bar.Bar(widgets=init_widgets_secondary(), size=15, opacity=1, margin=[4,6,0,6])),
+            Screen(top=bar.Bar(widgets=init_widgets_secondary(), size=15, opacity=1, margin=[4,6,0,6]))]
 screens = init_screens()
 
 
