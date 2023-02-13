@@ -3,9 +3,6 @@
 from libqtile import qtile
 from libqtile import widget
 
-#from qtile_extras import widget
-from qtile_extras.widget.decorations import BorderDecoration
-
 from settings.colors import get_theme
 from settings.helper import check_vpn, vpn_toggle, check_cpu
 
@@ -62,15 +59,7 @@ def get_current_layout():
         font = myFont + " Bold",
         fontsize = 10,
         foreground = colors['color1'],
-        background = colors['background'],
-        decorations=[
-            BorderDecoration(
-                colour = colors['color1'],
-                border_width = [0, 0, 1, 0],
-                padding_x = 5,
-                padding_y = None,
-            )
-        ],
+        background = colors['background']
     )
 
 # Current Window
