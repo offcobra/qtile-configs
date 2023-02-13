@@ -1,0 +1,10 @@
+{
+    "background": ["#EFF1F5", "#EFF1F5"],
+    "foreground": ["#4C4F69", "#4C4F69"],
+    "active": ["#8839EF", "#8839EF"],
+    "inactive": ["#9CA0B0", "#9CA0B0"],
+    "color1": ["#40A02B", "#40A02B"],
+    "color2": ["#D20F39", "#D20F39"],
+    "color3": ["#EA76CB", "#EA76CB"],
+    "color4": ["#1E66F5", "#1E66F5"]
+}
