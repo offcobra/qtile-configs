@@ -44,7 +44,7 @@ keybindings = [
     Key([mod, "shift"], "b", lazy.hide_show_bar("top")),
     Key([mod], "f", lazy.spawn("pcmanfm")),
     Key([mod], "s", lazy.spawn("alacritty -e bashtop")),
-    Key([mod], "u", lazy.spawn("kitty --hold -e gksudo 'bash /home/wally/.local/bin/update_system'")),
+    Key([mod], "u", lazy.spawn("kitty --hold -e bash /home/wally/.local/bin/update_system")),
     Key([mod], "z", lazy.spawn("archlinux-logout")),
 
 # KEYCHORD BINDINGS
