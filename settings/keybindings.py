@@ -106,8 +106,16 @@ keybindings = [
             lazy.spawn("emacsclient -c -a 'emacs' --eval '(ibuffer)'"),
             desc='Emacsclient Ibuffer'
             ),
+        Key([], "r",
+            lazy.spawn("emacsclient -c -a 'emacs' --eval '(doom/reload)'"),
+            desc='Emacsclient Ibuffer'
+            ),
         Key([], "d",
             lazy.spawn("emacsclient -c -a 'emacs' --eval '(dired nil)'"),
+            desc='Emacsclient Dired'
+            ),
+        Key([], "p",
+            lazy.spawn("emacsclient -c -a 'emacs' --eval '(dired ~/.config/qtile)'"),
             desc='Emacsclient Dired'
             ),
         Key([], "t",
