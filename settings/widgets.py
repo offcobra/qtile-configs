@@ -191,6 +191,7 @@ def init_widgets_list():
         py_image,
         get_sep(0, 5),
         get_group_box(),
+        get_sep(0, 5),
         get_current_layout(),
         get_window_name(),
         vpn_widget,
@@ -217,7 +218,7 @@ def init_widgets_list():
 
 def init_widgets_secondary():
     ''' widgets for the secundary Screen '''
-    widgets = init_widgets_list()[0:6].copy()
+    widgets = init_widgets_list()[0:7].copy()
     widgets.extend([
         clock(colors['background'])
     ])

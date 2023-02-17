@@ -33,7 +33,7 @@ xset m 1 0 &
 
 echo "Starting Tray applets..."
 nm-applet &
-#pamac-tray &
+pamac-tray &
 volumeicon &
 #xfce4-power-manager &
 #numlockx on &
@@ -41,6 +41,9 @@ volumeicon &
 
 echo "Starting Picom"
 picom --config $HOME/.config/picom/picom.conf &
+
+echo "Starting Conky"
+conky -c $HOME/.config/conky/theme.conkyrc
 
 echo "Auth Agent & Notifyd"
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
