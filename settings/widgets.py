@@ -32,10 +32,11 @@ py_image = widget.Image(
     )})
 
 # Groupbox for Display Groups
-def get_group_box():
+def get_group_box(visible_groups):
     ''' get group box '''
     groupbox = widget.GroupBox(
         font = myFont + ' Bold',
+        visible_groups = visible_groups,
         fontsize = 8,
         margin_y = 4,
         margin_x = 0,
@@ -184,13 +185,30 @@ systray = widget.Systray(
 )
 
 
-def init_widgets_list():
+def init_widgets_list(screens='work', count=0):
     ''' Widgets for the main screen '''
+    match screens:
+        case 'full':
+            groups = {
+                '0': [1, 4, 7, 0],
+                '1': [2, 5, 8],
+                '2': [3, 6, 9]
+            }
+        case 'chill':
+            groups = {
+                '0': [1, 3, 5, 7, 9],
+                '1': [2, 4, 6, 8]
+            }
+        case 'work':
+            groups = {
+                '0': [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+            }
+
     widgets_list = [
         get_sep(0, 10),
         py_image,
         get_sep(0, 5),
-        get_group_box(),
+        get_group_box([str(x) for x in groups[str(count)]]),
         get_sep(0, 5),
         get_current_layout(),
         get_window_name(),
@@ -216,9 +234,9 @@ def init_widgets_list():
     return widgets_list
 
 
-def init_widgets_secondary():
+def init_widgets_secondary(screens, count):
     ''' widgets for the secundary Screen '''
-    widgets = init_widgets_list()[0:7].copy()
+    widgets = init_widgets_list(screens, count)[0:7].copy()
     widgets.extend([
         clock(colors['background'])
     ])

@@ -9,7 +9,7 @@ from settings.helper import (
     window_to_next_screen,
     window_to_previous_screen
 )
-from settings.groups import group_keys
+from settings.screens import group_keys
 
 
 #mod4 or mod = super key

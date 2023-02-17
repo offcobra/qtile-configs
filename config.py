@@ -16,13 +16,12 @@ import os
 import subprocess
 
 from libqtile import qtile
-from libqtile import layout, bar, hook
-from libqtile.config import Match, Screen
+from libqtile import layout, hook
+from libqtile.config import Match
 
 from settings.keybindings import keybindings, mouse_keys
-from settings.groups import def_groups
+from settings.screens import def_groups, get_screens
 from settings.layouts import def_layouts
-from settings.widgets import init_widgets_list, init_widgets_secondary
 
 
 home = os.path.expanduser('~')
@@ -41,12 +40,7 @@ groups = def_groups
 layouts = def_layouts
 
 # Screens Definition
-def init_screens():
-    ''' Create the Screens... '''
-    return [Screen(top=bar.Bar(widgets=init_widgets_list(), size=15, opacity=1, margin=[4,6,0,6])),
-            Screen(top=bar.Bar(widgets=init_widgets_secondary(), size=15, opacity=1, margin=[4,6,0,6])),
-            Screen(top=bar.Bar(widgets=init_widgets_secondary(), size=15, opacity=1, margin=[4,6,0,6]))]
-screens = init_screens()
+screens = get_screens()
 
 
 dgroups_key_binder = None
