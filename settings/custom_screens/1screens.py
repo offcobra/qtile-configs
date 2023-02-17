@@ -31,10 +31,10 @@ def go_to_group(group):
     def f(qtile):
         if group in '1234567890':
             qtile.cmd_to_screen(0)
-            qtile.groupMap[group].cmd_toscreen()
+            qtile.groups_map[group].cmd_toscreen()
         else:
             qtile.cmd_to_screen(0)
-            qtile.groupMap[group].cmd_toscreen()
+            qtile.groups_map[group].cmd_toscreen()
 
     return f
 

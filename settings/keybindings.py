@@ -2,6 +2,9 @@
 from libqtile.command import lazy
 from libqtile.config import Drag, Key, KeyChord
 
+# Custom plugin
+from settings import traverse
+
 from settings.helper import (
     to_next,
     to_prev,
@@ -10,6 +13,7 @@ from settings.helper import (
     window_to_previous_screen
 )
 from settings.screens import group_keys
+
 
 
 #mod4 or mod = super key
@@ -254,12 +258,18 @@ keybindings = [
     Key([mod], "space", lazy.next_layout()),
 
 # CHANGE FOCUS
-    Key([mod], "k", lazy.layout.up()),
-    Key([mod], "j", lazy.layout.down()),
-    Key([mod], "h", lazy.layout.left()),
-    Key([mod], "l", lazy.layout.right()),
-    Key([mod], "m", lazy.function(to_next)),
-    Key([mod], "n", lazy.function(to_prev)),
+    #Key([mod], "k", lazy.layout.up()),
+    #Key([mod], "j", lazy.layout.down()),
+    #Key([mod], "h", lazy.layout.left()),
+    #Key([mod], "l", lazy.layout.right()),
+    #Key([mod], "m", lazy.function(to_next)),
+    #Key([mod], "n", lazy.function(to_prev)),
+    #
+# Traverse Plugin
+    Key([mod], 'k', lazy.function(traverse.up)),
+    Key([mod], 'j', lazy.function(traverse.down)),
+    Key([mod], 'h', lazy.function(traverse.left)),
+    Key([mod], 'l', lazy.function(traverse.right)),
 
 
 # RESIZE UP, DOWN, LEFT, RIGHT

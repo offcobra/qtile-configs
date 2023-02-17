@@ -197,7 +197,7 @@ def init_widgets_list(screens='work', count=0):
         case 'chill':
             groups = {
                 '0': [1, 3, 5, 7, 9],
-                '1': [2, 4, 6, 8]
+                '1': [2, 4, 6, 8, 0]
             }
         case 'work':
             groups = {
@@ -231,6 +231,12 @@ def init_widgets_list(screens='work', count=0):
         systray,
         get_sep(0, 10, background=colors['background']),
     ]
+
+    if screens == 'work':
+        widgets_list.append(
+            clock(colors['background'])
+        )
+
     return widgets_list
 
 

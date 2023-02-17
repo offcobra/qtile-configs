@@ -32,13 +32,13 @@ def go_to_group(group):
     def f(qtile):
         if group in '1470':
             qtile.cmd_to_screen(0)
-            qtile.groupMap[group].cmd_toscreen()
+            qtile.groups_map[group].cmd_toscreen()
         elif group in '258':
             qtile.cmd_to_screen(1)
-            qtile.groupMap[group].cmd_toscreen()
+            qtile.groups_map[group].cmd_toscreen()
         else:
             qtile.cmd_to_screen(2)
-            qtile.groupMap[group].cmd_toscreen()
+            qtile.groups_map[group].cmd_toscreen()
 
     return f
 

@@ -2,6 +2,10 @@
 
 from libqtile import layout
 
+from settings.colors import get_theme
+
+
+color = get_theme()
 
 # LAYOUTS
 #--------
@@ -30,10 +34,14 @@ def_layouts = [
          border_width = 2,
          bg_color = "282c34",#"1c1f24",
          active_bg = "51afef",#"FF5733",
-         #active_bg = "194d33",
          active_fg = "000000",
          inactive_bg = "194d33",#"51afef",
          inactive_fg = "1c1f24",
+         #bg_color = color["background"],
+         #active_bg = color["active"],
+         #active_fg = color["foreground"],
+         #inactive_bg = color["inactive"],
+         #inactive_fg = color["background"],
          padding_left = 0,
          padding_x = 0,
          padding_y = 5,
