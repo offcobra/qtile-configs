@@ -308,6 +308,3 @@ keybindings = [
 
 ]
 keybindings.extend(group_keys)
-
-if __name__  == '__main__':
-    import pdb; pdb.set_trace()

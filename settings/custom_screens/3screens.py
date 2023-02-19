@@ -16,57 +16,65 @@ def_groups = []
 group_keys = []
 
 # FOR KEYBOARDS
-group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0",]
-
-#group_labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0",]
-#group_labels = ["", "", "", "", "", "", "", "", "", "",]
-group_labels = [" I", " II", "III", "IV", " V", "VI", "VII", "VIII", "IX", "X"]
+group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+group_labels = [" I", " II", "III", "IV", " V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"]
 
 group_layouts = [
     "monadtall","monadtall","monadtall","monadtall","monadtall",
-    "monadtall","monadtall","monadtall","monadtall","monadtall"
+    "monadtall","monadtall","monadtall","monadtall","monadtall",
+    "monadtall","monadtall"
 ]
 
-DEFAULT_GROUPS = [[4,5,6], [7,8,9]]
-SDEFAULT_GROUPS = [[1,2,3], [4,5,6]]
+SDEFAULT_GROUPS = [[4, 5, 6], [7, 8, 9], [10, 11, 12]]
+DEFAULT_GROUPS = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
 
 def next_room(qtile):
-    ''' Function to chnage all group on screen... '''
+    ''' Function to change all group on screen... '''
     screens = qtile.screens
-    group_first_screen = screens[0].group.name
-    group_second_screen = screens[1].group.name
-    if [int(group_first_screen), int(group_second_screen)] not in DEFAULT_GROUPS:
+    gfscreen = screens[0].group.name
+    gsscreen = screens[1].group.name
+    gtscreen = screens[2].group.name
+    if [int(gfscreen), int(gsscreen), int(gtscreen)] not in DEFAULT_GROUPS:
         qtile.cmd_to_screen(0)
         qtile.groups_map['1'].cmd_toscreen()
         qtile.cmd_to_screen(1)
         qtile.groups_map['2'].cmd_toscreen()
+        qtile.cmd_to_screen(2)
+        qtile.groups_map['3'].cmd_toscreen()
 
     else:
-        fgroup = str(int(group_first_screen) + 2)
-        sgroup = '0' if str(int(group_second_screen) + 2) == '10' else str(int(group_second_screen) + 2)
+        group = int(gfscreen)
         qtile.cmd_to_screen(0)
-        qtile.groups_map[fgroup].cmd_toscreen()
+        qtile.groups_map[str(group + 3)].cmd_toscreen()
         qtile.cmd_to_screen(1)
-        qtile.groups_map[sgroup].cmd_toscreen()
+        qtile.groups_map[str(group + 4)].cmd_toscreen()
+        qtile.cmd_to_screen(2)
+        qtile.groups_map[str(group + 5)].cmd_toscreen()
+
 
 def prev_room(qtile):
-    ''' Function to chnage all group on screen... '''
+    ''' Function to change all group on screen... '''
     screens = qtile.screens
-    group_first_screen = screens[0].group.name
-    group_second_screen = screens[1].group.name
-    if [int(group_first_screen), int(group_second_screen)] not in SDEFAULT_GROUPS:
+    gfscreen = screens[0].group.name
+    gsscreen = screens[1].group.name
+    gtscreen = screens[2].group.name
+    if [int(gfscreen), int(gsscreen), int(gtscreen)] not in SDEFAULT_GROUPS:
         qtile.cmd_to_screen(0)
-        qtile.groups_map['9'].cmd_toscreen()
+        qtile.groups_map['10'].cmd_toscreen()
         qtile.cmd_to_screen(1)
-        qtile.groups_map['0'].cmd_toscreen()
+        qtile.groups_map['11'].cmd_toscreen()
+        qtile.cmd_to_screen(2)
+        qtile.groups_map['12'].cmd_toscreen()
 
     else:
-        fgroup = '9' if str(int(group_first_screen) - 2) == '-1' else str(int(group_first_screen) - 2)
-        sgroup = str(10 - 2) if group_second_screen == '0' else str(int(group_second_screen) - 2)
+        group = int(gfscreen)
         qtile.cmd_to_screen(0)
-        qtile.groups_map[fgroup].cmd_toscreen()
+        qtile.groups_map[str(group - 3)].cmd_toscreen()
         qtile.cmd_to_screen(1)
-        qtile.groups_map[sgroup].cmd_toscreen()
+        qtile.groups_map[str(group - 2)].cmd_toscreen()
+        qtile.cmd_to_screen(2)
+        qtile.groups_map[str(group - 1)].cmd_toscreen()
 
 
 def go_to_group(group):
@@ -84,6 +92,7 @@ def go_to_group(group):
 
     return f
 
+
 for i, value in enumerate(group_names):
     def_groups.append(
         Group(
@@ -93,12 +102,19 @@ for i, value in enumerate(group_names):
         ))
 
 for i in def_groups:
+    if int(i.name) > 9:
+        continue
     group_keys.extend([
 
 #CHANGE WORKSPACES
         Key([mod], i.name, lazy.function(go_to_group(i.name))),
         Key([mod, "shift"], i.name, lazy.window.togroup(i.name)),
     ])
+
+group_keys.extend([
+    Key([mod], "n", lazy.function(prev_room)),
+    Key([mod], "m", lazy.function(next_room))
+])
 
 
 def get_screens():

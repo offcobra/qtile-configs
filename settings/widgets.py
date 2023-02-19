@@ -190,14 +190,14 @@ def init_widgets_list(screens='work', count=0):
     match screens:
         case 'full':
             groups = {
-                '0': [1, 4, 7, 0],
-                '1': [2, 5, 8],
-                '2': [3, 6, 9]
+                '0': [1, 4, 7, 10],
+                '1': [2, 5, 8, 11],
+                '2': [3, 6, 9, 12]
             }
         case 'chill':
             groups = {
                 '0': [1, 3, 5, 7, 9],
-                '1': [2, 4, 6, 8, 0]
+                '1': [2, 4, 6, 8, 10]
             }
         case 'work':
             groups = {
