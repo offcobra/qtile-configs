@@ -258,16 +258,16 @@ keybindings = [
     Key([mod], "space", lazy.next_layout()),
 
 # CHANGE FOCUS
-    #Key([mod], "k", lazy.layout.up()),
-    #Key([mod], "j", lazy.layout.down()),
+    Key([mod], "k", lazy.layout.up()),
+    Key([mod], "j", lazy.layout.down()),
     #Key([mod], "h", lazy.layout.left()),
     #Key([mod], "l", lazy.layout.right()),
     #Key([mod], "m", lazy.function(to_next)),
     #Key([mod], "n", lazy.function(to_prev)),
     #
 # Traverse Plugin
-    Key([mod], 'k', lazy.function(traverse.up)),
-    Key([mod], 'j', lazy.function(traverse.down)),
+    #Key([mod], 'k', lazy.function(traverse.up)),
+    #Key([mod], 'j', lazy.function(traverse.down)),
     Key([mod], 'h', lazy.function(traverse.left)),
     Key([mod], 'l', lazy.function(traverse.right)),
 

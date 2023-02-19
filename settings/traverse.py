@@ -1,32 +1,29 @@
-"""
-This plugin exports four functions - up, down, left and right - that when called will
-move window focus to the first window in that general direction. Focussing is based
-entirely on position and geometry, so is independent of screens, layouts and whether
-windows are floating or tiled. It can also move focus to and from empty screens.
+""" Module to traverse across Screens """
 
-Example usage:
-
-    import traverse
-
-    keys.extend([
-        Key([mod], 'k', lazy.function(traverse.up)),
-        Key([mod], 'j', lazy.function(traverse.down)),
-        Key([mod], 'h', lazy.function(traverse.left)),
-        Key([mod], 'l', lazy.function(traverse.right)),
-    ])
-
-Qtile versions known to work: 0.16 - 0.18
-"""
-
+from libqtile.command.client import InteractiveCommandClient
 from libqtile.config import Screen
+from libqtile.log_utils import logger
 
+client = InteractiveCommandClient()
+
+SPECIAL_GROUPS = ['treetab', 'max']
 
 def up(qtile):
-    _focus_window(qtile, -1, 'y')
+    if qtile.current_layout in SPECIAL_GROUPS:
+        #qtile.current_group.prev_window()
+        logger.logger('############## This hsit is working.....')
+    else:
+        pass
+        #_focus_window(qtile, -1, 'y')
 
 
 def down(qtile):
-    _focus_window(qtile, 1, 'y')
+    if qtile.current_layout in SPECIAL_GROUPS:
+        #qtile.current_group.next_window()
+        logger.warning('############## This hsit is working.....')
+    else:
+        #_focus_window(qtile, 1, 'y')
+        pass
 
 
 def left(qtile):
