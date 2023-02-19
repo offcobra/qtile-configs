@@ -66,6 +66,10 @@ keybindings = [
             lazy.spawn("pavucontrol"),
             desc='Pavucontrol'
             ),
+        Key([], "s",
+            lazy.spawn("spotify"),
+            desc='Spotify Music'
+            ),
         Key([], "e",
             lazy.spawn("thunderbird"),
             desc='Mail Client'
