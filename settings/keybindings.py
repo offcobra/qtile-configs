@@ -41,8 +41,8 @@ keybindings = [
 # BASIC KEYBINDINGS
 # Def my own Keybinding
 
-    Key([mod], "Return", lazy.spawn("kitty -e fish")),
-    Key([mod, "shift"], "Return", lazy.spawn("alacritty")),
+    Key([mod], "Return", lazy.spawn("alacritty -e fish")),
+    Key([mod, "shift"], "Return", lazy.spawn("kitty")),
     Key([mod], "p", lazy.spawn("rofi -show run -theme ~/.config/rofi/theme.rasi")),
     Key([mod, "shift"], "p", lazy.spawn("bash /home/wally/.local/bin/websearch")),
     Key([mod, "shift"], "b", lazy.hide_show_bar("top")),
