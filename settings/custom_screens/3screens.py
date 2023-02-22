@@ -80,10 +80,10 @@ def prev_room(qtile):
 def go_to_group(group):
     ''' Function to focus group on default screen '''
     def f(qtile):
-        if group in '1470':
+        if group in ['1', '4', '7', '10']:
             qtile.cmd_to_screen(0)
             qtile.groups_map[group].cmd_toscreen()
-        elif group in '258':
+        elif group in ['2', '5', '8', '11']:
             qtile.cmd_to_screen(1)
             qtile.groups_map[group].cmd_toscreen()
         else:
@@ -116,16 +116,27 @@ def_groups.extend([
     ScratchPad("00", [
         DropDown("term", "alacritty", opacity=0.8)
     ]),
+    ScratchPad("02", [
+        DropDown("s_monitor", "alacritty -e vtop", opacity=0.8)
+    ]),
+    ScratchPad("03", [
+        DropDown("c_monitor", "alacritty -e ctop", opacity=0.8)
+    ]),
     ScratchPad("01", [
-        DropDown("music", "spotify", opacity=0.8)
+        DropDown("editor", "alacritty -e vim /home/wally/todo.txt", opacity=0.8)
     ])
 ])
 
 group_keys.extend([
     Key([mod], "n", lazy.function(prev_room)),
     Key([mod], "m", lazy.function(next_room)),
-     Key([], 'F11', lazy.group["01"].dropdown_toggle('music')),
-     Key([], 'F12', lazy.group["00"].dropdown_toggle('term')),
+    Key([], 'F1', lazy.function(go_to_group("10"))),
+    Key([], 'F2', lazy.function(go_to_group("11"))),
+    Key([], 'F3', lazy.function(go_to_group("12"))),
+    Key([], 'F11', lazy.group["01"].dropdown_toggle('editor')),
+    Key([], 'F10', lazy.group["00"].dropdown_toggle('term')),
+    Key([], 'F12', lazy.group["02"].dropdown_toggle('s_monitor')),
+    Key([], 'F9', lazy.group["03"].dropdown_toggle('c_monitor')),
 ])
 
 

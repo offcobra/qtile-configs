@@ -28,7 +28,7 @@ py_image = widget.Image(
     scale = True,
     mouse_callbacks = {
         'Button1': lambda: qtile.cmd_spawn(
-            myTerm + ' -t "Qtile Docs" --hold -e bat /home/wally/.config/docs/shortcuts.org'
+            myTerm + ' -t "Qtile Docs" --class qtile_docs --hold -e /bin/cat /home/wally/.config/docs/new_shortcuts.txt'
     )})
 
 # Groupbox for Display Groups
@@ -134,6 +134,7 @@ thermal = widget.ThermalSensor(
     bandwidth="down",
     metric = True,
     padding = 3,
+    tag_sensor = "Tctl",
     threshold = 80,
     mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + " --hold -t Sensors -e watch sensors")}
 )

@@ -22,7 +22,10 @@ from libqtile.config import Match
 from settings.keybindings import keybindings, mouse_keys
 from settings.screens import def_groups, get_screens
 from settings.layouts import def_layouts
+from settings.docs import set_docs
 
+# run Kewybindings Documentation
+set_docs()
 
 home = os.path.expanduser('~')
 
@@ -92,9 +95,11 @@ floating_layout = layout.Floating(float_rules=[
     Match(wm_class='toolbar'),
     Match(wm_class='Arandr'),
     Match(wm_class='feh'),
+    Match(wm_class='qtile_docs'),
     Match(wm_class='Galculator'),
     Match(wm_class='archlinux-logout'),
     Match(wm_class='xfce4-terminal'),
+    #Match(wm_class='spotify'),
     Match(wm_class='csgo_linux64'),
     Match(wm_class='Archlinux-logout.py'),
     #Match(wm_class='ConanSandbox (64-bit, PCD3D_SM5)'),

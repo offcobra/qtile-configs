@@ -41,15 +41,15 @@ keybindings = [
 # BASIC KEYBINDINGS
 # Def my own Keybinding
 
-    Key([mod], "Return", lazy.spawn("alacritty -e fish")),
-    Key([mod, "shift"], "Return", lazy.spawn("kitty")),
-    Key([mod], "p", lazy.spawn("rofi -show run -theme ~/.config/rofi/theme.rasi")),
-    Key([mod, "shift"], "p", lazy.spawn("bash /home/wally/.local/bin/websearch")),
-    Key([mod, "shift"], "b", lazy.hide_show_bar("top")),
-    Key([mod], "f", lazy.spawn("pcmanfm")),
-    Key([mod], "s", lazy.spawn("alacritty -e bashtop")),
-    Key([mod], "u", lazy.spawn("kitty --hold -e bash /home/wally/.local/bin/update_system")),
-    Key([mod], "z", lazy.spawn("archlinux-logout")),
+    Key([mod], "Return", lazy.spawn("alacritty -e fish"), desc="Alacritty with fish shell"),
+    Key([mod, "shift"], "Return", lazy.spawn("kitty"), desc="Kitty Term with bash"),
+    Key([mod], "p", lazy.spawn("rofi -show run -theme ~/.config/rofi/theme.rasi"), desc="Programm Launcher"),
+    Key([mod, "shift"], "p", lazy.spawn("bash /home/wally/.local/bin/websearch"), desc="Websearch Script"),
+    Key([mod, "shift"], "b", lazy.hide_show_bar("top"), desc="Toggle Qtile Bar"),
+    Key([mod], "f", lazy.spawn("pcmanfm"), desc="File Manager"),
+    Key([mod], "s", lazy.spawn("alacritty -e bashtop"), desc="Fancy System Monitor"),
+    Key([mod], "u", lazy.spawn("kitty --hold -e bash /home/wally/.local/bin/update_system"), desc="Update System"),
+    Key([mod], "z", lazy.spawn("archlinux-logout"), desc="Logout / Restart / Shutdown"),
 
 # KEYCHORD BINDINGS
 # Basic Commands
@@ -102,7 +102,7 @@ keybindings = [
             lazy.spawn("nitrogen"),
             desc='Nitrogen'
             )
-    ]),
+    ], name="Common Programms"),
 
 # Emacs
     KeyChord([mod],"e", [
@@ -130,7 +130,7 @@ keybindings = [
             lazy.spawn("emacsclient -c -a 'emacs' --eval '(+vterm/here nil)'"),
             desc='Emacsclient Vterm'
             )
-    ]),
+    ], name="Emacs"),
 
 # Crypto Stuff
     KeyChord([mod],"c", [
@@ -150,7 +150,7 @@ keybindings = [
             lazy.spawn("exodus"),
             desc='Crypto Wallet'
             )
-    ]),
+    ], name="Crypto Stuff"),
 
 # Browser
     KeyChord([mod],"b", [
@@ -182,7 +182,7 @@ keybindings = [
             lazy.spawn("librewolf --private-window"),
             desc='Librewolf Incognito'
             )
-    ]),
+    ], name="Browsers"),
 
 # Monitor Resolution / Picom toggle
     KeyChord([mod],"t", [
@@ -214,7 +214,7 @@ keybindings = [
             lazy.spawn("bash /home/wally/.local/bin/toggle_vpn"),
             desc='Toggle NordVPN'
             )
-    ]),
+    ], name="Toggle Scripts"),
 
 # Virtualization
     KeyChord([mod],"v", [
@@ -224,7 +224,11 @@ keybindings = [
             ),
         Key([], "k",
             lazy.spawn("alacritty -e /home/wally/.local/bin/docker_run"),
-            desc='Spawn and attach to KaliLinux Container'
+            desc='Spawn and attach to Docker Container'
+            ),
+        Key([], "d",
+            lazy.spawn("bash /home/wally/.local/bin/vms_run"),
+            desc='Spawn and attach to Vm Distro'
             ),
         Key([], "s",
             lazy.spawn("alacritty -e /home/wally/.local/bin/stop_docker"),
@@ -242,28 +246,28 @@ keybindings = [
             lazy.spawn("flatpak run com.usebottles.bottles"),
             desc='Spawns Bottles'
             )
-    ]),
+    ], name="Virtualization"),
 
 # SUPER + FUNCTION KEYS
 
     #Key([mod, "shift"], "f", lazy.window.toggle_fullscreen()),
-    Key([mod, "shift"], "n", lazy.layout.normalize()),
-    Key([mod, "shift"], "f", lazy.window.toggle_floating()),
-    Key([mod], "q", lazy.window.kill()),
+    Key([mod, "shift"], "n", lazy.layout.normalize(), desc="Normalize Layout"),
+    Key([mod, "shift"], "f", lazy.window.toggle_floating(), desc="Toggle Floating"),
+    Key([mod], "q", lazy.window.kill(), desc="Window Kill"),
 
 
 # SUPER + SHIFT KEYS
 
     #Key([mod, "shift"], "q", lazy.window.kill()),
-    Key([mod, "shift"], "r", lazy.restart()),
+    Key([mod, "shift"], "r", lazy.restart(), desc="Restart Qtile"),
 
 
 # QTILE LAYOUT KEYS
-    Key([mod], "space", lazy.next_layout()),
+    Key([mod], "space", lazy.next_layout(), desc="Next Layout"),
 
 # CHANGE FOCUS
-    Key([mod], "k", lazy.layout.up()),
-    Key([mod], "j", lazy.layout.down()),
+    Key([mod], "k", lazy.layout.up(), desc="Move Up"),
+    Key([mod], "j", lazy.layout.down(), desc="Move Down"),
     #Key([mod], "h", lazy.layout.left()),
     #Key([mod], "l", lazy.layout.right()),
     #Key([mod], "m", lazy.function(to_next)),
@@ -272,8 +276,8 @@ keybindings = [
 # Traverse Plugin
     #Key([mod], 'k', lazy.function(traverse.up)),
     #Key([mod], 'j', lazy.function(traverse.down)),
-    Key([mod], 'h', lazy.function(traverse.left)),
-    Key([mod], 'l', lazy.function(traverse.right)),
+    Key([mod], 'h', lazy.function(traverse.left), desc="Move Left"),
+    Key([mod], 'l', lazy.function(traverse.right), desc="Move Right"),
 
 
 # RESIZE UP, DOWN, LEFT, RIGHT

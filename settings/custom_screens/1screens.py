@@ -2,7 +2,7 @@
 
 from libqtile import bar
 from libqtile.command import lazy
-from libqtile.config import Group, Key, Screen
+from libqtile.config import Group, Key, Screen, DropDown, ScratchPad
 
 from settings.widgets import init_widgets_list, init_widgets_secondary
 
@@ -53,6 +53,26 @@ for i in def_groups:
         Key([mod], i.name, lazy.function(go_to_group(i.name))),
         Key([mod, "shift"], i.name, lazy.window.togroup(i.name)),
     ])
+
+# Testing Scratchpads
+def_groups.extend([
+    ScratchPad("00", [
+        DropDown("term", "alacritty", opacity=0.8)
+    ]),
+    ScratchPad("02", [
+        DropDown("s_monitor", "alacritty -e ctop", opacity=0.8)
+    ]),
+    ScratchPad("01", [
+        DropDown("editor", "alacritty -e vim /home/wally/todo.txt", opacity=0.8)
+    ])
+])
+
+group_keys.extend([
+    Key([], 'F11', lazy.group["01"].dropdown_toggle('editor')),
+    Key([], 'F10', lazy.group["00"].dropdown_toggle('term')),
+    Key([], 'F12', lazy.group["02"].dropdown_toggle('s_monitor')),
+])
+
 
 
 def get_screens():

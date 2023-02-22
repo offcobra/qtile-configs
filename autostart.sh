@@ -17,13 +17,6 @@
 #Some ways to set your wallpaper besides variety or nitrogen
 #wallpaper for other Arch based systems
 #run variety -> To cycle wallpapers
-#feh --bg-fill /usr/share/archlinux-tweak-tool/data/wallpaper/wallpaper.png &
-#start the conky to learn the shortcuts
-#(conky -c $HOME/.config/qtile/scripts/system-overview) &
-
-#start sxhkd to replace Qtile native key-bindings
-#run sxhkd -c ~/.config/qtile/sxhkd/sxhkdrc &
-
 
 #starting utility applications at boot time
 
