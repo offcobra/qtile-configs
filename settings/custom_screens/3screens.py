@@ -111,19 +111,21 @@ for i in def_groups:
         Key([mod, "shift"], i.name, lazy.window.togroup(i.name)),
     ])
 
+TERM = "alacritty --config-file /home/wally/.config/alacritty/alacritty_scratchpad.yml"
+
 # Testing Scratchpads
 def_groups.extend([
     ScratchPad("00", [
-        DropDown("term", "alacritty", opacity=0.8)
+        DropDown("term", TERM + ' -e fish', opacity=0.8)
     ]),
     ScratchPad("02", [
-        DropDown("s_monitor", "alacritty -e vtop", opacity=0.8)
+        DropDown("s_monitor", TERM + " -e vtop", opacity=0.8)
     ]),
     ScratchPad("03", [
-        DropDown("c_monitor", "alacritty -e ctop", opacity=0.8)
+        DropDown("c_monitor", TERM + " -e ctop", opacity=0.8)
     ]),
     ScratchPad("01", [
-        DropDown("editor", "alacritty -e vim /home/wally/todo.txt", opacity=0.8)
+        DropDown("editor", TERM + " -e vim /home/wally/todo.txt", opacity=0.8)
     ])
 ])
 

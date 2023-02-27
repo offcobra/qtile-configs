@@ -24,11 +24,15 @@ def get_sep(width, pad=5, background=colors['background']):
 
 # Display Python Image
 py_image = widget.Image(
-    filename = "~/.config/qtile/icons/python-white.png",
+    #filename = "~/.config/qtile/icons/python-white.png",
+    #filename = "~/.config/arco_icons/start-here-arcolinux.svg",
+    filename = "~/.config/arco_icons/start-here-arcolinux-orange.svg",
+    #filename = "~/.config/arco_icons/arcolinux-logo.svg",
     scale = True,
+    background = colors['background'],
     mouse_callbacks = {
         'Button1': lambda: qtile.cmd_spawn(
-            myTerm + ' -t "Qtile Docs" --class qtile_docs --hold -e /bin/cat /home/wally/.config/docs/new_shortcuts.txt'
+            myTerm + ' -t "Qtile Docs" --class qtile_docs --hold -e bat --pager "less" /home/wally/.config/docs/shortcuts.org'
     )})
 
 # Groupbox for Display Groups
@@ -59,6 +63,17 @@ def get_current_layout():
     return widget.CurrentLayout(
         font = myFont + " Bold",
         fontsize = 10,
+        foreground = colors['color1'],
+        background = colors['background']
+    )
+
+# Current Layout
+def get_current_icon_layout():
+    return widget.CurrentLayoutIcon(
+        current_icon_path = ["/home/wally/.config/qtile/icons"],
+        font = myFont + " Bold",
+        scale = 0.7,
+        fontsize = 8,
         foreground = colors['color1'],
         background = colors['background']
     )
@@ -212,22 +227,23 @@ def init_widgets_list(screens='work', count=0):
         get_group_box([str(x) for x in groups[str(count)]]),
         get_sep(0, 5),
         get_current_layout(),
+        get_current_icon_layout(),
         get_window_name(),
         vpn_widget,
         get_text_box(colors['background'], colors['foreground'], " ", 14),
-        get_text_box(colors['background'], colors['color1'], "", 16),
+        get_text_box(colors['background'], colors['color1'], " ", 10),
         cpu_widget,
         cpu,
         get_text_box(colors['background'], colors['foreground'], " ", 14),
-        get_text_box(colors['background'], colors['color4'], "🌡", 10, cmd=myTerm + ' --hold -t Sensors -e watch sensors'),
+        get_text_box(colors['background'], colors['color4'], "🌡", 9, cmd=myTerm + ' --hold -t Sensors -e watch sensors'),
         thermal,
         get_text_box(colors['background'], colors['foreground'], " ", 14),
-        get_text_box(colors['background'], colors['color2'], "", 14, cmd="websearch"),
+        get_text_box(colors['background'], colors['color2'], " ", 10, cmd="websearch"),
         net,
         get_text_box(colors['background'], colors['foreground'], " ", 14),
-        get_text_box(colors['background'], colors['color3'], "", 20),
+        get_text_box(colors['background'], colors['color3'], " ", 11),
         memory,
-        get_text_box(colors['background'], colors['foreground'], " ", 14),
+        get_text_box(colors['background'], colors['foreground'], "", 14),
         #clock(colors['background']),
         systray,
         get_sep(0, 10, background=colors['background']),
@@ -243,7 +259,7 @@ def init_widgets_list(screens='work', count=0):
 
 def init_widgets_secondary(screens, count):
     ''' widgets for the secundary Screen '''
-    widgets = init_widgets_list(screens, count)[0:7].copy()
+    widgets = init_widgets_list(screens, count)[0:8].copy()
     widgets.extend([
         clock(colors['background'])
     ])
