@@ -11,6 +11,8 @@ myTerm = "alacritty"      # My terminal of choice
 myFont = "Source Code Pro"
 
 
+customTerm = "alacritty --config-file /home/wally/.config/alacritty/alacritty_scratchpad.yml"
+
 colors = get_theme()
 
 # WIDGETS FOR THE BAR
@@ -32,7 +34,7 @@ py_image = widget.Image(
     background = colors['background'],
     mouse_callbacks = {
         'Button1': lambda: qtile.cmd_spawn(
-            myTerm + ' -t "Qtile Docs" --class qtile_docs --hold -e bat --pager "less" /home/wally/.config/docs/shortcuts.org'
+            customTerm + ' -t "Qtile Docs" --class qtile_docs --hold -e bat --pager "less" /home/wally/.config/docs/shortcuts.org'
     )})
 
 # Groupbox for Display Groups
