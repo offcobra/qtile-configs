@@ -1,5 +1,5 @@
 {
-    "background": ["#353c4a", "#353c4a"],
+    "background": ["#282c34", "#282c34"],
     "foreground": ["#f1ffff", "#f1ffff"],
     "active": ["#a151d3", "#a151d3"],
     "inactive": ["#F07178", "#F07178"],
