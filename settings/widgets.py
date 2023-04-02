@@ -85,6 +85,7 @@ def get_window_name():
     ''' get current window name..'''
     return widget.WindowName(
         font = myFont + " Bold",
+        format = '{name}',
         fontsize = 10,
         foreground = colors['active'],
         background = colors['background']
@@ -109,7 +110,7 @@ vpn_widget = widget.GenPollText(
     fontsize = 10,
     update_interval=2,
     func=lambda: check_vpn(),
-    foreground = colors['foreground'],
+    foreground = colors['active'],
     background = colors['background'],
     mouse_callbacks = {
         'Button1': lambda: qtile.cmd_spawn(myTerm + vpn_toggle()),
@@ -143,11 +144,11 @@ cpu = widget.CPUGraph(
 
 # Termal Sensor
 thermal = widget.ThermalSensor(
-    font = "Noto Sans Bold",
+    font = myFont + " Bold",
     foreground = colors['color4'],
     background = colors['background'],
     foreground_alert = colors['color2'],
-    fontsize=8,
+    fontsize=9,
     bandwidth="down",
     metric = True,
     padding = 3,
@@ -158,7 +159,7 @@ thermal = widget.ThermalSensor(
 
 # NetGraph
 net = widget.NetGraph(
-    font="Noto Sans",
+    font = myFont + " Bold",
     fontsize=12,
     bandwidth="down",
     interface="auto",
@@ -232,20 +233,31 @@ def init_widgets_list(screens='work', count=0):
         get_current_icon_layout(),
         get_window_name(),
         vpn_widget,
-        get_text_box(colors['background'], colors['foreground'], " ", 14),
-        get_text_box(colors['background'], colors['color1'], " ", 10),
-        cpu_widget,
-        cpu,
-        get_text_box(colors['background'], colors['foreground'], " ", 14),
-        get_text_box(colors['background'], colors['color4'], "🌡", 9, cmd=myTerm + ' --hold -t Sensors -e watch sensors'),
-        thermal,
-        get_text_box(colors['background'], colors['foreground'], " ", 14),
-        get_text_box(colors['background'], colors['color2'], " ", 10, cmd="websearch"),
-        net,
-        get_text_box(colors['background'], colors['foreground'], " ", 14),
-        get_text_box(colors['background'], colors['color3'], " ", 11),
-        memory,
-        get_text_box(colors['background'], colors['foreground'], "", 14),
+        widget.WidgetBox(
+            background=colors['background'],
+            font=myFont + " Bold",
+            fontsize=11,
+            text_open="⋟",
+            text_closed="⋞",
+            start_opened=True,
+            widgets=[
+                get_text_box(colors['background'], colors['foreground'], " ", 14),
+                get_text_box(colors['background'], colors['color1'], " ", 10),
+                cpu_widget,
+                cpu,
+                get_text_box(colors['background'], colors['foreground'], " ", 12),
+                get_text_box(colors['background'], colors['color4'], "🌡", 9, cmd=myTerm + ' --hold -t Sensors -e watch sensors'),
+                thermal,
+                get_text_box(colors['background'], colors['foreground'], " ", 14),
+                get_text_box(colors['background'], colors['color2'], " ", 10, cmd="websearch"),
+                net,
+                get_text_box(colors['background'], colors['foreground'], " ", 14),
+                get_text_box(colors['background'], colors['color3'], " ", 11),
+                memory,
+                get_text_box(colors['background'], colors['foreground'], "", 14),
+            ]
+        ),
+        #get_sep(0, 10, background=colors['background']),
         #clock(colors['background']),
         systray,
         get_sep(0, 10, background=colors['background']),

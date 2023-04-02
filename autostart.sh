@@ -26,7 +26,7 @@ xset m 1 0 &
 
 echo "Starting Tray applets..."
 nm-applet &
-pamac-tray &
+#pamac-tray &
 volumeicon &
 #xfce4-power-manager &
 #numlockx on &
@@ -47,3 +47,9 @@ nitrogen --restore &
 
 echo "Start emacs daemon..."
 emacs --daemon &
+
+echo "Start signal in tray"
+signal-desktop --start-in-tray &
+
+echo "Starting Flameshot Screenshot tool"
+flameshot &

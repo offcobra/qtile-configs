@@ -11,8 +11,8 @@ color = get_theme()
 #--------
 def init_layout_theme():
     ''' Set the default Themes for layout.. '''
-    return {"margin":5,
-            "border_width":2,
+    return {"margin":4,
+            "border_width": 2,
             "border_focus": "#E33D1A",
             "border_normal": "#4c566a",
             #"new_client_position": "top"

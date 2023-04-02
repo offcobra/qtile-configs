@@ -42,14 +42,16 @@ keybindings = [
 # Def my own Keybinding
 
     Key([mod], "Return", lazy.spawn("alacritty -e fish"), desc="Alacritty with fish shell"),
-    Key([mod, "shift"], "Return", lazy.spawn("kitty"), desc="Kitty Term with bash"),
-    Key([mod], "p", lazy.spawn("rofi -show run -theme ~/.config/rofi/theme.rasi"), desc="Programm Launcher"),
+    Key([mod, "shift"], "Return", lazy.spawn("alacritty"), desc="Alacritty Term with bash"),
+    Key([mod], "p", lazy.spawn("rofi -m 1 -show run -theme ~/.config/rofi/theme.rasi"), desc="Programm Launcher"),
     Key([mod, "shift"], "p", lazy.spawn("bash /home/wally/.local/bin/websearch"), desc="Websearch Script"),
     Key([mod, "shift"], "b", lazy.hide_show_bar("top"), desc="Toggle Qtile Bar"),
     Key([mod], "f", lazy.spawn("pcmanfm"), desc="File Manager"),
     Key([mod], "s", lazy.spawn("alacritty -e bashtop"), desc="Fancy System Monitor"),
-    Key([mod], "u", lazy.spawn("kitty --hold -e bash /home/wally/.local/bin/update_system"), desc="Update System"),
+    Key([mod], "u", lazy.spawn("alacritty -e bash /home/wally/.local/bin/update_system"), desc="Update System"),
     Key([mod], "z", lazy.spawn("archlinux-logout"), desc="Logout / Restart / Shutdown"),
+    Key([mod], "w", lazy.widget["widgetbox"].toggle(), desc="Toggle the WidgetBox"),
+    Key([mod], "x", lazy.spawn('flameshot gui'), desc="Start screen snipped"),
 
 # KEYCHORD BINDINGS
 # Basic Commands
@@ -73,10 +75,6 @@ keybindings = [
         Key([], "e",
             lazy.spawn("thunderbird"),
             desc='Mail Client'
-            ),
-        Key([], "d",
-            lazy.spawn("discord"),
-            desc='Discord'
             ),
         Key([], "p",
             lazy.spawn("gparted"),
@@ -206,6 +204,10 @@ keybindings = [
             lazy.spawn("bash /home/wally/.local/bin/toggle_picom"),
             desc='Toggle Picom'
             ),
+        Key([], "o",
+            lazy.spawn("bash /home/wally/.local/bin/toggle_conky"),
+            desc='Toggle Conky'
+            ),
         Key([], "b",
             lazy.spawn("bash /home/wally/.local/bin/toggle_cpu"),
             desc='Toggle CPU Guvernor'
@@ -213,6 +215,14 @@ keybindings = [
         Key([], "v",
             lazy.spawn("bash /home/wally/.local/bin/toggle_vpn"),
             desc='Toggle NordVPN'
+            ),
+        Key([], "s",
+            lazy.spawn("bash /home/wally/.local/bin/toggle_service"),
+            desc='Toggle System Service'
+            ),
+        Key([], "q",
+            lazy.spawn("bash /home/wally/.local/bin/toggle_service stop"),
+            desc='Stop all System Services'
             )
     ], name="Toggle Scripts"),
 
@@ -223,7 +233,7 @@ keybindings = [
             desc='Spawns VirtualBox'
             ),
         Key([], "k",
-            lazy.spawn("alacritty -e /home/wally/.local/bin/docker_run"),
+            lazy.spawn("bash /home/wally/.local/bin/docker_run"),
             desc='Spawn and attach to Docker Container'
             ),
         Key([], "d",
@@ -231,15 +241,15 @@ keybindings = [
             desc='Spawn and attach to Vm Distro'
             ),
         Key([], "s",
-            lazy.spawn("alacritty -e /home/wally/.local/bin/stop_docker"),
+            lazy.spawn("bash /home/wally/.local/bin/stop_docker"),
             desc='Remove all docker Container'
             ),
         Key([], "m",
-            lazy.spawn("virt-manager"),
+            lazy.spawn("bash /home/wally/.local/bin/virt-start"),
             desc='Spawns Virt-Manager'
             ),
         Key([], "w",
-            lazy.spawn("gksudo virsh start win10", shell=True),
+            lazy.spawn("bash /home/wally/.local/bin/vms_run win10"),
             desc='Start Windows'
             ),
         Key([], "b",
@@ -247,6 +257,22 @@ keybindings = [
             desc='Spawns Bottles'
             )
     ], name="Virtualization"),
+
+# Chat Programms
+    KeyChord([mod],"i", [
+        Key([], "d",
+            lazy.spawn("discord"),
+            desc='Discord'
+            ),
+        Key([], "s",
+            lazy.spawn("signal-desktop"),
+            desc='Signal'
+            ),
+        Key([], "w",
+            lazy.spawn("whatsapp-nativefier"),
+            desc='Whatsapp'
+            ),
+    ], name="Chating"),
 
 # SUPER + FUNCTION KEYS
 
