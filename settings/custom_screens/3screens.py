@@ -132,9 +132,9 @@ def_groups.extend([
 group_keys.extend([
     Key([mod], "n", lazy.function(prev_room)),
     Key([mod], "m", lazy.function(next_room)),
-    Key([], 'F1', lazy.function(go_to_group("10"))),
-    Key([], 'F2', lazy.function(go_to_group("11"))),
-    Key([], 'F3', lazy.function(go_to_group("12"))),
+    #Key([], 'F1', lazy.function(go_to_group("10"))),
+    #Key([], 'F2', lazy.function(go_to_group("11"))),
+    #Key([], 'F3', lazy.function(go_to_group("12"))),
     Key([], 'F11', lazy.group["01"].dropdown_toggle('editor')),
     Key([], 'F10', lazy.group["00"].dropdown_toggle('term')),
     Key([], 'F12', lazy.group["02"].dropdown_toggle('s_monitor')),

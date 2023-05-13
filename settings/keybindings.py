@@ -232,8 +232,20 @@ keybindings = [
             lazy.spawn("virtualbox"),
             desc='Spawns VirtualBox'
             ),
+        Key([], "u",
+            lazy.spawn("bash /home/wally/.local/bin/container_run ubuntu"),
+            desc='Spawns Ubuntu Container'
+            ),
+        Key([], "p",
+            lazy.spawn("bash /home/wally/.local/bin/container_run parrot"),
+            desc='Spawns ParrotOs Container'
+            ),
+        Key([], "f",
+            lazy.spawn("bash /home/wally/.local/bin/container_run fedora"),
+            desc='Spawns Fedora Container'
+            ),
         Key([], "k",
-            lazy.spawn("bash /home/wally/.local/bin/docker_run"),
+            lazy.spawn("bash /home/wally/.local/bin/container_run"),
             desc='Spawn and attach to Docker Container'
             ),
         Key([], "d",

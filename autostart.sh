@@ -41,6 +41,7 @@ conky -c $HOME/.config/conky/theme.conkyrc
 echo "Auth Agent & Notifyd"
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 /usr/lib/xfce4/notifyd/xfce4-notifyd &
+#dunst &
 
 echo "Setting Wallpapers"
 nitrogen --restore &
