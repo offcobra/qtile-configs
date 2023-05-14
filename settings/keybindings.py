@@ -77,7 +77,7 @@ keybindings = [
             desc='Mail Client'
             ),
         Key([], "p",
-            lazy.spawn("gparted"),
+            lazy.spawn("start-esudo-apps gparted"),
             desc='Gparted'
             ),
         Key([], "t",
