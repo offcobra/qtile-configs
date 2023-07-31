@@ -129,5 +129,5 @@ group_keys.extend([
 
 def get_screens():
     ''' Create the Screens... '''
-    return [Screen(top=bar.Bar(widgets=init_widgets_list('chill', 0), size=15, opacity=1, margin=[4,6,0,6])),
-            Screen(top=bar.Bar(widgets=init_widgets_secondary('chill', 1), size=15, opacity=1, margin=[4,6,0,6]))]
+    return [Screen(top=bar.Bar(widgets=init_widgets_list('chill', 0), size=15, opacity=1, margin=[6,6,0,6])),
+            Screen(top=bar.Bar(widgets=init_widgets_secondary('chill', 1), size=15, opacity=1, margin=[6,6,0,6]))]

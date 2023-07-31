@@ -52,16 +52,18 @@ dgroups_app_rules = []
 
 main = None
 
-@hook.subscribe.startup_once
-def start_once():
-    ''' Start once '''
-    subprocess.call([home + '/.config/qtile/autostart.sh'])
+if qtile.core.name == "x11":
 
-@hook.subscribe.startup
-def start_always():
-    ''' Start always '''
-    # Set the cursor to something sane in X
-    subprocess.Popen(['xsetroot', '-cursor_name', 'left_ptr'])
+    @hook.subscribe.startup_once
+    def start_once():
+        ''' Start once '''
+        subprocess.call([home + '/.config/qtile/autostart.sh'])
+
+    @hook.subscribe.startup
+    def start_always():
+        ''' Start always '''
+        # Set the cursor to something sane in X
+        subprocess.Popen(['xsetroot', '-cursor_name', 'left_ptr'])
 
 @hook.subscribe.client_new
 def set_floating(window):
@@ -97,11 +99,10 @@ floating_layout = layout.Floating(float_rules=[
     Match(wm_class='feh'),
     Match(wm_class='qtile_docs'),
     Match(wm_class='Galculator'),
-    Match(wm_class='archlinux-logout'),
     Match(wm_class='xfce4-terminal'),
     #Match(wm_class='spotify'),
     Match(wm_class='csgo_linux64'),
-    Match(wm_class='Archlinux-logout.py'),
+    Match(wm_class='archlinux-logout.py'),
     #Match(wm_class='ConanSandbox (64-bit, PCD3D_SM5)'),
     Match(wm_class='conky'),
 

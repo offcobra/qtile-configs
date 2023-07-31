@@ -22,7 +22,8 @@ mod1 = "alt"
 
 
 mod2 = "control"
-myTerm = "alacritty"      # My terminal of choice
+#myTerm = "alacritty"      # My terminal of choice
+myTerm = "foot"      # My terminal of choice
 
 
 # Mouse keybindings
@@ -118,10 +119,6 @@ keybindings = [
             ),
         Key([], "d",
             lazy.spawn("emacsclient -c -a 'emacs' --eval '(dired nil)'"),
-            desc='Emacsclient Dired'
-            ),
-        Key([], "p",
-            lazy.spawn("emacsclient -c -a 'emacs' --eval '(dired ~/.config/qtile)'"),
             desc='Emacsclient Dired'
             ),
         Key([], "t",
@@ -296,7 +293,7 @@ keybindings = [
 
 # SUPER + SHIFT KEYS
 
-    #Key([mod, "shift"], "q", lazy.window.kill()),
+    Key([mod, "shift"], "q", lazy.shutdown()),
     Key([mod, "shift"], "r", lazy.restart(), desc="Restart Qtile"),
 
 

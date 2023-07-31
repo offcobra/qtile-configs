@@ -20,9 +20,32 @@
 
 #starting utility applications at boot time
 
-echo "Setting Screen resolution...."
-bash /home/wally/.local/bin/screen_full &
-xset m 1 0 &
+
+if [[ -z $WAYLAND_DISPLAY ]]
+then
+    echo -e "X11 Session detected!!!\n\n"
+
+    echo "Setting Screen resolution...."
+    bash /home/wally/.local/bin/screen_full &
+
+    echo "Fix for GTK Apps starting slow..."
+    /usr/lib/xdg-desktop-portal &
+    /usr/lib/xdg-desktop-portal-gnome &
+
+    dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
+
+    echo "Starting Picom"
+    picom --config $HOME/.config/picom/picom.conf &
+
+    echo "Setting Wallpapers"
+    nitrogen --restore &
+
+    echo "Starting Flameshot Screenshot tool"
+    flameshot &
+
+    echo "Starting Conky"
+    conky -c $HOME/.config/conky/theme.conkyrc
+fi
 
 echo "Starting Tray applets..."
 nm-applet &
@@ -32,19 +55,10 @@ volumeicon &
 #numlockx on &
 #blueberry-tray &
 
-echo "Starting Picom"
-picom --config $HOME/.config/picom/picom.conf &
-
-echo "Starting Conky"
-conky -c $HOME/.config/conky/theme.conkyrc
-
 echo "Auth Agent & Notifyd"
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 /usr/lib/xfce4/notifyd/xfce4-notifyd &
 #dunst &
-
-echo "Setting Wallpapers"
-nitrogen --restore &
 
 echo "Start emacs daemon..."
 emacs --daemon &
@@ -52,5 +66,4 @@ emacs --daemon &
 echo "Start signal in tray"
 signal-desktop --start-in-tray &
 
-echo "Starting Flameshot Screenshot tool"
-flameshot &
+notify-send -t 3000 "Qtile AutoStart" "All Autostart Apps Loaded..."
