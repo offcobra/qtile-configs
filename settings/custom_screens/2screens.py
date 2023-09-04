@@ -26,49 +26,6 @@ group_layouts = [
     "monadtall","monadtall","monadtall","monadtall","monadtall"
 ]
 
-from libqtile.log_utils import logger
-
-DEFAULT_GROUPS = [[1,2], [3,4], [5,6], [7,8]]
-SDEFAULT_GROUPS = [[3,4], [5,6], [7,8], [9, 10]]
-
-def next_room(qtile):
-    ''' Function to chnage all group on screen... '''
-    screens = qtile.screens
-    gfscreen = screens[0].group.name
-    gsscreen = screens[1].group.name
-    if [int(gfscreen), int(gsscreen)] not in DEFAULT_GROUPS:
-        qtile.cmd_to_screen(0)
-        qtile.groups_map['1'].cmd_toscreen()
-        qtile.cmd_to_screen(1)
-        qtile.groups_map['2'].cmd_toscreen()
-
-    else:
-        group = int(gfscreen)
-        qtile.cmd_to_screen(0)
-        qtile.groups_map[str(group + 2)].cmd_toscreen()
-        qtile.cmd_to_screen(1)
-        qtile.groups_map[str(group + 3)].cmd_toscreen()
-
-
-def prev_room(qtile):
-    ''' Function to chnage all group on screen... '''
-    screens = qtile.screens
-    gfscreen = screens[0].group.name
-    gsscreen = screens[1].group.name
-    if [int(gfscreen), int(gsscreen)] not in SDEFAULT_GROUPS:
-        qtile.cmd_to_screen(0)
-        qtile.groups_map['9'].cmd_toscreen()
-        qtile.cmd_to_screen(1)
-        qtile.groups_map['10'].cmd_toscreen()
-
-    else:
-        group = int(gfscreen)
-        qtile.cmd_to_screen(0)
-        qtile.groups_map[str(group - 2)].cmd_toscreen()
-        qtile.cmd_to_screen(1)
-        qtile.groups_map[str(group - 1)].cmd_toscreen()
-
-
 def go_to_group(group):
     ''' Function to focus group on default screen '''
     def f(qtile):
@@ -99,6 +56,27 @@ for i in def_groups:
         Key([mod, "shift"], i.name, lazy.window.togroup(i.name)),
     ])
 
+def window_to_previous_group(qtile):
+    ''' Window to previous Group '''
+    if qtile.current_window is not None:
+        #index = qtile.groups.index(qtile.current_group)
+        index = int(qtile.current_group.name)
+        if index in [1, 3, 5, 7, 9]:
+            qtile.current_window.togroup(qtile.groups[index].name)
+        else:
+            qtile.current_window.togroup(qtile.groups[index - 1].name)
+
+def window_to_next_group(qtile):
+    ''' Window to previous Group '''
+    if qtile.current_window is not None:
+        #index = qtile.groups.index(qtile.current_group)
+        index = int(qtile.current_group.name)
+        if index in [2, 4, 6, 8, 10]:
+            qtile.current_window.togroup(qtile.groups[index].name)
+        else:
+            qtile.current_window.togroup(qtile.groups[index + 1].name)
+
+
 TERM = "alacritty --config-file /home/wally/.config/alacritty/alacritty_scratchpad.yml"
 
 # Testing Scratchpads
@@ -118,8 +96,6 @@ def_groups.extend([
 ])
 
 group_keys.extend([
-    Key([mod], "n", lazy.function(prev_room)),
-    Key([mod], "m", lazy.function(next_room)),
     Key([], 'F11', lazy.group["01"].dropdown_toggle('editor')),
     Key([], 'F10', lazy.group["00"].dropdown_toggle('term')),
     Key([], 'F12', lazy.group["02"].dropdown_toggle('s_monitor')),

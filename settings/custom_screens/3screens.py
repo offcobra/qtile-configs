@@ -25,66 +25,14 @@ group_layouts = [
     "monadtall","monadtall"
 ]
 
-SDEFAULT_GROUPS = [[4, 5, 6], [7, 8, 9], [10, 11, 12]]
-DEFAULT_GROUPS = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-
-
-def next_room(qtile):
-    ''' Function to change all group on screen... '''
-    screens = qtile.screens
-    gfscreen = screens[0].group.name
-    gsscreen = screens[1].group.name
-    gtscreen = screens[2].group.name
-    if [int(gfscreen), int(gsscreen), int(gtscreen)] not in DEFAULT_GROUPS:
-        qtile.cmd_to_screen(0)
-        qtile.groups_map['1'].cmd_toscreen()
-        qtile.cmd_to_screen(1)
-        qtile.groups_map['2'].cmd_toscreen()
-        qtile.cmd_to_screen(2)
-        qtile.groups_map['3'].cmd_toscreen()
-
-    else:
-        group = int(gfscreen)
-        qtile.cmd_to_screen(0)
-        qtile.groups_map[str(group + 3)].cmd_toscreen()
-        qtile.cmd_to_screen(1)
-        qtile.groups_map[str(group + 4)].cmd_toscreen()
-        qtile.cmd_to_screen(2)
-        qtile.groups_map[str(group + 5)].cmd_toscreen()
-
-
-def prev_room(qtile):
-    ''' Function to change all group on screen... '''
-    screens = qtile.screens
-    gfscreen = screens[0].group.name
-    gsscreen = screens[1].group.name
-    gtscreen = screens[2].group.name
-    if [int(gfscreen), int(gsscreen), int(gtscreen)] not in SDEFAULT_GROUPS:
-        qtile.cmd_to_screen(0)
-        qtile.groups_map['10'].cmd_toscreen()
-        qtile.cmd_to_screen(1)
-        qtile.groups_map['11'].cmd_toscreen()
-        qtile.cmd_to_screen(2)
-        qtile.groups_map['12'].cmd_toscreen()
-
-    else:
-        group = int(gfscreen)
-        qtile.cmd_to_screen(0)
-        qtile.groups_map[str(group - 3)].cmd_toscreen()
-        qtile.cmd_to_screen(1)
-        qtile.groups_map[str(group - 2)].cmd_toscreen()
-        qtile.cmd_to_screen(2)
-        qtile.groups_map[str(group - 1)].cmd_toscreen()
-
-
 def go_to_group(group):
     ''' Function to focus group on default screen '''
     def f(qtile):
         if group in ['1', '4', '7', '10']:
-            qtile.cmd_to_screen(0)
+            qtile.cmd_to_screen(1)
             qtile.groups_map[group].cmd_toscreen()
         elif group in ['2', '5', '8', '11']:
-            qtile.cmd_to_screen(1)
+            qtile.cmd_to_screen(0)
             qtile.groups_map[group].cmd_toscreen()
         else:
             qtile.cmd_to_screen(2)
@@ -130,8 +78,6 @@ def_groups.extend([
 ])
 
 group_keys.extend([
-    Key([mod], "n", lazy.function(prev_room)),
-    Key([mod], "m", lazy.function(next_room)),
     #Key([], 'F1', lazy.function(go_to_group("10"))),
     #Key([], 'F2', lazy.function(go_to_group("11"))),
     #Key([], 'F3', lazy.function(go_to_group("12"))),
@@ -142,9 +88,30 @@ group_keys.extend([
 ])
 
 
+def window_to_previous_group(qtile):
+    ''' Window to previous Group '''
+    if qtile.current_window is not None:
+        #index = qtile.groups.index(qtile.current_group)
+        index = int(qtile.current_group.name)
+        if index in [1, 4, 7, 10]:
+            qtile.current_window.togroup(qtile.groups[index + 1].name)
+        else:
+            qtile.current_window.togroup(qtile.groups[index - 2].name)
+
+def window_to_next_group(qtile):
+    ''' Window to previous Group '''
+    if qtile.current_window is not None:
+        #index = qtile.groups.index(qtile.current_group)
+        index = int(qtile.current_group.name)
+        if index in [3, 6, 9, 12]:
+            qtile.current_window.togroup(qtile.groups[index - 3].name)
+        else:
+            qtile.current_window.togroup(qtile.groups[index].name)
+
+
 def get_screens():
     ''' Create the Screens... '''
-    return [Screen(top=bar.Bar(widgets=init_widgets_list('full', 0), size=15, opacity=1, margin=[4,6,0,4])),
-            Screen(top=bar.Bar(widgets=init_widgets_secondary('full', 1), size=15, opacity=1, margin=[4,6,0,4])),
-            Screen(top=bar.Bar(widgets=init_widgets_secondary('full', 2), size=15, opacity=1, margin=[4,6,0,4]))
-            ]
+    screen_main = Screen(top=bar.Bar(widgets=init_widgets_list('full', 0), size=15, opacity=1, margin=[4,6,0,4]))
+    screen_1 = Screen(top=bar.Bar(widgets=init_widgets_secondary('full', 1), size=15, opacity=1, margin=[4,6,0,4]))
+    screen_2 = Screen(top=bar.Bar(widgets=init_widgets_secondary('full', 2), size=15, opacity=1, margin=[4,6,0,4]))
+    return [screen_1, screen_main, screen_2]

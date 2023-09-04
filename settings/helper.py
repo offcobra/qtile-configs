@@ -1,6 +1,7 @@
 ''' Module to host the helder Functions. '''
 from random import randint
 
+import netifaces
 import subprocess
 
 
@@ -68,12 +69,11 @@ def get_vpn_data():
 
 def check_vpn():
     ''' Check if VPN is Actrive '''
-    cmd = 'ip addr'
-    process = subprocess.run(cmd.split(), stdout=subprocess.PIPE, check=True).stdout.decode('utf-8')
+    process = netifaces.interfaces()
     if 'nordlynx' in process:
         result = '⮝ vpn: NordVPN => ' + get_vpn_data()
     elif 'tun0' in process:
-        result = '⮝ vpn: HackTheBox '
+        result = '⮝ vpn: HackTheBox => {} '.format(netifaces.ifaddresses('tun0')[2][0]['addr'])
     else:
         result = '⮝ vpn: no '
     return result

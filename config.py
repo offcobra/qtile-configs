@@ -52,17 +52,30 @@ dgroups_app_rules = []
 
 main = None
 
-if qtile.core.name == "x11":
+from libqtile.backend.wayland import InputConfig
 
-    @hook.subscribe.startup_once
-    def start_once():
-        ''' Start once '''
+wl_input_rules = {
+    "5426:599:Razer Razer Huntsman Mini": InputConfig(kb_layout='de'),
+    "4152:6224:SteelSeries SteelSeries Aerox 5": InputConfig(accel_profile='flat'),
+    "*": InputConfig(left_handed=True, pointer_accel=True),
+}
+
+
+@hook.subscribe.startup_once
+def start_once():
+    ''' Start once '''
+    if qtile.core.name == "x11":
         subprocess.call([home + '/.config/qtile/autostart.sh'])
+    else:
+        subprocess.call([home + '/.config/qtile/qautostart.sh'])
+        print('Start Wayland stuff...')
 
-    @hook.subscribe.startup
-    def start_always():
-        ''' Start always '''
-        # Set the cursor to something sane in X
+
+@hook.subscribe.startup
+def start_always():
+    ''' Start always '''
+    # Set the cursor to something sane in X
+    if qtile.core.name == "x11":
         subprocess.Popen(['xsetroot', '-cursor_name', 'left_ptr'])
 
 @hook.subscribe.client_new

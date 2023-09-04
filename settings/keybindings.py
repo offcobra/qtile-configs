@@ -5,15 +5,11 @@ from libqtile.config import Drag, Key, KeyChord
 # Custom plugin
 from settings import traverse
 
-from settings.helper import (
-    to_next,
-    to_prev,
-    toggle_cpu,
-    window_to_next_screen,
-    window_to_previous_screen
+from settings.screens import (
+    group_keys,
+    window_to_next_group,
+    window_to_previous_group
 )
-from settings.screens import group_keys
-
 
 
 #mod4 or mod = super key
@@ -44,7 +40,7 @@ keybindings = [
 
     Key([mod], "Return", lazy.spawn("alacritty -e fish"), desc="Alacritty with fish shell"),
     Key([mod, "shift"], "Return", lazy.spawn("alacritty"), desc="Alacritty Term with bash"),
-    Key([mod], "p", lazy.spawn("rofi -m 1 -show run -theme ~/.config/rofi/theme.rasi"), desc="Programm Launcher"),
+    Key([mod], "p", lazy.spawn("rofi -show run -theme ~/.config/rofi/theme.rasi"), desc="Programm Launcher"),
     Key([mod, "shift"], "p", lazy.spawn("bash /home/wally/.local/bin/websearch"), desc="Websearch Script"),
     Key([mod, "shift"], "b", lazy.hide_show_bar("top"), desc="Toggle Qtile Bar"),
     Key([mod], "f", lazy.spawn("pcmanfm"), desc="File Manager"),
@@ -281,6 +277,10 @@ keybindings = [
             lazy.spawn("whatsapp-nativefier"),
             desc='Whatsapp'
             ),
+        Key([], "t",
+            lazy.spawn("teamspeak"),
+            desc='TeamSpeak'
+            ),
     ], name="Chating"),
 
 # SUPER + FUNCTION KEYS
@@ -346,8 +346,8 @@ keybindings = [
     Key([mod, "control"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
 
     # MOVE WINDOW TO NEXT SCREEN
-    Key([mod,"shift"], "l", lazy.function(window_to_next_screen, switch_screen=True)),
-    Key([mod,"shift"], "h", lazy.function(window_to_previous_screen, switch_screen=True)),
+    Key([mod,"shift"], "l", lazy.function(window_to_next_group)),
+    Key([mod,"shift"], "h", lazy.function(window_to_previous_group)),
 
 ]
 keybindings.extend(group_keys)

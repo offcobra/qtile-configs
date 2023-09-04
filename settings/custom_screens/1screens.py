@@ -56,6 +56,14 @@ for i in def_groups:
 
 TERM = "alacritty --config-file /home/wally/.config/alacritty/alacritty_scratchpad.yml"
 
+def window_to_previous_group(qtile):
+    ''' Window to previous Group '''
+    pass
+
+def window_to_next_group(qtile):
+    ''' Window to previous Group '''
+    pass
+
 # Testing Scratchpads
 def_groups.extend([
     ScratchPad("00", [

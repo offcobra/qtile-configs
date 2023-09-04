@@ -197,7 +197,8 @@ def clock(backc):
     )
 
 # SysTray
-systray = widget.Systray(
+#systray = widget.Systray(
+systray = widget.StatusNotifier(
     background = colors['background'],
     icon_size=14,
     padding = 7,

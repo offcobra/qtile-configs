@@ -19,46 +19,35 @@
 #run variety -> To cycle wallpapers
 
 #starting utility applications at boot time
-# For X11
-
-echo "Setting Screen resolution...."
-bash /home/wally/.local/bin/screen_full &
-
-echo "Fix for GTK Apps starting slow..."
-/usr/lib/xdg-desktop-portal &
-/usr/lib/xdg-desktop-portal-gnome &
-
-dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
-
-echo "Starting Picom"
-picom --config $HOME/.config/picom/picom.conf &
-
-echo "Setting Wallpapers"
-nitrogen --restore &
-
-echo "Starting Flameshot Screenshot tool"
-flameshot &
-
-echo "Starting Conky"
-conky -c $HOME/.config/conky/theme.conkyrc
-
-echo "Starting Tray applets..."
-nm-applet &
-#pamac-tray &
-volumeicon &
-#xfce4-power-manager &
-#numlockx on &
-#blueberry-tray &
+# For Wayland
 
 echo "Auth Agent & Notifyd"
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 #/usr/lib/xfce4/notifyd/xfce4-notifyd &
 dunst &
 
+echo "Setting Screen resolution...."
+bash /home/wally/.local/bin/screen_full &
+
 echo "Start emacs daemon..."
 emacs --daemon &
 
-echo "Start signal in tray"
+#echo "Setting Wallpapers"
+#hyprpaper &
+
+#echo "Start XDG for Wayland..."
+#/usr/lib/xdg-desktop-portal-hyprland &
+
+echo "Starting Tray applets..."
 signal-desktop --start-in-tray &
 
-notify-send -t 3000 "Qtile AutoStart" "All Autostart Apps Loaded..."
+#nm-applet &
+##pamac-tray &
+#volumeicon &
+##xfce4-power-manager &
+##numlockx on &
+##blueberry-tray &
+#
+#
+
+#notify-send -t 3000 "Qtile AutoStart" "All Autostart Apps Loaded..."
