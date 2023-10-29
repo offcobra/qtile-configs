@@ -50,6 +50,10 @@ keybindings = [
     Key([mod], "w", lazy.widget["widgetbox"].toggle(), desc="Toggle the WidgetBox"),
     Key([mod], "x", lazy.spawn('flameshot gui'), desc="Start screen snipped"),
 
+    Key([], "xf86audioraisevolume", lazy.spawn('amixer sset Master 5%+'), desc="Raise Volume..."),
+    Key([], "xf86audiolowervolume", lazy.spawn('amixer sset Master 5%-'), desc="Lower Volume..."),
+    Key([], "xf86audiomute", lazy.spawn('amixer sset Master 0'), desc="Lower Volume..."),
+
 # KEYCHORD BINDINGS
 # Basic Commands
     KeyChord([mod],"g", [

@@ -29,10 +29,10 @@ def go_to_group(group):
     ''' Function to focus group on default screen '''
     def f(qtile):
         if group in ['1', '4', '7', '10']:
-            qtile.cmd_to_screen(1)
+            qtile.cmd_to_screen(0)
             qtile.groups_map[group].cmd_toscreen()
         elif group in ['2', '5', '8', '11']:
-            qtile.cmd_to_screen(0)
+            qtile.cmd_to_screen(1)
             qtile.groups_map[group].cmd_toscreen()
         else:
             qtile.cmd_to_screen(2)
@@ -114,4 +114,4 @@ def get_screens():
     screen_main = Screen(top=bar.Bar(widgets=init_widgets_list('full', 0), size=15, opacity=1, margin=[4,6,0,4]))
     screen_1 = Screen(top=bar.Bar(widgets=init_widgets_secondary('full', 1), size=15, opacity=1, margin=[4,6,0,4]))
     screen_2 = Screen(top=bar.Bar(widgets=init_widgets_secondary('full', 2), size=15, opacity=1, margin=[4,6,0,4]))
-    return [screen_1, screen_main, screen_2]
+    return [screen_main, screen_1, screen_2]
