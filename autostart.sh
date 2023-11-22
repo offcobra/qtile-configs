@@ -22,7 +22,7 @@
 # For X11
 
 echo "Setting Screen resolution...."
-bash /home/wally/.local/bin/screen_full &
+bash /home/wally/.local/bin/screen_work &
 
 echo "Fix for GTK Apps starting slow..."
 /usr/lib/xdg-desktop-portal &
@@ -30,8 +30,8 @@ echo "Fix for GTK Apps starting slow..."
 
 dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
 
-echo "Starting Picom"
-picom --config $HOME/.config/picom/picom.conf &
+#echo "Starting Picom"
+#picom --config $HOME/.config/picom/picom.conf &
 
 echo "Setting Wallpapers"
 nitrogen --restore &
@@ -39,13 +39,13 @@ nitrogen --restore &
 echo "Starting Flameshot Screenshot tool"
 flameshot &
 
-echo "Starting Conky"
-conky -c $HOME/.config/conky/theme.conkyrc
+#echo "Starting Conky"
+#conky -c $HOME/.config/conky/theme.conkyrc
 
-echo "Starting Tray applets..."
-nm-applet &
+#echo "Starting Tray applets..."
+#nm-applet &
 #pamac-tray &
-volumeicon &
+#volumeicon &
 #xfce4-power-manager &
 #numlockx on &
 #blueberry-tray &
@@ -56,9 +56,12 @@ echo "Auth Agent & Notifyd"
 dunst &
 
 echo "Start emacs daemon..."
-emacs --daemon &
+docker_exec emacs --daemon &
+
+echo "Starting Apps Conatiner..."
+xhost +local:*
 
 echo "Start signal in tray"
-signal-desktop --start-in-tray &
+flatpak run org.signal.Signal --start-in-tray &
 
 notify-send -t 3000 "Qtile AutoStart" "All Autostart Apps Loaded..."

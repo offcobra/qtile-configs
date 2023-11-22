@@ -64,13 +64,10 @@ TERM = "alacritty --config-file /home/wally/.config/alacritty/alacritty_scratchp
 # Testing Scratchpads
 def_groups.extend([
     ScratchPad("00", [
-        DropDown("term", TERM + ' -e fish', opacity=0.8)
+        DropDown("term", TERM, opacity=0.8)
     ]),
     ScratchPad("02", [
-        DropDown("s_monitor", TERM + " -e vtop", opacity=0.8)
-    ]),
-    ScratchPad("03", [
-        DropDown("c_monitor", TERM + " -e ctop", opacity=0.8)
+        DropDown("s_monitor", TERM + " -e btm", opacity=0.8)
     ]),
     ScratchPad("01", [
         DropDown("editor", TERM + " -e vim /home/wally/todo.txt", opacity=0.8)
@@ -84,7 +81,6 @@ group_keys.extend([
     Key([], 'F11', lazy.group["01"].dropdown_toggle('editor')),
     Key([], 'F10', lazy.group["00"].dropdown_toggle('term')),
     Key([], 'F12', lazy.group["02"].dropdown_toggle('s_monitor')),
-    Key([], 'F9', lazy.group["03"].dropdown_toggle('c_monitor')),
 ])
 
 

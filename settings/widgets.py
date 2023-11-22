@@ -27,9 +27,8 @@ def get_sep(width, pad=5, background=colors['background']):
 # Display Python Image
 py_image = widget.Image(
     #filename = "~/.config/qtile/icons/python-white.png",
-    #filename = "~/.config/arco_icons/start-here-arcolinux.svg",
-    filename = "~/.config/arco_icons/start-here-arcolinux-orange.svg",
-    #filename = "~/.config/arco_icons/arcolinux-logo.svg",
+    #filename = "~/.config/arco_icons/start-here-arcolinux-orange.svg",
+    filename = "~/.config/arco_icons/debian3.png",
     scale = True,
     background = colors['background'],
     mouse_callbacks = {
@@ -43,7 +42,7 @@ def get_group_box(visible_groups):
     groupbox = widget.GroupBox(
         font = myFont + ' Bold',
         visible_groups = visible_groups,
-        fontsize = 8,
+        fontsize = 7,
         margin_y = 4,
         margin_x = 0,
         padding_y = 5,
@@ -64,7 +63,7 @@ def get_group_box(visible_groups):
 def get_current_layout():
     return widget.CurrentLayout(
         font = myFont + " Bold",
-        fontsize = 10,
+        fontsize = 8,
         foreground = colors['color1'],
         background = colors['background']
     )
@@ -75,7 +74,7 @@ def get_current_icon_layout():
         current_icon_path = ["/home/wally/.config/qtile/icons"],
         font = myFont + " Bold",
         scale = 0.7,
-        fontsize = 8,
+        fontsize = 6,
         foreground = colors['color1'],
         background = colors['background']
     )
@@ -86,7 +85,7 @@ def get_window_name():
     return widget.WindowName(
         font = myFont + " Bold",
         format = '{name}',
-        fontsize = 10,
+        fontsize = 8,
         foreground = colors['active'],
         background = colors['background']
     )
@@ -107,7 +106,7 @@ def get_text_box(backc, forec, txt='', size=37, cmd=''):
 # Genn Pool Text
 vpn_widget = widget.GenPollText(
     font = myFont + " Bold",
-    fontsize = 10,
+    fontsize = 8,
     update_interval=2,
     func=lambda: check_vpn(),
     foreground = colors['active'],
@@ -160,7 +159,7 @@ thermal = widget.ThermalSensor(
 # NetGraph
 net = widget.NetGraph(
     font = myFont + " Bold",
-    fontsize=12,
+    fontsize=10,
     bandwidth="down",
     interface="auto",
     foreground = colors['foreground'],
@@ -191,14 +190,14 @@ def clock(backc):
         font = myFont + " Bold",
         foreground = colors['color1'],
         background = backc,
-        fontsize = 11,
+        fontsize = 9,
         format="%H:%M %d-%m-%Y ",
         mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -t Calender -e cal -y')}
     )
 
 # SysTray
 #systray = widget.Systray(
-systray = widget.StatusNotifier(
+systray = widget.Systray(
     background = colors['background'],
     icon_size=14,
     padding = 7,
@@ -226,7 +225,8 @@ def init_widgets_list(screens='work', count=0):
 
     widgets_list = [
         get_sep(0, 10),
-        py_image,
+        get_text_box(colors['background'], colors['inactive'], " ", 13),
+        #py_image,
         get_sep(0, 5),
         get_group_box([str(x) for x in groups[str(count)]]),
         get_sep(0, 5),
@@ -246,9 +246,6 @@ def init_widgets_list(screens='work', count=0):
                 get_text_box(colors['background'], colors['color1'], " ", 10),
                 cpu_widget,
                 cpu,
-                get_text_box(colors['background'], colors['foreground'], " ", 12),
-                get_text_box(colors['background'], colors['color4'], "🌡", 9, cmd=myTerm + ' --hold -t Sensors -e watch sensors'),
-                thermal,
                 get_text_box(colors['background'], colors['foreground'], " ", 14),
                 get_text_box(colors['background'], colors['color2'], " ", 10, cmd="websearch"),
                 net,

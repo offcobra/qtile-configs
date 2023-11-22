@@ -29,7 +29,6 @@ set_docs()
 
 home = os.path.expanduser('~')
 
-
 # KeyBindings
 keys = keybindings
 
@@ -52,13 +51,13 @@ dgroups_app_rules = []
 
 main = None
 
-from libqtile.backend.wayland import InputConfig
+#from libqtile.backend.wayland import InputConfig
 
-wl_input_rules = {
-    "5426:599:Razer Razer Huntsman Mini": InputConfig(kb_layout='de'),
-    "4152:6224:SteelSeries SteelSeries Aerox 5": InputConfig(accel_profile='flat'),
-    "*": InputConfig(left_handed=True, pointer_accel=True),
-}
+#wl_input_rules = {
+#    "5426:599:Razer Razer Huntsman Mini": InputConfig(kb_layout='de'),
+#    "4152:6224:SteelSeries SteelSeries Aerox 5": InputConfig(accel_profile='flat'),
+#    "*": InputConfig(left_handed=True, pointer_accel=True),
+#}
 
 
 @hook.subscribe.startup_once

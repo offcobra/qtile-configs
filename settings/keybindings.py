@@ -38,13 +38,13 @@ keybindings = [
 # BASIC KEYBINDINGS
 # Def my own Keybinding
 
-    Key([mod], "Return", lazy.spawn("alacritty -e fish"), desc="Alacritty with fish shell"),
-    Key([mod, "shift"], "Return", lazy.spawn("alacritty"), desc="Alacritty Term with bash"),
+    Key([mod], "Return", lazy.spawn("alacritty"), desc="Alacritty with fish shell"),
+    Key([mod, "shift"], "Return", lazy.spawn("container_run blackarch"), desc="Alacritty Term with bash"),
     Key([mod], "p", lazy.spawn("rofi -show run -theme ~/.config/rofi/theme.rasi"), desc="Programm Launcher"),
     Key([mod, "shift"], "p", lazy.spawn("bash /home/wally/.local/bin/websearch"), desc="Websearch Script"),
     Key([mod, "shift"], "b", lazy.hide_show_bar("top"), desc="Toggle Qtile Bar"),
-    Key([mod], "f", lazy.spawn("pcmanfm"), desc="File Manager"),
-    Key([mod], "s", lazy.spawn("alacritty -e bashtop"), desc="Fancy System Monitor"),
+    Key([mod], "f", lazy.spawn("docker_exec pcmanfm -n /home/wally"), desc="File Manager"),
+    Key([mod], "s", lazy.spawn("alacritty -e btm"), desc="Fancy System Monitor"),
     Key([mod], "u", lazy.spawn("alacritty -e bash /home/wally/.local/bin/update_system"), desc="Update System"),
     Key([mod], "z", lazy.spawn("archlinux-logout"), desc="Logout / Restart / Shutdown"),
     Key([mod], "w", lazy.widget["widgetbox"].toggle(), desc="Toggle the WidgetBox"),
@@ -57,233 +57,149 @@ keybindings = [
 # KEYCHORD BINDINGS
 # Basic Commands
     KeyChord([mod],"g", [
-        Key([], "g",
-            lazy.spawn("bash /home/wally/.local/bin/steam_start"),
-            desc='steam'
-            ),
-        Key([], "u",
-            lazy.spawn("/home/wally/.local/web_app/youtube-linux-x64/youtube"),
-            desc='Youtube'
-            ),
-        Key([], "v",
-            lazy.spawn("pavucontrol"),
-            desc='Pavucontrol'
-            ),
-        Key([], "s",
-            lazy.spawn("spotify"),
-            desc='Spotify Music'
-            ),
-        Key([], "e",
-            lazy.spawn("thunderbird"),
-            desc='Mail Client'
-            ),
-        Key([], "p",
-            lazy.spawn("start-esudo-apps gparted"),
-            desc='Gparted'
-            ),
-        Key([], "t",
-            lazy.spawn("bash /home/wally/.local/bin/tweak_theme"),
-            desc='Launch GTK & QT tweaks Tools'
-            ),
-        Key([], "w",
-            lazy.spawn("bash /home/wally/.local/bin/movie_time"),
-            desc='Launch PopCornTime'
-            ),
-        Key([], "m",
-            lazy.spawn("piper"),
-            desc='Launch Piper mouse control'
-            ),
-        Key([], "a",
-            lazy.spawn("archlinux-tweak-tool"),
-            desc='ArcoTweakTool'
-            ),
         Key([], "o",
             lazy.spawn("nitrogen"),
             desc='Nitrogen'
+            ),
+        Key([], "k",
+            lazy.spawn("docker_exec keepassxc"),
+            desc='KeepassXC'
+            ),
+        Key([], "t",
+            lazy.spawn("docker_exec lxappearance"),
+            desc='LXAppearance'
+            ),
+        Key([], "h",
+            lazy.spawn("docker_exec bitwarden-desktop"),
+            desc='Bitwarden Desktop'
+            ),
+        Key([], "s",
+            lazy.spawn("termius-app"),
+            desc='Termius Ssh Client'
             )
     ], name="Common Programms"),
 
 # Emacs
     KeyChord([mod],"e", [
         Key([], "e",
-            lazy.spawn("emacsclient -c -a 'emacs'"),
+            lazy.spawn("docker_exec emacsclient -c -a 'emacs'"),
             desc='Emacsclient Dashboard'
             ),
         Key([], "b",
-            lazy.spawn("emacsclient -c -a 'emacs' --eval '(ibuffer)'"),
+            lazy.spawn("docker_exec emacsclient -c -a 'emacs' --eval '(ibuffer)'"),
             desc='Emacsclient Ibuffer'
             ),
         Key([], "r",
-            lazy.spawn("emacsclient -c -a 'emacs' --eval '(doom/reload)'"),
+            lazy.spawn("docker_exec emacsclient -c -a 'emacs' --eval '(doom/reload)'"),
             desc='Emacsclient Ibuffer'
             ),
         Key([], "d",
-            lazy.spawn("emacsclient -c -a 'emacs' --eval '(dired nil)'"),
+            lazy.spawn("docker_exec emacsclient -c -a 'emacs' --eval '(dired nil)'"),
             desc='Emacsclient Dired'
             ),
         Key([], "t",
-            lazy.spawn("emacsclient -c -a 'emacs' --eval '(+vterm/here nil)'"),
+            lazy.spawn("docker_exec emacsclient -c -a 'emacs' --eval '(+vterm/here nil)'"),
             desc='Emacsclient Vterm'
             )
     ], name="Emacs"),
 
-# Crypto Stuff
-    KeyChord([mod],"c", [
-        Key([], "b",
-            lazy.spawn("binance"),
-            desc='Binance Trading'
-            ),
-        Key([], "c",
-            lazy.spawn("qutebrowser https://coinmarketcap.com/"),
-            desc='CoinMarketCap'
-            ),
-        Key([], "p",
-            lazy.spawn("qutebrowser https://mail.proton.me"),
-            desc='ProtonMail'
-            ),
-        Key([], "e",
-            lazy.spawn("exodus"),
-            desc='Crypto Wallet'
-            )
-    ], name="Crypto Stuff"),
-
 # Browser
     KeyChord([mod],"b", [
         Key([], "b",
-            lazy.spawn("brave"),
+            lazy.spawn("flatpak run com.brave.Browser"),
             desc='Brave'
             ),
         Key([], "i",
-            lazy.spawn("brave --incognito"),
+            lazy.spawn("flatpak run com.brave.Browser --incognito"),
             desc='Brave Incognito'
             ),
-        Key([], "f",
-            lazy.spawn("firefox"),
-            desc='Firefox'
-            ),
-        Key([], "h",
-            lazy.spawn("firefox --private-window"),
-            desc='Firefox Incognito'
-            ),
-        Key([], "l",
-            lazy.spawn("librewolf"),
-            desc='Librewolf'
-            ),
         Key([], "o",
-            lazy.spawn("qutebrowser"),
+            lazy.spawn("flatpak run org.qutebrowser.qutebrowser -C /home/wally/.config/qutebrowser/config.py"),
             desc='QuteBrowser'
             ),
-        Key([], "p",
-            lazy.spawn("librewolf --private-window"),
-            desc='Librewolf Incognito'
-            )
+        Key([], "s",
+            lazy.spawn("flatpak run com.github.tchx84.Flatseal"),
+            desc='Fllatseal'
+            ),
     ], name="Browsers"),
 
 # Monitor Resolution / Picom toggle
     KeyChord([mod],"t", [
         Key([], "t",
-            lazy.spawn("bash /home/wally/.local/bin/theme_choose"),
+            lazy.spawn("theme_choose"),
             desc='Toggle / Choose Global Theme...'
             ),
         Key([], "f",
-            lazy.spawn("bash /home/wally/.local/bin/screen_full"),
+            lazy.spawn("screen_full"),
             desc='Monitors in full mode'
             ),
         Key([], "c",
-            lazy.spawn("bash /home/wally/.local/bin/screen_chill"),
+            lazy.spawn("screen_chill"),
             desc='Monitors in chill mode'
             ),
         Key([], "w",
-            lazy.spawn("bash /home/wally/.local/bin/screen_work"),
+            lazy.spawn("screen_work"),
             desc='Monitors in work mode'
             ),
-        Key([], "p",
-            lazy.spawn("bash /home/wally/.local/bin/toggle_picom"),
-            desc='Toggle Picom'
-            ),
-        Key([], "o",
-            lazy.spawn("bash /home/wally/.local/bin/toggle_conky"),
-            desc='Toggle Conky'
-            ),
-        Key([], "b",
-            lazy.spawn("bash /home/wally/.local/bin/toggle_cpu"),
-            desc='Toggle CPU Guvernor'
-            ),
         Key([], "v",
-            lazy.spawn("bash /home/wally/.local/bin/toggle_vpn"),
+            lazy.spawn("toggle_vpn"),
             desc='Toggle NordVPN'
             ),
         Key([], "s",
-            lazy.spawn("bash /home/wally/.local/bin/toggle_service"),
+            lazy.spawn("toggle_service"),
             desc='Toggle System Service'
             ),
         Key([], "q",
-            lazy.spawn("bash /home/wally/.local/bin/toggle_service stop"),
+            lazy.spawn("toggle_service stop"),
             desc='Stop all System Services'
             )
     ], name="Toggle Scripts"),
 
 # Virtualization
     KeyChord([mod],"v", [
-        Key([], "v",
-            lazy.spawn("virtualbox"),
-            desc='Spawns VirtualBox'
-            ),
-        Key([], "u",
-            lazy.spawn("bash /home/wally/.local/bin/container_run ubuntu"),
+        Key([], "a",
+            lazy.spawn("container_run apps"),
             desc='Spawns Ubuntu Container'
             ),
+        Key([], "u",
+            lazy.spawn("container_run ubuntu"),
+            desc='Spawns Ubuntu Container'
+            ),
+        Key([], "d",
+            lazy.spawn("container_run debian"),
+            desc='Spawns Debian Container'
+            ),
+        Key([], "o",
+            lazy.spawn("container_run opensuse"),
+            desc='Spawns opensuse Container'
+            ),
         Key([], "p",
-            lazy.spawn("bash /home/wally/.local/bin/container_run parrot"),
+            lazy.spawn("container_run parrot"),
             desc='Spawns ParrotOs Container'
             ),
         Key([], "f",
-            lazy.spawn("bash /home/wally/.local/bin/container_run fedora"),
+            lazy.spawn("container_run fedora"),
             desc='Spawns Fedora Container'
             ),
         Key([], "k",
-            lazy.spawn("bash /home/wally/.local/bin/container_run"),
+            lazy.spawn("container_run"),
             desc='Spawn and attach to Docker Container'
             ),
-        Key([], "d",
-            lazy.spawn("bash /home/wally/.local/bin/vms_run"),
-            desc='Spawn and attach to Vm Distro'
-            ),
         Key([], "s",
-            lazy.spawn("bash /home/wally/.local/bin/stop_docker"),
+            lazy.spawn("stop_docker"),
             desc='Remove all docker Container'
             ),
-        Key([], "m",
-            lazy.spawn("bash /home/wally/.local/bin/virt-start"),
-            desc='Spawns Virt-Manager'
-            ),
-        Key([], "w",
-            lazy.spawn("bash /home/wally/.local/bin/vms_run win10"),
-            desc='Start Windows'
-            ),
-        Key([], "b",
-            lazy.spawn("flatpak run com.usebottles.bottles"),
-            desc='Spawns Bottles'
-            )
     ], name="Virtualization"),
 
 # Chat Programms
     KeyChord([mod],"i", [
-        Key([], "d",
-            lazy.spawn("discord"),
-            desc='Discord'
-            ),
         Key([], "s",
-            lazy.spawn("signal-desktop"),
+            lazy.spawn("flatpak run org.signal.Signal"),
             desc='Signal'
             ),
         Key([], "w",
             lazy.spawn("whatsapp-nativefier"),
             desc='Whatsapp'
-            ),
-        Key([], "t",
-            lazy.spawn("teamspeak"),
-            desc='TeamSpeak'
             ),
     ], name="Chating"),
 
