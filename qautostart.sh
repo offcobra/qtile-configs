@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ##### ===-->> Qtile autostart Config <<--=== ######
 #------------------
@@ -22,24 +22,25 @@
 # For Wayland
 
 echo "Auth Agent & Notifyd"
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+#/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 #/usr/lib/xfce4/notifyd/xfce4-notifyd &
 dunst &
 
 echo "Setting Screen resolution...."
-bash /home/wally/.local/bin/screen_full &
+#bash /home/wally/.local/bin/screen_full &
 
 echo "Start emacs daemon..."
-emacs --daemon &
+#emacs --daemon &
 
-#echo "Setting Wallpapers"
-#hyprpaper &
+echo "Setting Wallpapers"
+hyprpaper &
 
 #echo "Start XDG for Wayland..."
 #/usr/lib/xdg-desktop-portal-hyprland &
 
 echo "Starting Tray applets..."
-signal-desktop --start-in-tray &
+flatpak run org.signal.Signal --start-in-tray &
+flatpak run io.github.mimbrero.WhatsAppDesktop --start-hidden
 
 #nm-applet &
 ##pamac-tray &

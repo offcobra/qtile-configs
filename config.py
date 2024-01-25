@@ -22,10 +22,10 @@ from libqtile.config import Match
 from settings.keybindings import keybindings, mouse_keys
 from settings.screens import def_groups, get_screens
 from settings.layouts import def_layouts
-from settings.docs import set_docs
+#from settings.docs import set_docs
 
 # run Kewybindings Documentation
-set_docs()
+#set_docs()
 
 home = os.path.expanduser('~')
 
@@ -67,7 +67,7 @@ def start_once():
         subprocess.call([home + '/.config/qtile/autostart.sh'])
     else:
         subprocess.call([home + '/.config/qtile/qautostart.sh'])
-        print('Start Wayland stuff...')
+        #print('Start Wayland stuff...')
 
 
 @hook.subscribe.startup

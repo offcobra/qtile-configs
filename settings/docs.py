@@ -3,7 +3,7 @@ import os
 
 from libqtile.config import Key, KeyChord
 
-from prettytable import PrettyTable
+#from prettytable import PrettyTable
 
 from settings.keybindings import keybindings
 
@@ -93,18 +93,18 @@ def pretty_print(keys):
         tables.append(pretty)
     return tables
 
-def set_docs():
-    ''' Function to be called on every reload '''
-    if check_3screens():
-        # clear file
-        open(DOCS, 'w').close()
-        tables = pretty_print(keybindings)
-        with open(DOCS, 'a', encoding='utf-8') as f_docs:
-            for tab in tables:
-                f_docs.write(' \n')
-                f_docs.write(str(tab))
-                f_docs.write(' \n')
-
+#def set_docs():
+#    ''' Function to be called on every reload '''
+#    if check_3screens():
+#        # clear file
+#        open(DOCS, 'w').close()
+#        tables = pretty_print(keybindings)
+#        with open(DOCS, 'a', encoding='utf-8') as f_docs:
+#            for tab in tables:
+#                f_docs.write(' \n')
+#                f_docs.write(str(tab))
+#                f_docs.write(' \n')
+#
 
 
 if __name__ == '__main__':

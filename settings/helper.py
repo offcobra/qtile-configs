@@ -1,7 +1,7 @@
 ''' Module to host the helder Functions. '''
 from random import randint
 
-import netifaces
+#import netifaces
 import subprocess
 
 
@@ -67,34 +67,34 @@ def get_vpn_data():
     return result
 
 
-def check_vpn():
-    ''' Check if VPN is Actrive '''
-    process = netifaces.interfaces()
-    if 'nordlynx' in process:
-        result = '⮝ vpn: NordVPN => ' + get_vpn_data()
-    elif 'tun0' in process:
-        result = '⮝ vpn: HackTheBox => {} '.format(netifaces.ifaddresses('tun0')[2][0]['addr'])
-    else:
-        result = '⮝ vpn: no '
-    return result
-
-
-def vpn_toggle():
-    ''' Toggles the VPN connection to NordVpn '''
-    status = check_vpn()
-    if 'no' in status:
-        country = COUNTRIES[randint(0, len(COUNTRIES) - 1)]
-        response = f" -e nordvpn connect {country}"
-    elif 'NordVPN' in status:
-        response = " -e nordvpn disconnect"
-    else:
-        response = " --hold -e echo '#=-> Nothing to do... Status unknown!!! '"
-    return response
-
+#def check_vpn():
+#    ''' Check if VPN is Actrive '''
+#    process = netifaces.interfaces()
+#    if 'nordlynx' in process:
+#        result = '⮝ vpn: NordVPN => ' + get_vpn_data()
+#    elif 'tun0' in process:
+#        result = '⮝ vpn: HackTheBox => {} '.format(netifaces.ifaddresses('tun0')[2][0]['addr'])
+#    else:
+#        result = '⮝ vpn: no '
+#    return result
+#
+#
+#def vpn_toggle():
+#    ''' Toggles the VPN connection to NordVpn '''
+#    status = check_vpn()
+#    if 'no' in status:
+#        country = COUNTRIES[randint(0, len(COUNTRIES) - 1)]
+#        response = f" -e nordvpn connect {country}"
+#    elif 'NordVPN' in status:
+#        response = " -e nordvpn disconnect"
+#    else:
+#        response = " --hold -e echo '#=-> Nothing to do... Status unknown!!! '"
+#    return response
+#
 
 def check_cpu():
     ''' Check for CPU state '''
-    cmd = '/bin/cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor'
+    cmd = 'cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor'
     state = subprocess.run(cmd.split(), stdout=subprocess.PIPE, check=True).stdout.decode('utf-8')
     #return state.replace("\n", "")
     # ""

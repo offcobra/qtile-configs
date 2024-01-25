@@ -40,6 +40,7 @@ keybindings = [
 
     Key([mod], "Return", lazy.spawn("alacritty"), desc="Alacritty with fish shell"),
     Key([mod, "shift"], "Return", lazy.spawn("container_run blackarch"), desc="Alacritty Term with bash"),
+    Key([mod, "control"], "Return", lazy.spawn('foot'), desc="Launch Foot Terminal..."),
     Key([mod], "p", lazy.spawn("rofi -show run -theme ~/.config/rofi/theme.rasi"), desc="Programm Launcher"),
     Key([mod, "shift"], "p", lazy.spawn("bash /home/wally/.local/bin/websearch"), desc="Websearch Script"),
     Key([mod, "shift"], "b", lazy.hide_show_bar("top"), desc="Toggle Qtile Bar"),
@@ -53,6 +54,9 @@ keybindings = [
     Key([], "xf86audioraisevolume", lazy.spawn('amixer sset Master 5%+'), desc="Raise Volume..."),
     Key([], "xf86audiolowervolume", lazy.spawn('amixer sset Master 5%-'), desc="Lower Volume..."),
     Key([], "xf86audiomute", lazy.spawn('amixer sset Master 0'), desc="Lower Volume..."),
+
+    Key([], "xf86MonBrightnessDown", lazy.spawn('light -U 5'), desc="Lower Light..."),
+    Key([], "xf86MonBrightnessUp", lazy.spawn('light -A 5'), desc="Raise Light..."),
 
 # KEYCHORD BINDINGS
 # Basic Commands
@@ -82,23 +86,23 @@ keybindings = [
 # Emacs
     KeyChord([mod],"e", [
         Key([], "e",
-            lazy.spawn("docker_exec emacsclient -c -a 'emacs'"),
+            lazy.spawn("emacsclient -c -a 'emacs'"),
             desc='Emacsclient Dashboard'
             ),
         Key([], "b",
-            lazy.spawn("docker_exec emacsclient -c -a 'emacs' --eval '(ibuffer)'"),
+            lazy.spawn("emacsclient -c -a 'emacs' --eval '(ibuffer)'"),
             desc='Emacsclient Ibuffer'
             ),
         Key([], "r",
-            lazy.spawn("docker_exec emacsclient -c -a 'emacs' --eval '(doom/reload)'"),
+            lazy.spawn("emacsclient -c -a 'emacs' --eval '(doom/reload)'"),
             desc='Emacsclient Ibuffer'
             ),
         Key([], "d",
-            lazy.spawn("docker_exec emacsclient -c -a 'emacs' --eval '(dired nil)'"),
+            lazy.spawn("emacsclient -c -a 'emacs' --eval '(dired nil)'"),
             desc='Emacsclient Dired'
             ),
         Key([], "t",
-            lazy.spawn("docker_exec emacsclient -c -a 'emacs' --eval '(+vterm/here nil)'"),
+            lazy.spawn("emacsclient -c -a 'emacs' --eval '(+vterm/here nil)'"),
             desc='Emacsclient Vterm'
             )
     ], name="Emacs"),
@@ -142,9 +146,13 @@ keybindings = [
             desc='Monitors in work mode'
             ),
         Key([], "v",
-            lazy.spawn("toggle_vpn"),
+            lazy.spawn("bash /home/wally/.config/bin/toggle_vpn"),
             desc='Toggle NordVPN'
             ),
+        #Key([], "b",
+        #    lazy.spawn("bash /home/wally/.config/bin/toggle_cpu"),
+        #    desc='Toggle Cpu Guvernor'
+        #    ),
         Key([], "s",
             lazy.spawn("toggle_service"),
             desc='Toggle System Service'

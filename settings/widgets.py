@@ -4,7 +4,7 @@ from libqtile import qtile
 from libqtile import widget
 
 from settings.colors import get_theme
-from settings.helper import check_vpn, vpn_toggle, check_cpu
+from settings.helper import check_cpu # check_vpn, vpn_toggle, 
 
 
 myTerm = "alacritty"      # My terminal of choice
@@ -42,7 +42,7 @@ def get_group_box(visible_groups):
     groupbox = widget.GroupBox(
         font = myFont + ' Bold',
         visible_groups = visible_groups,
-        fontsize = 7,
+        fontsize = 9,
         margin_y = 4,
         margin_x = 0,
         padding_y = 5,
@@ -63,7 +63,7 @@ def get_group_box(visible_groups):
 def get_current_layout():
     return widget.CurrentLayout(
         font = myFont + " Bold",
-        fontsize = 8,
+        fontsize = 9,
         foreground = colors['color1'],
         background = colors['background']
     )
@@ -74,7 +74,7 @@ def get_current_icon_layout():
         current_icon_path = ["/home/wally/.config/qtile/icons"],
         font = myFont + " Bold",
         scale = 0.7,
-        fontsize = 6,
+        fontsize = 9,
         foreground = colors['color1'],
         background = colors['background']
     )
@@ -85,7 +85,7 @@ def get_window_name():
     return widget.WindowName(
         font = myFont + " Bold",
         format = '{name}',
-        fontsize = 8,
+        fontsize = 9,
         foreground = colors['active'],
         background = colors['background']
     )
@@ -104,21 +104,21 @@ def get_text_box(backc, forec, txt='', size=37, cmd=''):
     )
 
 # Genn Pool Text
-vpn_widget = widget.GenPollText(
-    font = myFont + " Bold",
-    fontsize = 8,
-    update_interval=2,
-    func=lambda: check_vpn(),
-    foreground = colors['active'],
-    background = colors['background'],
-    mouse_callbacks = {
-        'Button1': lambda: qtile.cmd_spawn(myTerm + vpn_toggle()),
-        'Button3': lambda: qtile.cmd_spawn(myTerm + ' --hold -e watch nordvpn status'),
-    }
-)
+#vpn_widget = widget.GenPollText(
+#    font = myFont + " Bold",
+#    fontsize = 8,
+#    update_interval=2,
+#    func=lambda: check_vpn(),
+#    foreground = colors['active'],
+#    background = colors['background'],
+#    mouse_callbacks = {
+#        'Button1': lambda: qtile.cmd_spawn(myTerm + vpn_toggle()),
+#        'Button3': lambda: qtile.cmd_spawn(myTerm + ' --hold -e watch nordvpn status'),
+#    }
+#)
 
 cpu_widget = widget.GenPollText(
-    font = myFont + " Bold",
+    font = myFont,
     fontsize = 10,
     update_interval=2,
     func=lambda: check_cpu(),
@@ -190,19 +190,32 @@ def clock(backc):
         font = myFont + " Bold",
         foreground = colors['color1'],
         background = backc,
-        fontsize = 9,
+        fontsize = 11,
         format="%H:%M %d-%m-%Y ",
         mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' --hold -t Calender -e cal -y')}
     )
 
 # SysTray
 #systray = widget.Systray(
-systray = widget.Systray(
+systray = widget.StatusNotifier(
     background = colors['background'],
     icon_size=14,
     padding = 7,
 )
 
+battery = widget.Battery(
+    background = colors['background'],
+    foreground = colors['color4'],
+    fontsize=9,
+    font = myFont + " Bold",
+)
+
+volume = widget.Volume(
+    background = colors['background'],
+    foreground = colors['color2'],
+    fontsize=9,
+    font = myFont + " Bold",
+)
 
 def init_widgets_list(screens='work', count=0):
     ''' Widgets for the main screen '''
@@ -225,7 +238,7 @@ def init_widgets_list(screens='work', count=0):
 
     widgets_list = [
         get_sep(0, 10),
-        get_text_box(colors['background'], colors['inactive'], " ", 13),
+        get_text_box(colors['background'], colors['inactive'], " ", 13),
         #py_image,
         get_sep(0, 5),
         get_group_box([str(x) for x in groups[str(count)]]),
@@ -233,7 +246,11 @@ def init_widgets_list(screens='work', count=0):
         get_current_layout(),
         get_current_icon_layout(),
         get_window_name(),
-        vpn_widget,
+        #vpn_widget,
+        get_text_box(colors['background'], colors['color1'], " ", 10),
+        volume,
+        get_text_box(colors['background'], colors['color1'], "   ", 10),
+        battery,
         widget.WidgetBox(
             background=colors['background'],
             font=myFont + " Bold",
