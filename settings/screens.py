@@ -1,1 +1,1 @@
-/home/wally/.config/qtile/settings/custom_screens/1screens.py
+/home/wally/.config/qtile/settings/custom_screens/3screens.py
