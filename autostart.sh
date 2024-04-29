@@ -14,30 +14,26 @@
 # Github Ssh: git@github.com:offcobra/dotfiles.git
 #--------------------------------------------------
 
-#Some ways to set your wallpaper besides variety or nitrogen
-#wallpaper for other Arch based systems
-#run variety -> To cycle wallpapers
-
-#starting utility applications at boot time
+# Starting utility applications at boot time
 # For X11
 
 echo "Setting Screen resolution...."
-bash /home/wally/.local/bin/screen_work &
-
-echo "Fix for GTK Apps starting slow..."
-/usr/lib/xdg-desktop-portal &
-/usr/lib/xdg-desktop-portal-gnome &
-
-dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
+#bash /home/wally/.local/bin/screen_work &
+#
+#echo "Fix for GTK Apps starting slow..."
+#/usr/lib/xdg-desktop-portal &
+#/usr/lib/xdg-desktop-portal-gnome &
+#
+#dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
 
 #echo "Starting Picom"
 #picom --config $HOME/.config/picom/picom.conf &
 
-echo "Setting Wallpapers"
-nitrogen --restore &
-
-echo "Starting Flameshot Screenshot tool"
-flameshot &
+#echo "Setting Wallpapers"
+#nitrogen --restore &
+#
+#echo "Starting Flameshot Screenshot tool"
+#flameshot &
 
 #echo "Starting Conky"
 #conky -c $HOME/.config/conky/theme.conkyrc
@@ -50,18 +46,18 @@ flameshot &
 #numlockx on &
 #blueberry-tray &
 
-echo "Auth Agent & Notifyd"
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+#echo "Auth Agent & Notifyd"
+#/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 #/usr/lib/xfce4/notifyd/xfce4-notifyd &
-dunst &
-
-echo "Start emacs daemon..."
-docker_exec emacs --daemon &
-
-echo "Starting Apps Conatiner..."
-xhost +local:*
-
-echo "Start signal in tray"
-flatpak run org.signal.Signal --start-in-tray &
-
-notify-send -t 3000 "Qtile AutoStart" "All Autostart Apps Loaded..."
+#dunst &
+#
+#echo "Start emacs daemon..."
+#docker_exec emacs --daemon &
+#
+#echo "Starting Apps Conatiner..."
+#xhost +local:*
+#
+#echo "Start signal in tray"
+#flatpak run org.signal.Signal --start-in-tray &
+#
+#notify-send -t 3000 "Qtile AutoStart" "All Autostart Apps Loaded..."

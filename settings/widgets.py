@@ -196,19 +196,19 @@ def clock(backc):
     )
 
 # SysTray
-#systray = widget.Systray(
-systray = widget.StatusNotifier(
+#systray = widget.StatusNotifier(
+systray = widget.Systray(
     background = colors['background'],
     icon_size=14,
     padding = 7,
 )
 
-battery = widget.Battery(
-    background = colors['background'],
-    foreground = colors['color4'],
-    fontsize=9,
-    font = myFont + " Bold",
-)
+#battery = widget.Battery(
+#    background = colors['background'],
+#    foreground = colors['color4'],
+#    fontsize=9,
+#    font = myFont + " Bold",
+#)
 
 volume = widget.Volume(
     background = colors['background'],
@@ -249,8 +249,8 @@ def init_widgets_list(screens='work', count=0):
         #vpn_widget,
         get_text_box(colors['background'], colors['color1'], " ", 10),
         volume,
-        get_text_box(colors['background'], colors['color1'], "   ", 10),
-        battery,
+        #get_text_box(colors['background'], colors['color1'], "   ", 10),
+        #battery,
         widget.WidgetBox(
             background=colors['background'],
             font=myFont + " Bold",

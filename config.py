@@ -32,7 +32,7 @@ home = os.path.expanduser('~')
 # KeyBindings
 keys = keybindings
 
-# MOUSE CONFIGURATION
+# MouseKeys
 mouse = mouse_keys
 
 # Groups
@@ -51,8 +51,9 @@ dgroups_app_rules = []
 
 main = None
 
-#from libqtile.backend.wayland import InputConfig
+wl_input_rules = None
 
+#from libqtile.backend.wayland import InputConfig
 #wl_input_rules = {
 #    "5426:599:Razer Razer Huntsman Mini": InputConfig(kb_layout='de'),
 #    "4152:6224:SteelSeries SteelSeries Aerox 5": InputConfig(accel_profile='flat'),
@@ -64,7 +65,8 @@ main = None
 def start_once():
     ''' Start once '''
     if qtile.core.name == "x11":
-        subprocess.call([home + '/.config/qtile/autostart.sh'])
+        #subprocess.call([home + '/.config/qtile/autostart.sh'])
+        print("this is it")
     else:
         subprocess.call([home + '/.config/qtile/qautostart.sh'])
         #print('Start Wayland stuff...')
