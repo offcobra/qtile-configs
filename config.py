@@ -65,8 +65,7 @@ wl_input_rules = None
 def start_once():
     ''' Start once '''
     if qtile.core.name == "x11":
-        #subprocess.call([home + '/.config/qtile/autostart.sh'])
-        print("this is it")
+        subprocess.call(['bash', home + '/.config/qtile/autostart.sh'])
     else:
         subprocess.call([home + '/.config/qtile/qautostart.sh'])
         #print('Start Wayland stuff...')
@@ -115,13 +114,14 @@ floating_layout = layout.Floating(float_rules=[
     Match(wm_class='Galculator'),
     Match(wm_class='xfce4-terminal'),
     #Match(wm_class='spotify'),
-    Match(wm_class='csgo_linux64'),
+    Match(wm_class='cs2'),
     Match(wm_class='archlinux-logout.py'),
     #Match(wm_class='ConanSandbox (64-bit, PCD3D_SM5)'),
     Match(wm_class='conky'),
 
 ],  fullscreen_border_width = 0, border_width = 0)
 auto_fullscreen = True
+auto_minimize = False
 
 focus_on_window_activation = "focus" # or smart
 

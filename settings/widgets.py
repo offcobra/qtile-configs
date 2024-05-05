@@ -199,7 +199,7 @@ def clock(backc):
 #systray = widget.StatusNotifier(
 systray = widget.Systray(
     background = colors['background'],
-    icon_size=14,
+    icon_size=16,
     padding = 7,
 )
 
@@ -238,7 +238,7 @@ def init_widgets_list(screens='work', count=0):
 
     widgets_list = [
         get_sep(0, 10),
-        get_text_box(colors['background'], colors['inactive'], " ", 13),
+        get_text_box(colors['background'], colors['inactive'], " ", 11),
         #py_image,
         get_sep(0, 5),
         get_group_box([str(x) for x in groups[str(count)]]),

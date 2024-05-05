@@ -18,13 +18,13 @@
 # For X11
 
 echo "Setting Screen resolution...."
-#bash /home/wally/.local/bin/screen_work &
+bash /home/wally/.local/bin/screen_full &
 #
 #echo "Fix for GTK Apps starting slow..."
 #/usr/lib/xdg-desktop-portal &
 #/usr/lib/xdg-desktop-portal-gnome &
 #
-#dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
+dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
 
 #echo "Starting Picom"
 #picom --config $HOME/.config/picom/picom.conf &
@@ -39,25 +39,26 @@ echo "Setting Screen resolution...."
 #conky -c $HOME/.config/conky/theme.conkyrc
 
 #echo "Starting Tray applets..."
-#nm-applet &
-#pamac-tray &
-#volumeicon &
-#xfce4-power-manager &
-#numlockx on &
-#blueberry-tray &
+nm-applet &
+blueberry-tray &
 
 #echo "Auth Agent & Notifyd"
 #/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 #/usr/lib/xfce4/notifyd/xfce4-notifyd &
-#dunst &
+dunst &
 #
-#echo "Start emacs daemon..."
-#docker_exec emacs --daemon &
+echo "Start emacs daemon..."
+emacs --daemon &
 #
-#echo "Starting Apps Conatiner..."
-#xhost +local:*
+echo "Starting Apps Conatiner..."
+xhost +local:*
 #
-#echo "Start signal in tray"
-#flatpak run org.signal.Signal --start-in-tray &
-#
-#notify-send -t 3000 "Qtile AutoStart" "All Autostart Apps Loaded..."
+echo "Start signal in tray"
+flatpak run org.signal.Signal --start-in-tray &
+flatpak run io.github.mimbrero.WhatsAppDesktop --start-hidden &
+
+# Setting custom resolution
+xrandr --newmode "1280x960_165.00"  310.25  1280 1392 1528 1776  960 963 967 1060 -hsync +vsync
+xrandr --addmode DisplayPort-1 1280x960_165.00
+
+notify-send -t 3000 "Qtile AutoStart" "All Autostart Apps Loaded..."

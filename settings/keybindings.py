@@ -39,12 +39,12 @@ keybindings = [
 # Def my own Keybinding
 
     Key([mod], "Return", lazy.spawn("alacritty"), desc="Alacritty with fish shell"),
-    Key([mod, "shift"], "Return", lazy.spawn("container_run blackarch"), desc="Alacritty Term with bash"),
+    Key([mod, "shift"], "Return", lazy.spawn("container_run arch"), desc="Alacritty Term with bash"),
     Key([mod, "control"], "Return", lazy.spawn('foot'), desc="Launch Foot Terminal..."),
     Key([mod], "p", lazy.spawn("rofi -show run -theme ~/.config/rofi/theme.rasi"), desc="Programm Launcher"),
     Key([mod, "shift"], "p", lazy.spawn("bash /home/wally/.local/bin/websearch"), desc="Websearch Script"),
     Key([mod, "shift"], "b", lazy.hide_show_bar("top"), desc="Toggle Qtile Bar"),
-    Key([mod], "f", lazy.spawn("docker_exec pcmanfm -n /home/wally"), desc="File Manager"),
+    Key([mod], "f", lazy.spawn("pcmanfm"), desc="File Manager"),
     Key([mod], "s", lazy.spawn("alacritty -e btm"), desc="Fancy System Monitor"),
     Key([mod], "u", lazy.spawn("alacritty -e bash /home/wally/.local/bin/update_system"), desc="Update System"),
     Key([mod], "z", lazy.spawn("archlinux-logout"), desc="Logout / Restart / Shutdown"),
@@ -65,6 +65,10 @@ keybindings = [
             lazy.spawn("nitrogen"),
             desc='Nitrogen'
             ),
+        Key([], "g",
+            lazy.spawn("steam"),
+            desc='Steam'
+            ),
         Key([], "k",
             lazy.spawn("docker_exec keepassxc"),
             desc='KeepassXC'
@@ -76,6 +80,22 @@ keybindings = [
         Key([], "h",
             lazy.spawn("docker_exec bitwarden-desktop"),
             desc='Bitwarden Desktop'
+            ),
+        Key([], "y",
+            lazy.spawn("flatpak run io.freetubeapp.FreeTube"),
+            desc='FreeTube Desktop'
+            ),
+        Key([], "f",
+            lazy.spawn("flatpak run com.github.tchx84.Flatseal"),
+            desc='Flatpak Flatseal'
+            ),
+        Key([], "b",
+            lazy.spawn("blueberry"),
+            desc='Blueberry Desktop'
+            ),
+        Key([], "v",
+            lazy.spawn("pavucontrol"),
+            desc='Pavucontrol Desktop'
             ),
         Key([], "s",
             lazy.spawn("termius-app"),
@@ -110,12 +130,20 @@ keybindings = [
 # Browser
     KeyChord([mod],"b", [
         Key([], "b",
-            lazy.spawn("flatpak run com.brave.Browser"),
+            lazy.spawn("brave"),
             desc='Brave'
             ),
         Key([], "i",
-            lazy.spawn("flatpak run com.brave.Browser --incognito"),
+            lazy.spawn("brave --incognito"),
             desc='Brave Incognito'
+            ),
+        Key([], "t",
+            lazy.spawn("docker_exec thorium-browser"),
+            desc='Thorium'
+            ),
+        Key([], "h",
+            lazy.spawn("docker_exec thorium-browser --incognito"),
+            desc='Thorium Incognito'
             ),
         Key([], "o",
             lazy.spawn("flatpak run org.qutebrowser.qutebrowser -C /home/wally/.config/qutebrowser/config.py"),
@@ -205,8 +233,12 @@ keybindings = [
             lazy.spawn("flatpak run org.signal.Signal"),
             desc='Signal'
             ),
+        Key([], "d",
+            lazy.spawn("flatpak run com.discordapp.Discord"),
+            desc='Discord'
+            ),
         Key([], "w",
-            lazy.spawn("whatsapp-nativefier"),
+            lazy.spawn("flatpak run io.github.mimbrero.WhatsAppDesktop"),
             desc='Whatsapp'
             ),
     ], name="Chating"),
