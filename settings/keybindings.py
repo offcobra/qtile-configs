@@ -1,5 +1,5 @@
 ''' Module to host keybindings '''
-from libqtile.command import lazy
+from libqtile.lazy import lazy
 from libqtile.config import Drag, Key, KeyChord
 
 # Custom plugin

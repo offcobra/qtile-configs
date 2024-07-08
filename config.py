@@ -115,6 +115,8 @@ floating_layout = layout.Floating(float_rules=[
     Match(wm_class='xfce4-terminal'),
     #Match(wm_class='spotify'),
     Match(wm_class='cs2'),
+    Match(wm_class='steamwebhelper'),
+    Match(wm_class='Counter-Strike 2'),
     Match(wm_class='archlinux-logout.py'),
     #Match(wm_class='ConanSandbox (64-bit, PCD3D_SM5)'),
     Match(wm_class='conky'),
@@ -126,3 +128,5 @@ auto_minimize = False
 focus_on_window_activation = "focus" # or smart
 
 wmname = "LG3D"
+
+# /bin/bash /home/wally/.local/share/Steam/steamapps/common/Counter-Strike Global Offensive/game/cs2.sh -steam

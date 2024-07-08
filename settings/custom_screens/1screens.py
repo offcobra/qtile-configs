@@ -1,7 +1,7 @@
 ''' Module to define de Qtile Groups... '''
 
 from libqtile import bar
-from libqtile.command import lazy
+from libqtile.lazy import lazy
 from libqtile.config import Group, Key, Screen, DropDown, ScratchPad
 
 from settings.widgets import init_widgets_list, init_widgets_secondary
