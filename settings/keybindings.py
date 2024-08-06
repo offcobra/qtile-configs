@@ -38,8 +38,8 @@ keybindings = [
 # BASIC KEYBINDINGS
 # Def my own Keybinding
 
-    Key([mod], "Return", lazy.spawn("alacritty"), desc="Alacritty with fish shell"),
-    Key([mod, "shift"], "Return", lazy.spawn("container_run arch"), desc="Alacritty Term with bash"),
+    Key([mod], "Return", lazy.spawn("alacritty"), desc="Alacritty with bash shell"),
+    Key([mod, "shift"], "Return", lazy.spawn("foot"), desc="Foot Term with bash"),
     Key([mod, "control"], "Return", lazy.spawn('foot'), desc="Launch Foot Terminal..."),
     Key([mod], "p", lazy.spawn("rofi -show run -theme ~/.config/rofi/theme.rasi"), desc="Programm Launcher"),
     Key([mod, "shift"], "p", lazy.spawn("bash /home/wally/.local/bin/websearch"), desc="Websearch Script"),
