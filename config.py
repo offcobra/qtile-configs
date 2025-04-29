@@ -65,10 +65,13 @@ wl_input_rules = None
 def start_once():
     ''' Start once '''
     if qtile.core.name == "x11":
-        subprocess.call(['bash', home + '/.config/qtile/autostart.sh'])
+        # TODO fix qtile-startup (x11 & wayland) & rm austostar.sh
+        # subprocess.call(['bash', home + '/.config/qtile/autostart.sh'])
+        subprocess.call(['qtile-startup'])
     else:
+        # TODO remove unneeded script
+        # print('Start Wayland stuff...')
         subprocess.call([home + '/.config/qtile/qautostart.sh'])
-        #print('Start Wayland stuff...')
 
 
 @hook.subscribe.startup
@@ -86,7 +89,6 @@ def set_floating(window):
         window.floating = True
 
 floating_types = ["notification", "toolbar", "splash", "dialog"]
-
 
 follow_mouse_focus = True
 bring_front_click = False
@@ -112,22 +114,21 @@ floating_layout = layout.Floating(float_rules=[
     Match(wm_class='feh'),
     Match(wm_class='qtile_docs'),
     Match(wm_class='Galculator'),
-    Match(wm_class='xfce4-terminal'),
-    #Match(wm_class='spotify'),
     Match(wm_class='cs2'),
     Match(wm_class='steam_app_730'),
     Match(wm_class='steamwebhelper'),
     Match(wm_class='Counter-Strike 2'),
     Match(wm_class='archlinux-logout.py'),
-    #Match(wm_class='ConanSandbox (64-bit, PCD3D_SM5)'),
     Match(wm_class='conky'),
-
+    Match(wm_class='Blueberry.py'),
+    Match(wm_class='com.rtosta.zapzap'),
+    Match(wm_class='Signal'),
+    Match(wm_class='ollama'),
+    Match(wm_class='pavucontrol'),
 ],  fullscreen_border_width = 0, border_width = 0)
 auto_fullscreen = True
 auto_minimize = False
 
-focus_on_window_activation = "focus" # or smart
+focus_on_window_activation = "smart" # or smart
 
 wmname = "LG3D"
-
-# /bin/bash /home/wally/.local/share/Steam/steamapps/common/Counter-Strike Global Offensive/game/cs2.sh -steam

@@ -59,7 +59,7 @@ for i in def_groups:
         Key([mod, "shift"], i.name, lazy.window.togroup(i.name)),
     ])
 
-TERM = "alacritty"
+TERM = "kitty"
 
 # Testing Scratchpads
 def_groups.extend([
@@ -107,7 +107,7 @@ def window_to_next_group(qtile):
 
 def get_screens():
     ''' Create the Screens... '''
-    screen_main = Screen(top=bar.Bar(widgets=init_widgets_list('full', 0), size=15, opacity=1, margin=[4,6,0,4]))
-    screen_1 = Screen(top=bar.Bar(widgets=init_widgets_secondary('full', 1), size=15, opacity=1, margin=[4,6,0,4]))
-    screen_2 = Screen(top=bar.Bar(widgets=init_widgets_secondary('full', 2), size=15, opacity=1, margin=[4,6,0,4]))
+    screen_main = Screen(top=bar.Bar(widgets=init_widgets_list('full', 0), size=15, opacity=0.8, margin=[4,6,0,4]))
+    screen_1 = Screen(top=bar.Bar(widgets=init_widgets_secondary('full', 1), size=15, opacity=0.8, margin=[4,6,0,4]))
+    screen_2 = Screen(top=bar.Bar(widgets=init_widgets_secondary('full', 2), size=15, opacity=0.8, margin=[4,6,0,4]))
     return [screen_main, screen_1, screen_2]

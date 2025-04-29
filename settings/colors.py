@@ -1,16 +1,8 @@
 ''' Colors Module.. '''
 import json
 
-# Possible Themes
-# Doom     !
-# Dracula   !
-# Nord      !
-# One - Ocean  !
-# Snazzy   !
-# Gruvbox   !
-# Solarized dark  !
 
-THEME = "/home/wally/.config/qtile/theme.json"
+THEME = "/home/wally/.config/theme.json"
 
 # Default Colors
 colors = {

@@ -4,11 +4,12 @@ from libqtile import qtile
 from libqtile import widget
 
 from settings.colors import get_theme
-from settings.helper import check_cpu # check_vpn, vpn_toggle, 
+from settings.helper import check_cpu # check_vpn, vpn_toggle,
 
 
 myTerm = "alacritty"      # My terminal of choice
-myFont = "Source Code Pro"
+#myFont = "Source Code Pro"
+myFont = "FiraCodeCerdFont"
 
 
 customTerm = "alacritty --config-file /home/wally/.config/alacritty/alacritty_scratchpad.yml"
@@ -86,6 +87,7 @@ def get_window_name():
         font = myFont + " Bold",
         format = '{name}',
         fontsize = 9,
+        max_chars = 50,
         foreground = colors['active'],
         background = colors['background']
     )
@@ -257,7 +259,7 @@ def init_widgets_list(screens='work', count=0):
             fontsize=11,
             text_open="⋟",
             text_closed="⋞",
-            start_opened=True,
+            start_opened=False,
             widgets=[
                 get_text_box(colors['background'], colors['foreground'], " ", 14),
                 get_text_box(colors['background'], colors['color1'], " ", 10),
